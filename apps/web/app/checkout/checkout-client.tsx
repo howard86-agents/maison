@@ -4,12 +4,18 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatCcy } from "../../lib/currency";
 import { PAYMENT_METHODS } from "../../lib/maison-data";
-import { Placeholder } from "../_components/Placeholder";
+import { Placeholder } from "../_components/placeholder";
 import { useLocale } from "../providers";
 
 const CONSENTS: [string, boolean][] = [
-  ["I confirm the piece matches my brief — and accept the concierge has discretion within the approved budget.", true],
-  ["I authorise MAISON to authenticate before dispatch; failed inspections refund in full.", true],
+  [
+    "I confirm the piece matches my brief — and accept the concierge has discretion within the approved budget.",
+    true,
+  ],
+  [
+    "I authorise MAISON to authenticate before dispatch; failed inspections refund in full.",
+    true,
+  ],
   ["Send LINE updates from @maison_concierge at each milestone.", true],
   ["Hold my address on file for repeat carriage (encrypted at rest).", false],
 ];
@@ -25,9 +31,18 @@ export function CheckoutClient() {
         <div className="eyebrow">File MSN — 04823 · Candidate A · Paris</div>
         <h1
           className="display"
-          style={{ fontSize: 52, marginTop: 14, fontWeight: 400, letterSpacing: "-0.02em" }}
+          style={{
+            fontSize: 52,
+            marginTop: 14,
+            fontWeight: 400,
+            letterSpacing: "-0.02em",
+          }}
         >
-          Approve & <span style={{ fontStyle: "italic", color: "var(--accent)" }}>secure</span>.
+          Approve &{" "}
+          <span style={{ fontStyle: "italic", color: "var(--accent)" }}>
+            secure
+          </span>
+          .
         </h1>
       </div>
 
@@ -45,7 +60,10 @@ export function CheckoutClient() {
             <div className="hairline" style={{ marginTop: 12 }} />
             <div
               className="row-between"
-              style={{ padding: "18px 0", borderBottom: "0.5px solid var(--line)" }}
+              style={{
+                padding: "18px 0",
+                borderBottom: "0.5px solid var(--line)",
+              }}
             >
               <div>
                 <div
@@ -55,8 +73,11 @@ export function CheckoutClient() {
                   Chen Mei-Lin · 陳美琳
                 </div>
                 <div className="muted" style={{ fontSize: 12.5, marginTop: 4 }}>
-                  No. 7, Lane 12, Lishui Street · Da&apos;an District · Taipei 106 · TW
-                  <span style={{ marginLeft: 14, color: "var(--accent)" }}>· primary</span>
+                  No. 7, Lane 12, Lishui Street · Da&apos;an District · Taipei
+                  106 · TW
+                  <span style={{ marginLeft: 14, color: "var(--accent)" }}>
+                    · primary
+                  </span>
                 </div>
               </div>
               <button className="btn-link" type="button">
@@ -67,7 +88,11 @@ export function CheckoutClient() {
               <div>
                 <div
                   className="mono"
-                  style={{ fontSize: 10.5, letterSpacing: "0.14em", color: "var(--ink-3)" }}
+                  style={{
+                    fontSize: 10.5,
+                    letterSpacing: "0.14em",
+                    color: "var(--ink-3)",
+                  }}
                 >
                   CARRIAGE
                 </div>
@@ -99,22 +124,35 @@ export function CheckoutClient() {
                   style={{
                     textAlign: "left",
                     cursor: "pointer",
-                    background: method === m.id ? "var(--bg-card)" : "var(--paper)",
+                    background:
+                      method === m.id ? "var(--bg-card)" : "var(--paper)",
                     border: `0.5px solid ${method === m.id ? "var(--ink)" : "var(--line)"}`,
                     padding: 18,
                   }}
+                  type="button"
                 >
-                  <div className="display" style={{ fontSize: 19, letterSpacing: "-0.01em" }}>
+                  <div
+                    className="display"
+                    style={{ fontSize: 19, letterSpacing: "-0.01em" }}
+                  >
                     {m.name}
                   </div>
-                  <div className="muted" style={{ fontSize: 11.5, marginTop: 4 }}>
+                  <div
+                    className="muted"
+                    style={{ fontSize: 11.5, marginTop: 4 }}
+                  >
                     {m.sub}
                   </div>
                   <div style={{ marginTop: 10, display: "flex", gap: 6 }}>
                     {[0, 1, 2, 3].map((i) => (
                       <div
                         key={i}
-                        style={{ width: 22, height: 14, background: "var(--bg-soft)", borderRadius: 1.5 }}
+                        style={{
+                          width: 22,
+                          height: 14,
+                          background: "var(--bg-soft)",
+                          borderRadius: 1.5,
+                        }}
                       />
                     ))}
                   </div>
@@ -131,16 +169,16 @@ export function CheckoutClient() {
               }}
             >
               <div className="field">
-                <label>Card number</label>
-                <input placeholder="4242  4242  4242  4242" />
+                <label htmlFor="card-number">Card number</label>
+                <input id="card-number" placeholder="4242  4242  4242  4242" />
               </div>
               <div className="field">
-                <label>Expiry</label>
-                <input placeholder="05 / 29" />
+                <label htmlFor="card-expiry">Expiry</label>
+                <input id="card-expiry" placeholder="05 / 29" />
               </div>
               <div className="field">
-                <label>CVC</label>
-                <input placeholder="•••" />
+                <label htmlFor="card-cvc">CVC</label>
+                <input id="card-cvc" placeholder="•••" />
               </div>
             </div>
           </div>
@@ -158,12 +196,29 @@ export function CheckoutClient() {
                 color: "var(--ink-2)",
               }}
             >
-              {CONSENTS.map(([copy, on], i) => (
+              {CONSENTS.map(([copy, on]) => (
                 <label
-                  key={i}
-                  style={{ display: "flex", gap: 14, cursor: "pointer", alignItems: "flex-start" }}
+                  key={copy}
+                  style={{
+                    display: "flex",
+                    gap: 14,
+                    cursor: "pointer",
+                    alignItems: "flex-start",
+                  }}
                 >
+                  <input
+                    defaultChecked={on}
+                    style={{
+                      position: "absolute",
+                      width: 1,
+                      height: 1,
+                      opacity: 0,
+                      pointerEvents: "none",
+                    }}
+                    type="checkbox"
+                  />
                   <span
+                    aria-hidden="true"
                     style={{
                       width: 16,
                       height: 16,
@@ -210,15 +265,26 @@ export function CheckoutClient() {
             Order summary
           </h4>
           <div className="row" style={{ gap: 14 }}>
-            <Placeholder aspect="none" caption="A" style={{ width: 78, height: 96 }} />
+            <Placeholder
+              aspect="none"
+              caption="A"
+              style={{ width: 78, height: 96 }}
+            />
             <div>
               <div
                 className="mono"
-                style={{ fontSize: 10, color: "var(--accent)", letterSpacing: "0.14em" }}
+                style={{
+                  fontSize: 10,
+                  color: "var(--accent)",
+                  letterSpacing: "0.14em",
+                }}
               >
                 BIRKETT · 2023
               </div>
-              <div className="display" style={{ fontSize: 17, marginTop: 4, lineHeight: 1.15 }}>
+              <div
+                className="display"
+                style={{ fontSize: 17, marginTop: 4, lineHeight: 1.15 }}
+              >
                 Saddle 25 · Étoupe
               </div>
               <div className="muted" style={{ fontSize: 11.5, marginTop: 6 }}>
@@ -239,7 +305,7 @@ export function CheckoutClient() {
           >
             <div className="row-between">
               <span className="muted">Piece</span>
-              <span>{formatCcy(11760, ccy)}</span>
+              <span>{formatCcy(11_760, ccy)}</span>
             </div>
             <div className="row-between">
               <span className="muted">Concierge service</span>
@@ -262,12 +328,16 @@ export function CheckoutClient() {
           <div className="row-between">
             <span
               className="mono"
-              style={{ fontSize: 10.5, letterSpacing: "0.16em", color: "var(--ink-3)" }}
+              style={{
+                fontSize: 10.5,
+                letterSpacing: "0.16em",
+                color: "var(--ink-3)",
+              }}
             >
               TOTAL TODAY
             </span>
             <span className="display" style={{ fontSize: 30 }}>
-              {formatCcy(12455, ccy)}
+              {formatCcy(12_455, ccy)}
             </span>
           </div>
           <div className="fine" style={{ marginTop: 4 }}>
@@ -275,12 +345,16 @@ export function CheckoutClient() {
           </div>
           <button
             className="btn btn-primary"
-            style={{ marginTop: 22, width: "100%", justifyContent: "center" }}
             onClick={() => router.push("/order")}
+            style={{ marginTop: 22, width: "100%", justifyContent: "center" }}
+            type="button"
           >
-            Authorise · {formatCcy(12455, ccy)} <span>→</span>
+            Authorise · {formatCcy(12_455, ccy)} <span>→</span>
           </button>
-          <div className="fine" style={{ marginTop: 14, lineHeight: 1.6, textAlign: "center" }}>
+          <div
+            className="fine"
+            style={{ marginTop: 14, lineHeight: 1.6, textAlign: "center" }}
+          >
             256-bit · Stripe · escrowed in TWD
           </div>
         </aside>

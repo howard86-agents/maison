@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { MEMBER, ORDERS, TIERS, type Tier } from "../../lib/maison-data";
-import { TierChip } from "../_components/TierChip";
+import { TierChip } from "../_components/tier-chip";
 
 const SIDE_NAV: [string, string][] = [
   ["orders", "Concierge files"],
@@ -20,6 +20,12 @@ const SECTION_TITLES: Record<string, string> = {
   payments: "Payment & escrow",
   notifications: "LINE & notifications",
   profile: "Profile & language",
+};
+
+const TIER_HEADLINES: Record<Tier, string> = {
+  Normal: "— building file",
+  Professional: "Quarterly preview unlocked",
+  Diamond: "By invitation",
 };
 
 export function AccountClient() {
@@ -42,7 +48,10 @@ export function AccountClient() {
           }}
         >
           Welcome back,{" "}
-          <em style={{ fontStyle: "italic", color: "var(--accent)" }}>{MEMBER.firstName}</em>.
+          <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
+            {MEMBER.firstName}
+          </em>
+          .
         </h1>
       </div>
 
@@ -56,7 +65,11 @@ export function AccountClient() {
               </div>
               <div
                 className="mono"
-                style={{ fontSize: 10, color: "var(--ink-3)", letterSpacing: "0.14em" }}
+                style={{
+                  fontSize: 10,
+                  color: "var(--ink-3)",
+                  letterSpacing: "0.14em",
+                }}
               >
                 {MEMBER.kanji} · {MEMBER.city}
               </div>
@@ -74,7 +87,11 @@ export function AccountClient() {
             <div className="row-between">
               <div
                 className="mono"
-                style={{ fontSize: 10, color: "var(--ink-3)", letterSpacing: "0.14em" }}
+                style={{
+                  fontSize: 10,
+                  color: "var(--ink-3)",
+                  letterSpacing: "0.14em",
+                }}
               >
                 CURRENT TIER
               </div>
@@ -89,14 +106,11 @@ export function AccountClient() {
                 fontStyle: tier === "Diamond" ? "normal" : "italic",
               }}
             >
-              {tier === "Normal"
-                ? "— building file"
-                : tier === "Professional"
-                  ? "Quarterly preview unlocked"
-                  : "By invitation"}
+              {TIER_HEADLINES[tier]}
             </div>
             <div className="fine" style={{ marginTop: 8, lineHeight: 1.6 }}>
-              Lifetime · {MEMBER.ledgerYtd} across {MEMBER.filesCompleted} files. Next review: Aug 2026.
+              Lifetime · {MEMBER.ledgerYtd} across {MEMBER.filesCompleted}{" "}
+              files. Next review: Aug 2026.
             </div>
             <div style={{ marginTop: 12, display: "flex", gap: 6 }}>
               {TIERS.map((tl) => (
@@ -114,8 +128,11 @@ export function AccountClient() {
                     textTransform: "uppercase",
                     background: tier === tl ? "var(--ink)" : "transparent",
                     color: tier === tl ? "var(--bg)" : "var(--ink-3)",
-                    border: "0.5px solid " + (tier === tl ? "var(--ink)" : "var(--line)"),
+                    border:
+                      "0.5px solid " +
+                      (tier === tl ? "var(--ink)" : "var(--line)"),
                   }}
+                  type="button"
                 >
                   {tl[0]}
                 </button>
@@ -129,9 +146,10 @@ export function AccountClient() {
           <nav>
             {SIDE_NAV.map(([id, label]) => (
               <button
-                key={id}
                 data-on={page === id ? "1" : "0"}
+                key={id}
                 onClick={() => setPage(id)}
+                type="button"
               >
                 {label}
               </button>
@@ -155,12 +173,16 @@ export function AccountClient() {
                     }}
                   >
                     Four files{" "}
-                    <em style={{ fontStyle: "italic", color: "var(--accent)" }}>open</em>.
+                    <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
+                      open
+                    </em>
+                    .
                   </div>
                 </div>
                 <button
                   className="btn btn-primary"
                   onClick={() => router.push("/request")}
+                  type="button"
                 >
                   New file <span>→</span>
                 </button>
@@ -175,13 +197,11 @@ export function AccountClient() {
                   <span style={{ textAlign: "right" }}>—</span>
                 </div>
                 {ORDERS.map((o) => (
-                  <div
-                    key={o.id}
-                    className="row"
-                    onClick={() => router.push("/order")}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <span className="mono" style={{ fontSize: 11, letterSpacing: "0.06em" }}>
+                  <div className="row" key={o.id}>
+                    <span
+                      className="mono"
+                      style={{ fontSize: 11, letterSpacing: "0.06em" }}
+                    >
                       {o.id}
                       <div
                         style={{
@@ -208,7 +228,11 @@ export function AccountClient() {
                       {o.value}
                     </span>
                     <span style={{ textAlign: "right" }}>
-                      <button className="btn-link" type="button">
+                      <button
+                        className="btn-link"
+                        onClick={() => router.push("/order")}
+                        type="button"
+                      >
                         View
                       </button>
                     </span>
@@ -228,12 +252,17 @@ export function AccountClient() {
                   <div className="eyebrow">Concierge ledger · year to date</div>
                   <div
                     className="display"
-                    style={{ fontSize: 32, marginTop: 10, letterSpacing: "-0.015em" }}
+                    style={{
+                      fontSize: 32,
+                      marginTop: 10,
+                      letterSpacing: "-0.015em",
+                    }}
                   >
                     {MEMBER.ledgerYtd}
                   </div>
                   <div className="fine" style={{ marginTop: 4 }}>
-                    {MEMBER.filesCompleted} files completed · 0 rejected at second inspection
+                    {MEMBER.filesCompleted} files completed · 0 rejected at
+                    second inspection
                   </div>
                 </div>
                 <div className="card-paper" style={{ padding: 22 }}>
@@ -279,8 +308,9 @@ export function AccountClient() {
                   fontSize: 14,
                 }}
               >
-                Sketched here for the prototype. The shape of this surface follows the same restraint — a single
-                column, generous airline above the fold, no calls-to-action competing for the eye.
+                Sketched here for the prototype. The shape of this surface
+                follows the same restraint — a single column, generous airline
+                above the fold, no calls-to-action competing for the eye.
               </p>
             </div>
           )}

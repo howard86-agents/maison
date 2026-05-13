@@ -2,7 +2,7 @@
 
 import { formatCcy } from "../../lib/currency";
 import { ORDER_STAGES } from "../../lib/maison-data";
-import { Placeholder } from "../_components/Placeholder";
+import { Placeholder } from "../_components/placeholder";
 import { useLocale } from "../providers";
 
 const NOTIFICATIONS: [string, boolean][] = [
@@ -19,10 +19,18 @@ export function OrderClient() {
         <div className="eyebrow">File MSN — 04823 · in motion</div>
         <h1
           className="display"
-          style={{ fontSize: 56, marginTop: 16, fontWeight: 400, letterSpacing: "-0.02em" }}
+          style={{
+            fontSize: 56,
+            marginTop: 16,
+            fontWeight: 400,
+            letterSpacing: "-0.02em",
+          }}
         >
           Your{" "}
-          <em style={{ fontStyle: "italic", color: "var(--accent)" }}>Saddle 25</em> is travelling.
+          <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
+            Saddle 25
+          </em>{" "}
+          is travelling.
         </h1>
       </div>
 
@@ -46,13 +54,21 @@ export function OrderClient() {
               <div>
                 <div
                   className="mono"
-                  style={{ fontSize: 10, letterSpacing: "0.14em", color: "var(--accent)" }}
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: "0.14em",
+                    color: "var(--accent)",
+                  }}
                 >
                   BIRKETT · 2023
                 </div>
                 <div
                   className="display"
-                  style={{ fontSize: 26, marginTop: 6, letterSpacing: "-0.015em" }}
+                  style={{
+                    fontSize: 26,
+                    marginTop: 6,
+                    letterSpacing: "-0.015em",
+                  }}
                 >
                   Saddle 25 · Étoupe
                 </div>
@@ -62,9 +78,16 @@ export function OrderClient() {
                 <div className="row" style={{ gap: 8, marginTop: 14 }}>
                   <span
                     className="tag"
-                    style={{ color: "var(--accent)", borderColor: "var(--accent)" }}
+                    style={{
+                      color: "var(--accent)",
+                      borderColor: "var(--accent)",
+                    }}
                   >
-                    <span className="dot" style={{ background: "var(--accent)" }} /> Stage 3 of 5
+                    <span
+                      className="dot"
+                      style={{ background: "var(--accent)" }}
+                    />{" "}
+                    Stage 3 of 5
                   </span>
                   <span className="tag">ETA · 21 May</span>
                 </div>
@@ -73,12 +96,16 @@ export function OrderClient() {
             <div>
               <div
                 className="mono"
-                style={{ fontSize: 10.5, color: "var(--ink-3)", letterSpacing: "0.14em" }}
+                style={{
+                  fontSize: 10.5,
+                  color: "var(--ink-3)",
+                  letterSpacing: "0.14em",
+                }}
               >
                 PAID · ESCROWED
               </div>
               <div className="display" style={{ fontSize: 30, marginTop: 6 }}>
-                {formatCcy(12455, ccy)}
+                {formatCcy(12_455, ccy)}
               </div>
               <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
                 Released to maison on second-inspection clear.
@@ -95,8 +122,8 @@ export function OrderClient() {
           </div>
 
           <div className="timeline">
-            {ORDER_STAGES.map((st, i) => (
-              <div key={i} className="stage" data-on={st.s}>
+            {ORDER_STAGES.map((st) => (
+              <div className="stage" data-on={st.s} key={st.t}>
                 <div className="marker">
                   {st.t.split(" ").slice(0, 2).join(" ")}
                   <div className="when">{st.w}</div>
@@ -108,8 +135,10 @@ export function OrderClient() {
                     <div className="line-preview" style={{ marginTop: 14 }}>
                       <strong>Hsiao-Yu</strong> · MAISON CONCIERGE
                       <br />
-                      Saddle is on AF197, due Taoyuan 06:40 tomorrow. I will photograph her at the vault before
-                      lunch and dispatch by Wednesday — we are on track for your Friday hand-delivery window.
+                      Saddle is on AF197, due Taoyuan 06:40 tomorrow. I will
+                      photograph her at the vault before lunch and dispatch by
+                      Wednesday — we are on track for your Friday hand-delivery
+                      window.
                     </div>
                   )}
                 </div>
@@ -148,7 +177,11 @@ export function OrderClient() {
                 </div>
                 <div
                   className="mono"
-                  style={{ fontSize: 10, color: "var(--ink-3)", letterSpacing: "0.14em" }}
+                  style={{
+                    fontSize: 10,
+                    color: "var(--ink-3)",
+                    letterSpacing: "0.14em",
+                  }}
                 >
                   YOUR CONCIERGE
                 </div>
@@ -167,7 +200,11 @@ export function OrderClient() {
             >
               Open LINE channel
             </button>
-            <button className="btn btn-link" style={{ marginTop: 12 }} type="button">
+            <button
+              className="btn btn-link"
+              style={{ marginTop: 12 }}
+              type="button"
+            >
               Request photographs of the piece
             </button>
           </div>
@@ -182,7 +219,11 @@ export function OrderClient() {
           >
             <div
               className="mono"
-              style={{ fontSize: 10.5, color: "var(--ink-3)", letterSpacing: "0.14em" }}
+              style={{
+                fontSize: 10.5,
+                color: "var(--ink-3)",
+                letterSpacing: "0.14em",
+              }}
             >
               YOUR NOTIFICATIONS
             </div>
@@ -196,19 +237,24 @@ export function OrderClient() {
               }}
             >
               {NOTIFICATIONS.map(([k, on]) => (
-                <div key={k} className="row-between">
+                <div className="row-between" key={k}>
                   <span>{k}</span>
                   <span
                     className="tag"
                     style={
                       on
-                        ? { color: "var(--positive)", borderColor: "var(--positive)" }
+                        ? {
+                            color: "var(--positive)",
+                            borderColor: "var(--positive)",
+                          }
                         : { color: "var(--ink-3)" }
                     }
                   >
                     <span
                       className="dot"
-                      style={{ background: on ? "var(--positive)" : "var(--ink-3)" }}
+                      style={{
+                        background: on ? "var(--positive)" : "var(--ink-3)",
+                      }}
                     />
                     {on ? "on" : "off"}
                   </span>

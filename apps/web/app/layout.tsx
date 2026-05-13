@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Geist, JetBrains_Mono } from "next/font/google";
-import { Footer } from "./_components/Footer";
-import { Header } from "./_components/Header";
-import { DevSwitcher } from "./_components/DevSwitcher";
-import { Providers, THEME_INIT_SCRIPT } from "./providers";
+import { DevSwitcher } from "./_components/dev-switcher";
+import { Footer } from "./_components/footer";
+import { Header } from "./_components/header";
+import { Providers } from "./providers";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -30,7 +30,8 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "MAISON · Concierge",
-  description: "A private concierge for sourcing fine leather, watchmaking and ready-to-wear.",
+  description:
+    "A private concierge for sourcing fine leather, watchmaking and ready-to-wear.",
 };
 
 export const viewport: Viewport = {
@@ -40,15 +41,19 @@ export const viewport: Viewport = {
 
 const isDev = process.env.NODE_ENV !== "production";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
+      className={`${cormorant.variable} ${geist.variable} ${mono.variable}`}
       lang="en"
       suppressHydrationWarning
-      className={`${cormorant.variable} ${geist.variable} ${mono.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script src="/theme-init.js" />
       </head>
       <body>
         <Providers>

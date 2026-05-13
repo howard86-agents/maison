@@ -5,13 +5,26 @@ export function Footer() {
         <div className="foot-grid">
           <div>
             <div className="mark">MAISON</div>
-            <p style={{ maxWidth: "30ch", marginTop: 16, color: "var(--ink-2)", fontSize: 13 }}>
-              A private concierge for considered pieces. By appointment from our Taipei atelier; we ship worldwide
-              with insured delivery and lifetime authentication.
+            <p
+              style={{
+                maxWidth: "30ch",
+                marginTop: 16,
+                color: "var(--ink-2)",
+                fontSize: 13,
+              }}
+            >
+              A private concierge for considered pieces. By appointment from our
+              Taipei atelier; we ship worldwide with insured delivery and
+              lifetime authentication.
             </p>
             <div
               className="rule"
-              style={{ marginTop: 22, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.14em" }}
+              style={{
+                marginTop: 22,
+                fontFamily: "var(--mono)",
+                fontSize: 10,
+                letterSpacing: "0.14em",
+              }}
             >
               <span>SOURCED · AUTHENTICATED · DELIVERED</span>
             </div>
