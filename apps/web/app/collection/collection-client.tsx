@@ -1,6 +1,6 @@
 "use client";
 
-import { PRODUCTS, type Product } from "@repo/data";
+import { PRODUCTS, type Product } from "@maison/data";
 import Link from "next/link";
 import { useState } from "react";
 import { CCY } from "../../lib/currency";

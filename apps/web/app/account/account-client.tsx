@@ -1,6 +1,6 @@
 "use client";
 
-import { MEMBER, ORDERS, TIERS, type Tier } from "@repo/data";
+import { MEMBER, ORDERS, TIERS, type Tier } from "@maison/data";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { TierChip } from "../_components/tier-chip";

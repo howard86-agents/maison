@@ -1,6 +1,6 @@
 "use client";
 
-import { ORDER_STAGES } from "@repo/data";
+import { ORDER_STAGES } from "@maison/data";
 import { formatCcy } from "../../lib/currency";
 import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";

@@ -1,6 +1,6 @@
 "use client";
 
-import { AI_MATCHES } from "@repo/data";
+import { AI_MATCHES } from "@maison/data";
 import { useRouter } from "next/navigation";
 import { type ChangeEvent, useRef, useState } from "react";
 import { CCY, formatCcy } from "../../lib/currency";

@@ -1,6 +1,6 @@
 "use client";
 
-import { PAYMENT_METHODS } from "@repo/data";
+import { PAYMENT_METHODS } from "@maison/data";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatCcy } from "../../lib/currency";

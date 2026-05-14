@@ -1,6 +1,6 @@
 "use client";
 
-import type { Product } from "@repo/data";
+import type { Product } from "@maison/data";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

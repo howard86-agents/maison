@@ -20,14 +20,14 @@
       },
     },
     "apps/cli": {
-      "name": "@repo/cli",
+      "name": "@maison/cli",
       "version": "1.0.0",
       "dependencies": {
-        "@repo/data": "*",
+        "@maison/data": "*",
         "sharp": "^0.34.1",
       },
       "devDependencies": {
-        "@repo/typescript-config": "*",
+        "@maison/typescript-config": "*",
         "@types/bun": "latest",
         "typescript": "5.5.4",
       },
@@ -36,15 +36,15 @@
       "name": "web",
       "version": "1.0.0",
       "dependencies": {
-        "@repo/data": "*",
+        "@maison/data": "*",
         "next": "16.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
       },
       "devDependencies": {
+        "@maison/eslint-config": "*",
+        "@maison/typescript-config": "*",
         "@next/eslint-plugin-next": "^16.2.0",
-        "@repo/eslint-config": "*",
-        "@repo/typescript-config": "*",
         "@tailwindcss/postcss": "^4",
         "@types/node": "^20.11.24",
         "@types/react": "^18.2.61",
@@ -55,7 +55,7 @@
       },
     },
     "packages/config-eslint": {
-      "name": "@repo/eslint-config",
+      "name": "@maison/eslint-config",
       "version": "0.0.0",
       "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^7.1.0",
@@ -68,19 +68,19 @@
       },
     },
     "packages/config-typescript": {
-      "name": "@repo/typescript-config",
+      "name": "@maison/typescript-config",
       "version": "0.0.0",
     },
     "packages/data": {
-      "name": "@repo/data",
+      "name": "@maison/data",
       "version": "1.0.0",
       "devDependencies": {
-        "@repo/typescript-config": "*",
+        "@maison/typescript-config": "*",
         "typescript": "5.5.4",
       },
     },
     "packages/database": {
-      "name": "@repo/database",
+      "name": "@maison/database",
       "version": "1.0.0",
       "dependencies": {
         "@prisma/client": "latest",
@@ -89,8 +89,8 @@
         "pg": "^8.16.3",
       },
       "devDependencies": {
-        "@repo/eslint-config": "*",
-        "@repo/typescript-config": "*",
+        "@maison/eslint-config": "*",
+        "@maison/typescript-config": "*",
         "@types/pg": "^8.16.0",
         "eslint": "^8.57.0",
         "prisma": "latest",
@@ -304,6 +304,16 @@
 
     "@kurkle/color": ["@kurkle/color@0.3.4", "", {}, "sha512-M5UknZPHRu3DEDWoipU6sE8PdkZ6Z/S+v4dD+Ke8IaNlpdSQah50lz1KtcFBa2vsdOnwbbnxJwVM4wty6udA5w=="],
 
+    "@maison/cli": ["@maison/cli@workspace:apps/cli"],
+
+    "@maison/data": ["@maison/data@workspace:packages/data"],
+
+    "@maison/database": ["@maison/database@workspace:packages/database"],
+
+    "@maison/eslint-config": ["@maison/eslint-config@workspace:packages/config-eslint"],
+
+    "@maison/typescript-config": ["@maison/typescript-config@workspace:packages/config-typescript"],
+
     "@microsoft/tsdoc": ["@microsoft/tsdoc@0.14.2", "", {}, "sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug=="],
 
     "@microsoft/tsdoc-config": ["@microsoft/tsdoc-config@0.16.2", "", { "dependencies": { "@microsoft/tsdoc": "0.14.2", "ajv": "~6.12.6", "jju": "~1.4.0", "resolve": "~1.19.0" } }, "sha512-OGiIzzoBLgWWR0UdRJX98oYO+XKGf7tiK4Zk6tQ/E4IJqGCe7dvkTvgDZV5cFJUzLGDOjeAXrnZoA6QkVySuxw=="],
@@ -385,16 +395,6 @@
     "@radix-ui/react-use-effect-event": ["@radix-ui/react-use-effect-event@0.0.2", "", { "dependencies": { "@radix-ui/react-use-layout-effect": "1.1.1" }, "peerDependencies": { "@types/react": "*", "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc" }, "optionalPeers": ["@types/react"] }, "sha512-Qp8WbZOBe+blgpuUT+lw2xheLP8q0oatc9UpmiemEICxGvFLYmHm9QowVZGHtJlGbS6A6yJ3iViad/2cVjnOiA=="],
 
     "@radix-ui/react-use-layout-effect": ["@radix-ui/react-use-layout-effect@1.1.1", "", { "peerDependencies": { "@types/react": "*", "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc" }, "optionalPeers": ["@types/react"] }, "sha512-RbJRS4UWQFkzHTTwVymMTUv8EqYhOp8dOOviLj2ugtTiXRaRQS7GLGxZTLL1jWhMeoSCf5zmcZkqTl9IiYfXcQ=="],
-
-    "@repo/cli": ["@repo/cli@workspace:apps/cli"],
-
-    "@repo/data": ["@repo/data@workspace:packages/data"],
-
-    "@repo/database": ["@repo/database@workspace:packages/database"],
-
-    "@repo/eslint-config": ["@repo/eslint-config@workspace:packages/config-eslint"],
-
-    "@repo/typescript-config": ["@repo/typescript-config@workspace:packages/config-typescript"],
 
     "@rollup/rollup-android-arm-eabi": ["@rollup/rollup-android-arm-eabi@4.60.3", "", { "os": "android", "cpu": "arm" }, "sha512-x35CNW/ANXG3hE/EZpRU8MXX1JDN86hBb2wMGAtltkz7pc6cxgjpy1OMMfDosOQ+2hWqIkag/fGok1Yady9nGw=="],
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { HOUSES, PRODUCTS } from "@repo/data";
+import { HOUSES, PRODUCTS } from "@maison/data";
 import Link from "next/link";
 import { TRANSLATIONS } from "../lib/translations";
 import { ProductCard } from "./_components/product-card";

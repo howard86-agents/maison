@@ -1,5 +1,5 @@
 {
-  "name": "@repo/data",
+  "name": "@maison/data",
   "version": "1.0.0",
   "private": true,
   "exports": {
@@ -9,7 +9,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
+    "@maison/typescript-config": "*",
     "typescript": "5.5.4"
   }
 }

@@ -2,7 +2,7 @@
 import { existsSync } from "node:fs";
 import { copyFile, mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-import { AI_MATCHES, PRODUCTS, REFERENCE_IMAGE } from "@repo/data";
+import { AI_MATCHES, PRODUCTS, REFERENCE_IMAGE } from "@maison/data";
 import sharp from "sharp";
 
 const STYLE_SUFFIX =

@@ -1,6 +1,6 @@
 "use client";
 
-import { QUOTE_CANDIDATES, type QuoteCandidate } from "@repo/data";
+import { QUOTE_CANDIDATES, type QuoteCandidate } from "@maison/data";
 import { useRouter } from "next/navigation";
 import { formatCcy } from "../../lib/currency";
 import { ImageOrPlaceholder } from "../_components/product-image";

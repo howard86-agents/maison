@@ -1,4 +1,4 @@
-import type { Tier } from "@repo/data";
+import type { Tier } from "@maison/data";
 
 export function TierChip({ tier }: { tier: Tier }) {
   return (

@@ -1,5 +1,5 @@
 {
-  "name": "@repo/cli",
+  "name": "@maison/cli",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,11 +8,11 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@repo/data": "*",
+    "@maison/data": "*",
     "sharp": "^0.34.1"
   },
   "devDependencies": {
-    "@repo/typescript-config": "*",
+    "@maison/typescript-config": "*",
     "@types/bun": "latest",
     "typescript": "5.5.4"
   }

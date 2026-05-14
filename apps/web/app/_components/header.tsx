@@ -1,6 +1,6 @@
 "use client";
 
-import type { Tier } from "@repo/data";
+import type { Tier } from "@maison/data";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";

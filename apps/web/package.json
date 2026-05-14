@@ -9,15 +9,15 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@repo/data": "*",
+    "@maison/data": "*",
     "next": "16.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^16.2.0",
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@maison/eslint-config": "*",
+    "@maison/typescript-config": "*",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",

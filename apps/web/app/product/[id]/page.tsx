@@ -1,4 +1,4 @@
-import { PRODUCTS } from "@repo/data";
+import { PRODUCTS } from "@maison/data";
 import { notFound } from "next/navigation";
 import { ProductClient } from "./product-client";
 
