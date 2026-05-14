@@ -34,3 +34,6 @@ apps/web/.env
 
 # turbo
 .turbo
+
+# codex review pipeline staging area (regenerable images, archive backups, verdict cache)
+apps/cli/staging/

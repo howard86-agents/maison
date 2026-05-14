@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "gen:images": "bun run src/gen-images.ts",
+    "review:images": "bun run src/review-images.ts",
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
