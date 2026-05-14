@@ -15,102 +15,51 @@ export function OrderClient() {
   const { ccy } = useLocale();
   return (
     <div className="fade-in shell">
-      <div style={{ padding: "48px 0 0" }}>
+      <div className="pt-12">
         <div className="eyebrow">File MSN — 04823 · in motion</div>
-        <h1
-          className="display"
-          style={{
-            fontSize: 56,
-            marginTop: 16,
-            fontWeight: 400,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Your{" "}
-          <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
-            Saddle 25
-          </em>{" "}
-          is travelling.
+        <h1 className="display mt-4 font-normal text-[56px] tracking-[-0.02em]">
+          Your <em className="text-accent italic">Saddle 25</em> is travelling.
         </h1>
       </div>
 
       <div className="order-shell">
         <div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.2fr 1fr",
-              gap: 32,
-              paddingBottom: 28,
-              borderBottom: "0.5px solid var(--line)",
-            }}
-          >
-            <div className="row" style={{ gap: 18 }}>
+          <div className="grid grid-cols-[1.2fr_1fr] gap-8 border-line border-b-[0.5px] pb-7">
+            <div className="row gap-[18px]">
               <Placeholder
                 aspect="square"
                 caption="piece"
                 style={{ width: 120, height: 120 }}
               />
               <div>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 10,
-                    letterSpacing: "0.14em",
-                    color: "var(--accent)",
-                  }}
-                >
+                <div className="mono text-[10px] text-accent tracking-[0.14em]">
                   BIRKETT · 2023
                 </div>
-                <div
-                  className="display"
-                  style={{
-                    fontSize: 26,
-                    marginTop: 6,
-                    letterSpacing: "-0.015em",
-                  }}
-                >
+                <div className="display mt-[6px] text-[26px] tracking-[-0.015em]">
                   Saddle 25 · Étoupe
                 </div>
-                <div className="muted" style={{ fontSize: 13, marginTop: 8 }}>
+                <div className="muted mt-2 text-[13px]">
                   Candidate A · Paris 8e · approved 14 May
                 </div>
-                <div className="row" style={{ gap: 8, marginTop: 14 }}>
-                  <span
-                    className="tag"
-                    style={{
-                      color: "var(--accent)",
-                      borderColor: "var(--accent)",
-                    }}
-                  >
-                    <span
-                      className="dot"
-                      style={{ background: "var(--accent)" }}
-                    />{" "}
-                    Stage 3 of 5
+                <div className="row mt-[14px] gap-2">
+                  <span className="tag border-accent text-accent">
+                    <span className="dot bg-accent" /> Stage 3 of 5
                   </span>
                   <span className="tag">ETA · 21 May</span>
                 </div>
               </div>
             </div>
             <div>
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10.5,
-                  color: "var(--ink-3)",
-                  letterSpacing: "0.14em",
-                }}
-              >
+              <div className="mono text-[10.5px] text-ink-3 tracking-[0.14em]">
                 PAID · ESCROWED
               </div>
-              <div className="display" style={{ fontSize: 30, marginTop: 6 }}>
+              <div className="display mt-[6px] text-[30px]">
                 {formatCcy(12_455, ccy)}
               </div>
-              <div className="muted" style={{ fontSize: 12, marginTop: 4 }}>
+              <div className="muted mt-1 text-[12px]">
                 Released to maison on second-inspection clear.
               </div>
-              <div className="process" style={{ marginTop: 20 }}>
+              <div className="process mt-5">
                 <div className="seg on" />
                 <div className="seg on" />
                 <div className="seg cur" />
@@ -132,7 +81,7 @@ export function OrderClient() {
                   <h5>{st.t}</h5>
                   <p>{st.d}</p>
                   {st.s === "cur" && (
-                    <div className="line-preview" style={{ marginTop: 14 }}>
+                    <div className="line-preview mt-[14px]">
                       <strong>Hsiao-Yu</strong> · MAISON CONCIERGE
                       <br />
                       Saddle is on AF197, due Taoyuan 06:40 tomorrow. I will
@@ -148,113 +97,48 @@ export function OrderClient() {
         </div>
 
         <aside>
-          <div
-            style={{
-              background: "var(--paper)",
-              border: "0.5px solid var(--line)",
-              padding: 22,
-            }}
-          >
-            <div className="row" style={{ gap: 14 }}>
-              <div
-                style={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: 999,
-                  background: "var(--ink)",
-                  color: "var(--bg)",
-                  display: "grid",
-                  placeItems: "center",
-                  fontFamily: "var(--display)",
-                  fontSize: 18,
-                }}
-              >
+          <div className="border-[0.5px] border-line bg-paper p-[22px]">
+            <div className="row gap-[14px]">
+              <div className="grid size-[42px] place-items-center rounded-full bg-ink font-display text-[18px] text-bg">
                 HY
               </div>
               <div>
-                <div className="display" style={{ fontSize: 16 }}>
-                  Hsiao-Yu Chen
-                </div>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 10,
-                    color: "var(--ink-3)",
-                    letterSpacing: "0.14em",
-                  }}
-                >
+                <div className="display text-[16px]">Hsiao-Yu Chen</div>
+                <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
                   YOUR CONCIERGE
                 </div>
               </div>
             </div>
-            <div className="hairline" style={{ margin: "16px 0" }} />
-            <div className="fine" style={{ lineHeight: 1.7 }}>
+            <div className="hairline my-4" />
+            <div className="fine leading-[1.7]">
               Reachable 09:00 — 19:00 GMT+8.
               <br />
               Replies in 32 mins (median).
             </div>
             <button
-              className="btn btn-ghost"
-              style={{ marginTop: 16, width: "100%", justifyContent: "center" }}
+              className="btn btn-ghost mt-4 w-full justify-center"
               type="button"
             >
               Open LINE channel
             </button>
-            <button
-              className="btn btn-link"
-              style={{ marginTop: 12 }}
-              type="button"
-            >
+            <button className="btn btn-link mt-3" type="button">
               Request photographs of the piece
             </button>
           </div>
 
-          <div
-            style={{
-              background: "var(--bg-card)",
-              border: "0.5px solid var(--line)",
-              padding: 22,
-              marginTop: 18,
-            }}
-          >
-            <div
-              className="mono"
-              style={{
-                fontSize: 10.5,
-                color: "var(--ink-3)",
-                letterSpacing: "0.14em",
-              }}
-            >
+          <div className="mt-[18px] border-[0.5px] border-line bg-bg-card p-[22px]">
+            <div className="mono text-[10.5px] text-ink-3 tracking-[0.14em]">
               YOUR NOTIFICATIONS
             </div>
-            <div
-              style={{
-                marginTop: 14,
-                display: "flex",
-                flexDirection: "column",
-                gap: 10,
-                fontSize: 12.5,
-              }}
-            >
+            <div className="mt-[14px] flex flex-col gap-[10px] text-[12.5px]">
               {NOTIFICATIONS.map(([k, on]) => (
                 <div className="row-between" key={k}>
                   <span>{k}</span>
                   <span
-                    className="tag"
-                    style={
-                      on
-                        ? {
-                            color: "var(--positive)",
-                            borderColor: "var(--positive)",
-                          }
-                        : { color: "var(--ink-3)" }
-                    }
+                    className={`tag ${on ? "border-positive text-positive" : "text-ink-3"}`}
                   >
                     <span
-                      className="dot"
-                      style={{
-                        background: on ? "var(--positive)" : "var(--ink-3)",
-                      }}
+                      className={`dot ${on ? "bg-positive" : "bg-ink-3"}`}
                     />
                     {on ? "on" : "off"}
                   </span>
@@ -263,27 +147,9 @@ export function OrderClient() {
             </div>
           </div>
 
-          <div
-            style={{
-              background: "var(--bg-card)",
-              border: "0.5px solid var(--line)",
-              padding: 22,
-              marginTop: 18,
-            }}
-          >
+          <div className="mt-[18px] border-[0.5px] border-line bg-bg-card p-[22px]">
             <div className="eyebrow">After arrival</div>
-            <ul
-              style={{
-                margin: "12px 0 0",
-                padding: 0,
-                listStyle: "none",
-                fontSize: 13,
-                color: "var(--ink-2)",
-                display: "flex",
-                flexDirection: "column",
-                gap: 9,
-              }}
-            >
+            <ul className="mx-0 mt-3 mb-0 flex list-none flex-col gap-[9px] p-0 text-[13px] text-ink-2">
               <li>— 14-day no-questions return</li>
               <li>— Resale offer · 70% within 12 months</li>
               <li>— Lifetime authentication card</li>

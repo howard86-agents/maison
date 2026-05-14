@@ -61,46 +61,22 @@ function UploadStep({
 
   return (
     <div className="stack-lg">
-      <div className="field" style={{ gap: 10 }}>
+      <div className="field gap-[10px]">
         <label htmlFor="req-piece-upload">01 · The piece</label>
         <div className="upload-zone" data-has={hasUpload ? "1" : "0"}>
           <div className="drop-target">
             {hasUpload ? (
               <div
-                className="ph ph-square brackets"
+                className="ph ph-square brackets size-full bg-center bg-cover"
                 data-ph="reference · uploaded"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: `url(${uploadPreview})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
+                style={{ backgroundImage: `url(${uploadPreview})` }}
               />
             ) : (
-              <div
-                className="muted"
-                style={{ fontSize: 12, textAlign: "center" }}
-              >
-                <div
-                  className="display"
-                  style={{
-                    fontSize: 56,
-                    fontStyle: "italic",
-                    color: "var(--ink-3)",
-                    lineHeight: 1,
-                  }}
-                >
+              <div className="muted text-center text-[12px]">
+                <div className="display text-[56px] text-ink-3 italic leading-none">
                   +
                 </div>
-                <div
-                  className="mono"
-                  style={{
-                    marginTop: 8,
-                    fontSize: 10,
-                    letterSpacing: "0.16em",
-                  }}
-                >
+                <div className="mono mt-2 text-[10px] tracking-[0.16em]">
                   DRAG · OR · BROWSE
                 </div>
               </div>
@@ -223,7 +199,7 @@ function DetailsStep({
   const upd = (k: keyof FormState, v: string) => setForm({ ...form, [k]: v });
   return (
     <div className="stack-lg">
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+      <div className="grid grid-cols-2 gap-8">
         <div className="field">
           <label htmlFor="req-brand">02 · Maison or house</label>
           <input
@@ -244,7 +220,7 @@ function DetailsStep({
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+      <div className="grid grid-cols-2 gap-8">
         <div className="field">
           <label htmlFor="req-budget-low">03 · Budget — comfortable</label>
           <input
@@ -286,7 +262,7 @@ function DetailsStep({
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+      <div className="grid grid-cols-2 gap-8">
         <div className="field">
           <label htmlFor="req-cond">05 · Acceptable condition</label>
           <select
@@ -316,29 +292,19 @@ function DetailsStep({
 function ReviewStep({ form }: { form: FormState }) {
   return (
     <div className="stack-lg">
-      <div className="card-paper" style={{ padding: 32 }}>
-        <div className="row-between" style={{ alignItems: "flex-start" }}>
+      <div className="card-paper p-8">
+        <div className="row-between items-start">
           <div>
             <div className="eyebrow">File · ready to dispatch</div>
-            <h2
-              className="display"
-              style={{
-                fontSize: 40,
-                fontWeight: 400,
-                margin: "12px 0 4px",
-                letterSpacing: "-0.015em",
-              }}
-            >
-              <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
-                {form.brand || "Birkett"}
-              </em>{" "}
+            <h2 className="display mx-0 mt-3 mb-1 font-normal text-[40px] tracking-[-0.015em]">
+              <em className="text-accent italic">{form.brand || "Birkett"}</em>{" "}
               {form.model || "Saddle 25 · Étoupe"}
             </h2>
             <div className="muted">
               {form.budgetLow || "USD 10,000"}
-              <span style={{ margin: "0 8px", color: "var(--ink-3)" }}>—</span>
+              <span className="mx-2 text-ink-3">—</span>
               {form.budgetHi || "USD 14,500"}
-              <span style={{ margin: "0 12px" }}>·</span>
+              <span className="mx-3">·</span>
               {form.cond}
             </div>
           </div>
@@ -348,81 +314,37 @@ function ReviewStep({ form }: { form: FormState }) {
             style={{ width: 96, height: 96 }}
           />
         </div>
-        <div className="hairline" style={{ margin: "24px 0" }} />
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "120px 1fr",
-            gap: 14,
-            fontSize: 13,
-          }}
-        >
-          <div
-            className="mono"
-            style={{
-              color: "var(--ink-3)",
-              fontSize: 10,
-              letterSpacing: "0.14em",
-            }}
-          >
+        <div className="hairline my-6" />
+        <div className="grid grid-cols-[120px_1fr] gap-[14px] text-[13px]">
+          <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
             NOTES
           </div>
           <div>
             {form.notes ||
               "Pre-loved is welcome, nothing visibly worn at corners. Warmer reading than the reference photograph — closer to milky coffee."}
           </div>
-          <div
-            className="mono"
-            style={{
-              color: "var(--ink-3)",
-              fontSize: 10,
-              letterSpacing: "0.14em",
-            }}
-          >
+          <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
             BY
           </div>
           <div>{form.deadline || "No fixed date"}</div>
-          <div
-            className="mono"
-            style={{
-              color: "var(--ink-3)",
-              fontSize: 10,
-              letterSpacing: "0.14em",
-            }}
-          >
+          <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
             CHANNEL
           </div>
-          <div className="row" style={{ gap: 14, flexWrap: "wrap" }}>
+          <div className="row flex-wrap gap-[14px]">
             <span>
               Concierge channel · LINE
-              <span
-                className="muted"
-                style={{ marginLeft: 6, fontFamily: "var(--mono)" }}
-              >
+              <span className="muted ml-[6px] font-mono">
                 @maison_concierge
               </span>
             </span>
-            <span
-              className="tag"
-              style={{
-                color: "var(--positive)",
-                borderColor: "var(--positive)",
-              }}
-            >
-              <span className="dot" style={{ background: "var(--positive)" }} />{" "}
-              connected
+            <span className="tag border-positive text-positive">
+              <span className="dot bg-positive" /> connected
             </span>
           </div>
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: 16,
-        }}
-      >
+      <div className="grid grid-cols-3 gap-4">
         {(
           [
             ["T+0", "You submit the file", "Now"],
@@ -430,32 +352,12 @@ function ReviewStep({ form }: { form: FormState }) {
             ["T+3–6w", "Piece in the vault, ready to ship", "mid · June"],
           ] as const
         ).map(([tlabel, w, when]) => (
-          <div className="card-paper" key={tlabel} style={{ padding: 18 }}>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                color: "var(--accent)",
-                letterSpacing: "0.14em",
-              }}
-            >
+          <div className="card-paper p-[18px]" key={tlabel}>
+            <div className="mono text-[10px] text-accent tracking-[0.14em]">
               {tlabel}
             </div>
-            <div
-              className="display"
-              style={{ fontSize: 17, marginTop: 8, lineHeight: 1.2 }}
-            >
-              {w}
-            </div>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                color: "var(--ink-3)",
-                marginTop: 6,
-                letterSpacing: "0.1em",
-              }}
-            >
+            <div className="display mt-2 text-[17px] leading-[1.2]">{w}</div>
+            <div className="mono mt-[6px] text-[10px] text-ink-3 tracking-[0.1em]">
               {when}
             </div>
           </div>
@@ -496,7 +398,7 @@ export function RequestClient() {
 
   return (
     <div className="fade-in shell">
-      <div className="req-header" style={{ paddingTop: 48 }}>
+      <div className="req-header pt-12">
         <div>
           <div className="eyebrow">Concierge file · new</div>
           <h1>
@@ -507,11 +409,11 @@ export function RequestClient() {
           <span className="step" data-on={step === 1 ? "1" : "0"}>
             01 The piece
           </span>
-          <span style={{ color: "var(--line-2)" }}>—</span>
+          <span className="text-line-2">—</span>
           <span className="step" data-on={step === 2 ? "1" : "0"}>
             02 Details
           </span>
-          <span style={{ color: "var(--line-2)" }}>—</span>
+          <span className="text-line-2">—</span>
           <span className="step" data-on={step === 3 ? "1" : "0"}>
             03 Review
           </span>
@@ -542,27 +444,11 @@ export function RequestClient() {
         <aside className="req-aside">
           <h4>File preview</h4>
           <div className="price-block">
-            <span
-              style={{
-                fontFamily: "var(--mono)",
-                fontSize: 10,
-                letterSpacing: "0.14em",
-                color: "var(--ink-3)",
-                display: "block",
-                marginBottom: 4,
-              }}
-            >
+            <span className="mb-1 block font-mono text-[10px] text-ink-3 tracking-[0.14em]">
               EST. ALL-IN
             </span>
             {formatCcy(13_150, ccy)}
-            <div
-              style={{
-                fontSize: 12,
-                color: "var(--ink-3)",
-                marginTop: 6,
-                fontFamily: "var(--sans)",
-              }}
-            >
+            <div className="mt-[6px] font-sans text-[12px] text-ink-3">
               Indicative — final quote arrives within 24 hours.
             </div>
           </div>
@@ -571,20 +457,11 @@ export function RequestClient() {
               <div className="row" key={k}>
                 <div className="k">
                   {k}
-                  <div
-                    style={{
-                      fontSize: 10.5,
-                      color: "var(--ink-3)",
-                      marginTop: 2,
-                      fontStyle: "italic",
-                    }}
-                  >
+                  <div className="mt-[2px] text-[10.5px] text-ink-3 italic">
                     {s}
                   </div>
                 </div>
-                <div className="v" style={{ marginLeft: "auto" }}>
-                  {v}
-                </div>
+                <div className="v ml-auto">{v}</div>
               </div>
             ))}
           </div>
@@ -592,14 +469,13 @@ export function RequestClient() {
             <div className="k">Hold deposit · refundable</div>
             <div className="v">{formatCcy(200, ccy)}</div>
           </div>
-          <div style={{ marginTop: 22, display: "flex", gap: 10 }}>
+          <div className="mt-[22px] flex gap-[10px]">
             {step > 1 && (
               <button
-                className="btn btn-ghost"
+                className="btn btn-ghost flex-none"
                 onClick={() =>
                   setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3) : s))
                 }
-                style={{ flex: "0 0 auto" }}
                 type="button"
               >
                 ← back
@@ -607,12 +483,11 @@ export function RequestClient() {
             )}
             {step < 3 ? (
               <button
-                className="btn btn-primary"
+                className="btn btn-primary flex-1"
                 disabled={step === 1 && uploadPreview === null}
                 onClick={() =>
                   setStep((s) => (s < 3 ? ((s + 1) as 1 | 2 | 3) : s))
                 }
-                style={{ flex: 1 }}
                 type="button"
               >
                 {step === 1 ? "Continue to details" : "Continue to review"}{" "}
@@ -620,16 +495,15 @@ export function RequestClient() {
               </button>
             ) : (
               <button
-                className="btn btn-primary"
+                className="btn btn-primary flex-1"
                 onClick={() => router.push("/quote")}
-                style={{ flex: 1 }}
                 type="button"
               >
                 Dispatch file · {formatCcy(200, ccy)} hold
               </button>
             )}
           </div>
-          <div className="fine" style={{ marginTop: 18, lineHeight: 1.6 }}>
+          <div className="fine mt-[18px] leading-[1.6]">
             Hold deposit is refunded in full if the quote is declined. We never
             charge it until a dossier is delivered.
           </div>

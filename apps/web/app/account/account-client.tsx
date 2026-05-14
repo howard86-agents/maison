@@ -35,23 +35,11 @@ export function AccountClient() {
 
   return (
     <div className="fade-in shell">
-      <div style={{ padding: "48px 0 0" }}>
+      <div className="pt-12">
         <div className="eyebrow">Member · since {MEMBER.joined}</div>
-        <h1
-          className="display"
-          style={{
-            fontSize: 56,
-            marginTop: 14,
-            fontWeight: 400,
-            letterSpacing: "-0.02em",
-            lineHeight: 1,
-          }}
-        >
+        <h1 className="display mt-[14px] font-normal text-[56px] leading-none tracking-[-0.02em]">
           Welcome back,{" "}
-          <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
-            {MEMBER.firstName}
-          </em>
-          .
+          <em className="text-accent italic">{MEMBER.firstName}</em>.
         </h1>
       </div>
 
@@ -60,87 +48,45 @@ export function AccountClient() {
           <div className="me">
             <div className="av">ML</div>
             <div>
-              <div className="display" style={{ fontSize: 17 }}>
-                {MEMBER.fullName}
-              </div>
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  color: "var(--ink-3)",
-                  letterSpacing: "0.14em",
-                }}
-              >
+              <div className="display text-[17px]">{MEMBER.fullName}</div>
+              <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
                 {MEMBER.kanji} · {MEMBER.city}
               </div>
             </div>
           </div>
 
-          <div
-            style={{
-              marginTop: 22,
-              padding: 14,
-              background: "var(--paper)",
-              border: "0.5px solid var(--line)",
-            }}
-          >
+          <div className="mt-[22px] border-[0.5px] border-line bg-paper p-[14px]">
             <div className="row-between">
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  color: "var(--ink-3)",
-                  letterSpacing: "0.14em",
-                }}
-              >
+              <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
                 CURRENT TIER
               </div>
               <TierChip tier={tier} />
             </div>
             <div
-              className="display"
-              style={{
-                fontSize: 24,
-                marginTop: 12,
-                lineHeight: 1,
-                fontStyle: tier === "Diamond" ? "normal" : "italic",
-              }}
+              className={`display mt-3 text-[24px] leading-none ${tier === "Diamond" ? "not-italic" : "italic"}`}
             >
               {TIER_HEADLINES[tier]}
             </div>
-            <div className="fine" style={{ marginTop: 8, lineHeight: 1.6 }}>
+            <div className="fine mt-2 leading-[1.6]">
               Lifetime · {MEMBER.ledgerYtd} across {MEMBER.filesCompleted}{" "}
               files. Next review: Aug 2026.
             </div>
-            <div style={{ marginTop: 12, display: "flex", gap: 6 }}>
-              {TIERS.map((tl) => (
-                <button
-                  key={tl}
-                  onClick={() => setTier(tl)}
-                  style={{
-                    flex: 1,
-                    cursor: "pointer",
-                    appearance: "none",
-                    padding: "6px 4px",
-                    fontSize: 10.5,
-                    fontFamily: "var(--mono)",
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    background: tier === tl ? "var(--ink)" : "transparent",
-                    color: tier === tl ? "var(--bg)" : "var(--ink-3)",
-                    border:
-                      "0.5px solid " +
-                      (tier === tl ? "var(--ink)" : "var(--line)"),
-                  }}
-                  type="button"
-                >
-                  {tl[0]}
-                </button>
-              ))}
+            <div className="mt-3 flex gap-[6px]">
+              {TIERS.map((tl) => {
+                const active = tier === tl;
+                return (
+                  <button
+                    className={`flex-1 cursor-pointer appearance-none border-[0.5px] px-1 py-[6px] font-mono text-[10.5px] uppercase tracking-[0.1em] ${active ? "border-ink bg-ink text-bg" : "border-line bg-transparent text-ink-3"}`}
+                    key={tl}
+                    onClick={() => setTier(tl)}
+                    type="button"
+                  >
+                    {tl[0]}
+                  </button>
+                );
+              })}
             </div>
-            <div className="fine" style={{ marginTop: 6, fontStyle: "italic" }}>
-              preview a tier
-            </div>
+            <div className="fine mt-[6px] italic">preview a tier</div>
           </div>
 
           <nav>
@@ -163,20 +109,8 @@ export function AccountClient() {
               <div className="row-between">
                 <div>
                   <div className="eyebrow">Files · live and historical</div>
-                  <div
-                    className="display"
-                    style={{
-                      fontSize: 32,
-                      fontWeight: 400,
-                      marginTop: 10,
-                      letterSpacing: "-0.015em",
-                    }}
-                  >
-                    Four files{" "}
-                    <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
-                      open
-                    </em>
-                    .
+                  <div className="display mt-[10px] font-normal text-[32px] tracking-[-0.015em]">
+                    Four files <em className="text-accent italic">open</em>.
                   </div>
                 </div>
                 <button
@@ -188,35 +122,23 @@ export function AccountClient() {
                 </button>
               </div>
 
-              <div className="orders-table" style={{ marginTop: 28 }}>
+              <div className="orders-table mt-7">
                 <div className="row head">
                   <span>File</span>
                   <span>Piece</span>
                   <span>State</span>
                   <span>Value</span>
-                  <span style={{ textAlign: "right" }}>—</span>
+                  <span className="text-right">—</span>
                 </div>
                 {ORDERS.map((o) => (
                   <div className="row" key={o.id}>
-                    <span
-                      className="mono"
-                      style={{ fontSize: 11, letterSpacing: "0.06em" }}
-                    >
+                    <span className="mono text-[11px] tracking-[0.06em]">
                       {o.id}
-                      <div
-                        style={{
-                          fontSize: 9.5,
-                          color: "var(--ink-3)",
-                          letterSpacing: "0.1em",
-                        }}
-                      >
+                      <div className="text-[9.5px] text-ink-3 tracking-[0.1em]">
                         {o.date}
                       </div>
                     </span>
-                    <span
-                      className="display"
-                      style={{ fontSize: 17, letterSpacing: "-0.01em" }}
-                    >
+                    <span className="display text-[17px] tracking-[-0.01em]">
                       {o.item}
                     </span>
                     <span>
@@ -224,10 +146,10 @@ export function AccountClient() {
                         {o.state}
                       </span>
                     </span>
-                    <span className="numeric mono" style={{ fontSize: 12.5 }}>
+                    <span className="numeric mono text-[12.5px]">
                       {o.value}
                     </span>
-                    <span style={{ textAlign: "right" }}>
+                    <span className="text-right">
                       <button
                         className="btn-link"
                         onClick={() => router.push("/order")}
@@ -240,40 +162,23 @@ export function AccountClient() {
                 ))}
               </div>
 
-              <div
-                style={{
-                  marginTop: 32,
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: 20,
-                }}
-              >
-                <div className="card-paper" style={{ padding: 22 }}>
+              <div className="mt-8 grid grid-cols-2 gap-5">
+                <div className="card-paper p-[22px]">
                   <div className="eyebrow">Concierge ledger · year to date</div>
-                  <div
-                    className="display"
-                    style={{
-                      fontSize: 32,
-                      marginTop: 10,
-                      letterSpacing: "-0.015em",
-                    }}
-                  >
+                  <div className="display mt-[10px] text-[32px] tracking-[-0.015em]">
                     {MEMBER.ledgerYtd}
                   </div>
-                  <div className="fine" style={{ marginTop: 4 }}>
+                  <div className="fine mt-1">
                     {MEMBER.filesCompleted} files completed · 0 rejected at
                     second inspection
                   </div>
                 </div>
-                <div className="card-paper" style={{ padding: 22 }}>
+                <div className="card-paper p-[22px]">
                   <div className="eyebrow">LINE concierge channel</div>
-                  <div
-                    className="display"
-                    style={{ fontSize: 19, marginTop: 10, lineHeight: 1.3 }}
-                  >
+                  <div className="display mt-[10px] text-[19px] leading-[1.3]">
                     {MEMBER.lineChannel} · {MEMBER.lineMedianReply} median reply
                   </div>
-                  <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+                  <div className="mt-[14px] flex gap-[10px]">
                     <button className="btn btn-ghost" type="button">
                       Open channel
                     </button>
@@ -285,29 +190,12 @@ export function AccountClient() {
               </div>
             </div>
           ) : (
-            <div className="card-paper" style={{ padding: 40, marginTop: 16 }}>
+            <div className="card-paper mt-4 p-10">
               <div className="eyebrow">Section preview</div>
-              <h2
-                className="display"
-                style={{
-                  fontSize: 36,
-                  fontWeight: 400,
-                  letterSpacing: "-0.015em",
-                  marginTop: 12,
-                }}
-              >
-                <em style={{ fontStyle: "italic", color: "var(--accent)" }}>
-                  {SECTION_TITLES[page]}
-                </em>
+              <h2 className="display mt-3 font-normal text-[36px] tracking-[-0.015em]">
+                <em className="text-accent italic">{SECTION_TITLES[page]}</em>
               </h2>
-              <p
-                style={{
-                  marginTop: 14,
-                  maxWidth: "60ch",
-                  color: "var(--ink-2)",
-                  fontSize: 14,
-                }}
-              >
+              <p className="mt-[14px] max-w-[60ch] text-[14px] text-ink-2">
                 Sketched here for the prototype. The shape of this surface
                 follows the same restraint — a single column, generous airline
                 above the fold, no calls-to-action competing for the eye.

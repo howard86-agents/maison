@@ -15,7 +15,7 @@ function HeroA() {
     <section className="hero">
       <div>
         <div className="eyebrow">{t.hero.eyebrow}</div>
-        <h1 className="hero-headline" style={{ marginTop: 22 }}>
+        <h1 className="hero-headline mt-[22px]">
           {h.line1}
           <br />
           {h.line2}
@@ -47,22 +47,14 @@ function HeroA() {
           <div className="hero-meta-cell">
             <div className="num display">
               36
-              <span
-                style={{ fontSize: 14, marginLeft: 4, color: "var(--ink-3)" }}
-              >
-                hr
-              </span>
+              <span className="ml-1 text-[14px] text-ink-3">hr</span>
             </div>
             <div className="lbl">median time to first dossier</div>
           </div>
           <div className="hero-meta-cell">
             <div className="num display">
               98.4
-              <span
-                style={{ fontSize: 14, marginLeft: 4, color: "var(--ink-3)" }}
-              >
-                %
-              </span>
+              <span className="ml-1 text-[14px] text-ink-3">%</span>
             </div>
             <div className="lbl">authenticated on first inspection</div>
           </div>
@@ -80,7 +72,7 @@ function HeroA() {
 
 function Maisons() {
   return (
-    <section className="section" style={{ paddingTop: 32, paddingBottom: 32 }}>
+    <section className="section py-8">
       <div className="shell">
         <div className="maisons">
           {HOUSES.map((h) => (
@@ -103,7 +95,7 @@ function Process() {
         <div className="section-head">
           <div>
             <div className="eyebrow">{t.kicker}</div>
-            <h2 style={{ marginTop: 14 }}>
+            <h2 className="mt-[14px]">
               <em>{t.title}</em>
             </h2>
           </div>
@@ -133,20 +125,15 @@ function Collection() {
         <div className="section-head">
           <div>
             <div className="eyebrow">In rotation · May</div>
-            <h2 style={{ marginTop: 14 }}>
+            <h2 className="mt-[14px]">
               Eight quiet <em>arrivals</em>.
             </h2>
           </div>
           <div className="meta">
             Updated as files close. Marked{" "}
-            <span className="mono" style={{ color: "var(--ink-2)" }}>
-              IN VAULT
-            </span>{" "}
-            if confirmed in Taipei;{" "}
-            <span className="mono" style={{ color: "var(--accent)" }}>
-              ESTIMATED
-            </span>{" "}
-            if sourcing on quote.
+            <span className="mono text-ink-2">IN VAULT</span> if confirmed in
+            Taipei; <span className="mono text-accent">ESTIMATED</span> if
+            sourcing on quote.
           </div>
         </div>
         <div className="grid-4">
@@ -166,13 +153,13 @@ function AtelierNote() {
         <div className="atelier-note">
           <div>
             <div className="eyebrow">A note from the atelier</div>
-            <h3 style={{ marginTop: 14 }}>
+            <h3 className="mt-[14px]">
               We work in <em>three languages</em>,<br />
               five currencies, and one voice.
             </h3>
           </div>
           <div>
-            <p style={{ marginBottom: 16 }}>
+            <p className="mb-4">
               Switch currency at any moment — every figure on the platform
               reflects the live mid-market rate, refreshed every fifteen minutes
               and marked with a timestamp. We hold orders in the currency we
@@ -233,7 +220,7 @@ function Tiers() {
         <div className="section-head">
           <div>
             <div className="eyebrow">Three memberships</div>
-            <h2 style={{ marginTop: 14 }}>
+            <h2 className="mt-[14px]">
               Choose the rhythm <em>of your file</em>.
             </h2>
           </div>

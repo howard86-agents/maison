@@ -5,27 +5,12 @@ export function Footer() {
         <div className="foot-grid">
           <div>
             <div className="mark">MAISON</div>
-            <p
-              style={{
-                maxWidth: "30ch",
-                marginTop: 16,
-                color: "var(--ink-2)",
-                fontSize: 13,
-              }}
-            >
+            <p className="mt-4 max-w-[30ch] text-[13px] text-ink-2">
               A private concierge for considered pieces. By appointment from our
               Taipei atelier; we ship worldwide with insured delivery and
               lifetime authentication.
             </p>
-            <div
-              className="rule"
-              style={{
-                marginTop: 22,
-                fontFamily: "var(--mono)",
-                fontSize: 10,
-                letterSpacing: "0.14em",
-              }}
-            >
+            <div className="rule mt-[22px] font-mono text-[10px] tracking-[0.14em]">
               <span>SOURCED · AUTHENTICATED · DELIVERED</span>
             </div>
           </div>

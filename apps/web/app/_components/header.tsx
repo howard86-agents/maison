@@ -60,11 +60,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
   return (
     <header className="hdr">
       <div className="shell hdr-top">
-        <Link
-          className="row"
-          href="/"
-          style={{ gap: 14, textDecoration: "none" }}
-        >
+        <Link className="row no-underline" href="/">
           <div className="hdr-mark">MAISON</div>
           <sup>EST · 2019 · TAIPEI</sup>
         </Link>
@@ -81,7 +77,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
           ))}
         </nav>
         <div className="hdr-right">
-          <div data-menu ref={wrapRef} style={{ position: "relative" }}>
+          <div className="relative" data-menu ref={wrapRef}>
             <button
               aria-expanded={open}
               aria-haspopup="menu"
@@ -91,9 +87,9 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
             >
               <span className="dot" />
               <span className="mono">{lang}</span>
-              <span style={{ color: "var(--ink-3)" }}>·</span>
+              <span className="text-ink-3">·</span>
               <span className="mono">{ccy}</span>
-              <span style={{ color: "var(--ink-3)", marginLeft: 2 }}>▾</span>
+              <span className="ml-[2px] text-ink-3">▾</span>
             </button>
             {open && (
               <div className="dropdown" role="menu">
@@ -106,9 +102,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
                     type="button"
                   >
                     <span>{l === "EN" ? "English" : "繁體中文"}</span>
-                    <span className="mono" style={{ color: "var(--ink-3)" }}>
-                      {l}
-                    </span>
+                    <span className="mono text-ink-3">{l}</span>
                   </button>
                 ))}
                 <div className="group">Currency · reference</div>
@@ -123,15 +117,10 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
                     type="button"
                   >
                     <span>{CCY[c].label}</span>
-                    <span className="mono" style={{ color: "var(--ink-3)" }}>
-                      {CCY[c].sym}
-                    </span>
+                    <span className="mono text-ink-3">{CCY[c].sym}</span>
                   </button>
                 ))}
-                <div
-                  className="group"
-                  style={{ display: "flex", gap: 8, alignItems: "center" }}
-                >
+                <div className="group flex items-center gap-2">
                   Updated 13·05·26 09:42 GMT+8
                 </div>
               </div>

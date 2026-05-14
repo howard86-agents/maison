@@ -20,25 +20,16 @@ export function ProductClient({ product }: { product: Product }) {
 
   return (
     <div className="fade-in shell">
-      <div
-        style={{
-          padding: "24px 0",
-          fontFamily: "var(--mono)",
-          fontSize: 10.5,
-          letterSpacing: "0.14em",
-          color: "var(--ink-3)",
-          textTransform: "uppercase",
-        }}
-      >
-        <Link href="/" style={{ color: "inherit" }}>
+      <div className="py-6 font-mono text-[10.5px] text-ink-3 uppercase tracking-[0.14em]">
+        <Link className="text-inherit" href="/">
           Atelier
         </Link>
-        <span style={{ margin: "0 10px" }}>/</span>
-        <Link href="/collection" style={{ color: "inherit" }}>
+        <span className="mx-[10px]">/</span>
+        <Link className="text-inherit" href="/collection">
           The Collection
         </Link>
-        <span style={{ margin: "0 10px" }}>/</span>
-        <span style={{ color: "var(--ink)" }}>
+        <span className="mx-[10px]">/</span>
+        <span className="text-ink">
           {product.house} · {product.name}
         </span>
       </div>
@@ -50,12 +41,11 @@ export function ProductClient({ product }: { product: Product }) {
               <button
                 aria-label={`View ${i + 1}`}
                 aria-pressed={thumb === i}
-                className="ph"
+                className="ph cursor-pointer"
                 data-on={thumb === i ? "1" : "0"}
                 data-ph={`v${i + 1}`}
                 key={i}
                 onClick={() => setThumb(i)}
-                style={{ cursor: "pointer" }}
                 type="button"
               />
             ))}
@@ -70,8 +60,8 @@ export function ProductClient({ product }: { product: Product }) {
         </div>
         <div>
           <div className="house">{product.house}</div>
-          <h1 style={{ marginTop: 10 }}>{product.name}</h1>
-          <div className="muted" style={{ fontSize: 13 }}>
+          <h1 className="mt-[10px]">{product.name}</h1>
+          <div className="muted text-[13px]">
             Sourced from {houseTitle} maison, Faubourg Saint-Honoré · Paris.
           </div>
 
@@ -82,26 +72,12 @@ export function ProductClient({ product }: { product: Product }) {
             </span>
           </div>
 
-          <div
-            className="row"
-            style={{ marginTop: 18, gap: 10, flexWrap: "wrap" }}
-          >
+          <div className="row mt-[18px] flex-wrap gap-[10px]">
             <span
-              className="tag"
-              style={
-                product.stockType === "in-vault"
-                  ? { color: "var(--positive)", borderColor: "var(--positive)" }
-                  : {}
-              }
+              className={`tag ${product.stockType === "in-vault" ? "border-positive text-positive" : ""}`}
             >
               <span
-                className="dot"
-                style={{
-                  background:
-                    product.stockType === "in-vault"
-                      ? "var(--positive)"
-                      : "var(--accent)",
-                }}
+                className={`dot ${product.stockType === "in-vault" ? "bg-positive" : "bg-accent"}`}
               />
               {product.stockType === "in-vault"
                 ? "In Taipei vault · ready to ship"
