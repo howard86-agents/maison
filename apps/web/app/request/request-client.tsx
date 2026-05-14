@@ -1,10 +1,10 @@
 "use client";
 
+import { AI_MATCHES } from "@repo/data";
 import { useRouter } from "next/navigation";
 import { type ChangeEvent, useRef, useState } from "react";
 import { CCY, formatCcy } from "../../lib/currency";
-import { AI_MATCHES } from "../../lib/maison-data";
-import { Placeholder } from "../_components/placeholder";
+import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";
 
 interface FormState {
@@ -166,7 +166,14 @@ function UploadStep({
               <div className="matches">
                 {AI_MATCHES.map((m) => (
                   <div className="m" key={m.id}>
-                    <Placeholder aspect="square" caption={m.id} />
+                    <ImageOrPlaceholder
+                      alt={`${m.brand} ${m.name}`}
+                      aspect="square"
+                      caption={m.id}
+                      id={m.id}
+                      kind="matches"
+                      sizes="120px"
+                    />
                     <div className="body">
                       <div className="nm">{m.name}</div>
                       <div className="pr">{m.brand}</div>
@@ -308,9 +315,13 @@ function ReviewStep({ form }: { form: FormState }) {
               {form.cond}
             </div>
           </div>
-          <Placeholder
+          <ImageOrPlaceholder
+            alt="Customer reference photograph"
             aspect="none"
             caption="reference"
+            id="reference"
+            kind="reference"
+            sizes="96px"
             style={{ width: 96, height: 96 }}
           />
         </div>

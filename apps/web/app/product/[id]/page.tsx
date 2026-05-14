@@ -1,5 +1,5 @@
+import { PRODUCTS } from "@repo/data";
 import { notFound } from "next/navigation";
-import { PRODUCTS } from "../../../lib/maison-data";
 import { ProductClient } from "./product-client";
 
 export default async function ProductPage({

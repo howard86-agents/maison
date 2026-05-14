@@ -1,12 +1,12 @@
 "use client";
 
+import type { Product } from "@repo/data";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatCcy } from "../../../lib/currency";
-import type { Product } from "../../../lib/maison-data";
 import { TRANSLATIONS } from "../../../lib/translations";
-import { Placeholder } from "../../_components/placeholder";
+import { ImageOrPlaceholder } from "../../_components/product-image";
 import { useLocale } from "../../providers";
 
 export function ProductClient({ product }: { product: Product }) {
@@ -50,11 +50,16 @@ export function ProductClient({ product }: { product: Product }) {
               />
             ))}
           </div>
-          <Placeholder
+          <ImageOrPlaceholder
+            alt={`${product.house} ${product.name} · view ${thumb + 1}`}
             aspect="4x5"
             brackets
             caption={`${product.house.toLowerCase()} · view ${thumb + 1}`}
             className="pdp-hero"
+            id={product.id}
+            kind="products"
+            priority
+            sizes="(min-width: 1280px) 50vw, 100vw"
             style={{ minHeight: 620 }}
           />
         </div>

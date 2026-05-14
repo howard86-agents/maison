@@ -1,18 +1,22 @@
 "use client";
 
+import type { Product } from "@repo/data";
 import Link from "next/link";
 import { formatCcy } from "../../lib/currency";
-import type { Product } from "../../lib/maison-data";
 import { useLocale } from "../providers";
-import { Placeholder } from "./placeholder";
+import { ImageOrPlaceholder } from "./product-image";
 
 export function ProductCard({ product }: { product: Product }) {
   const { ccy } = useLocale();
   return (
     <Link className="prod" href={`/product/${product.id}`}>
-      <Placeholder
+      <ImageOrPlaceholder
+        alt={`${product.house} ${product.name}`}
         aspect="4x5"
         caption={`${product.house.toLowerCase()} · ${product.id}`}
+        id={product.id}
+        kind="products"
+        sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
       />
       <div className="prod-meta">
         <div className="prod-house">{product.house}</div>

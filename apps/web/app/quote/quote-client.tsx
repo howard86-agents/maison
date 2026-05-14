@@ -1,10 +1,16 @@
 "use client";
 
+import { QUOTE_CANDIDATES, type QuoteCandidate } from "@repo/data";
 import { useRouter } from "next/navigation";
 import { formatCcy } from "../../lib/currency";
-import { QUOTE_CANDIDATES } from "../../lib/maison-data";
-import { Placeholder } from "../_components/placeholder";
+import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";
+
+const MATCH_ID_BY_LETTER: Record<QuoteCandidate["letter"], string> = {
+  A: "m1",
+  B: "m2",
+  C: "m3",
+};
 
 export function QuoteClient() {
   const { ccy } = useLocale();
@@ -72,9 +78,13 @@ export function QuoteClient() {
                 </div>
               )}
             </div>
-            <Placeholder
+            <ImageOrPlaceholder
+              alt={`Birkett Saddle 25 · candidate ${c.letter}`}
               aspect="4x5"
               caption={`candidate ${c.letter}`}
+              id={MATCH_ID_BY_LETTER[c.letter]}
+              kind="matches"
+              sizes="(min-width: 1280px) 33vw, 50vw"
               style={{ marginTop: 14 }}
             />
             <div className="display mt-[14px] text-[22px] tracking-[-0.01em]">

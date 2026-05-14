@@ -1,8 +1,8 @@
 "use client";
 
+import { MEMBER, ORDERS, TIERS, type Tier } from "@repo/data";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { MEMBER, ORDERS, TIERS, type Tier } from "../../lib/maison-data";
 import { TierChip } from "../_components/tier-chip";
 
 const SIDE_NAV: [string, string][] = [

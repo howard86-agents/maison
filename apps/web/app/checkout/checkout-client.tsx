@@ -1,10 +1,10 @@
 "use client";
 
+import { PAYMENT_METHODS } from "@repo/data";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatCcy } from "../../lib/currency";
-import { PAYMENT_METHODS } from "../../lib/maison-data";
-import { Placeholder } from "../_components/placeholder";
+import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";
 
 const CONSENTS: [string, boolean][] = [
@@ -147,9 +147,13 @@ export function CheckoutClient() {
             Order summary
           </h4>
           <div className="row gap-[14px]">
-            <Placeholder
+            <ImageOrPlaceholder
+              alt="Birkett Saddle 25 · Étoupe"
               aspect="none"
               caption="A"
+              id="p1"
+              kind="products"
+              sizes="78px"
               style={{ width: 78, height: 96 }}
             />
             <div>

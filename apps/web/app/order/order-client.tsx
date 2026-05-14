@@ -1,8 +1,8 @@
 "use client";
 
+import { ORDER_STAGES } from "@repo/data";
 import { formatCcy } from "../../lib/currency";
-import { ORDER_STAGES } from "../../lib/maison-data";
-import { Placeholder } from "../_components/placeholder";
+import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";
 
 const NOTIFICATIONS: [string, boolean][] = [
@@ -26,9 +26,13 @@ export function OrderClient() {
         <div>
           <div className="grid grid-cols-[1.2fr_1fr] gap-8 border-line border-b-[0.5px] pb-7">
             <div className="row gap-[18px]">
-              <Placeholder
+              <ImageOrPlaceholder
+                alt="Saddle 25 · Étoupe"
                 aspect="square"
                 caption="piece"
+                id="p1"
+                kind="products"
+                sizes="120px"
                 style={{ width: 120, height: 120 }}
               />
               <div>

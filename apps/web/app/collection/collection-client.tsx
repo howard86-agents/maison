@@ -1,9 +1,9 @@
 "use client";
 
+import { PRODUCTS, type Product } from "@repo/data";
 import Link from "next/link";
 import { useState } from "react";
 import { CCY } from "../../lib/currency";
-import { PRODUCTS, type Product } from "../../lib/maison-data";
 import { TRANSLATIONS } from "../../lib/translations";
 import { ProductCard } from "../_components/product-card";
 import { useLocale } from "../providers";

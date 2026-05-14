@@ -1,10 +1,10 @@
 "use client";
 
+import { HOUSES, PRODUCTS } from "@repo/data";
 import Link from "next/link";
-import { HOUSES, PRODUCTS } from "../lib/maison-data";
 import { TRANSLATIONS } from "../lib/translations";
-import { Placeholder } from "./_components/placeholder";
 import { ProductCard } from "./_components/product-card";
+import { ImageOrPlaceholder } from "./_components/product-image";
 import { useLocale } from "./providers";
 
 function HeroA() {
@@ -60,10 +60,15 @@ function HeroA() {
           </div>
         </div>
       </div>
-      <Placeholder
+      <ImageOrPlaceholder
+        alt="A sourced Birkett Saddle 25 in Étoupe, photographed in studio"
         aspect="3x4"
         brackets
         caption="hero · sourced piece, hand-styled"
+        id="p1"
+        kind="products"
+        priority
+        sizes="(min-width: 1280px) 40vw, 100vw"
         style={{ minHeight: 480 }}
       />
     </section>

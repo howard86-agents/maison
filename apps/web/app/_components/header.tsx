@@ -1,10 +1,10 @@
 "use client";
 
+import type { Tier } from "@repo/data";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { CCY, CURRENCY_CODES } from "../../lib/currency";
-import type { Tier } from "../../lib/maison-data";
 import { type Lang, TRANSLATIONS } from "../../lib/translations";
 import { useLocale, useTheme } from "../providers";
 import { TierChip } from "./tier-chip";
