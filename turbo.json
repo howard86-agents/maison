@@ -26,6 +26,18 @@
     "generate": {
       "dependsOn": ["^generate"],
       "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck", "generate"],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "tsconfig.json",
+        "tsconfig.*.json"
+      ],
+      "outputs": []
     }
   }
 }

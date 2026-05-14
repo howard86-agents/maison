@@ -24,7 +24,8 @@
     "fix": "ultracite fix",
     "generate": "turbo run generate",
     "lint": "ultracite check",
-    "prepare": "husky"
+    "prepare": "husky",
+    "typecheck": "turbo run typecheck"
   },
   "workspaces": [
     "apps/*",
