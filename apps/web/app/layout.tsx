@@ -10,21 +10,21 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
-  variable: "--font-display",
+  variable: "--ff-display",
   display: "swap",
 });
 
 const geist = Geist({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
-  variable: "--font-sans",
+  variable: "--ff-sans",
   display: "swap",
 });
 
 const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-mono",
+  variable: "--ff-mono",
   display: "swap",
 });
 
@@ -57,9 +57,9 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          <div className="app">
+          <div className="flex min-h-screen flex-col">
             <Header />
-            <main style={{ flex: 1 }}>{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
             {isDev && <DevSwitcher />}
           </div>
