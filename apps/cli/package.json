@@ -1,0 +1,19 @@
+{
+  "name": "@maison/cli",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "gen:images": "bun run src/gen-images.ts",
+    "review:images": "bun run src/review-images.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@maison/data": "*",
+    "sharp": "^0.34.1"
+  },
+  "devDependencies": {
+    "@maison/typescript-config": "*",
+    "@types/bun": "latest",
+    "typescript": "5.5.4"
+  }
+}

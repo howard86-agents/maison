@@ -1,11 +1,11 @@
 "use client";
 
+import { HOUSES, PRODUCTS } from "@maison/data";
 import Link from "next/link";
-import { HOUSES, PRODUCTS } from "../lib/maison-data";
 import { TRANSLATIONS } from "../lib/translations";
+import { ProductCard } from "./_components/product-card";
+import { ImageOrPlaceholder } from "./_components/product-image";
 import { useLocale } from "./providers";
-import { Placeholder } from "./_components/Placeholder";
-import { ProductCard } from "./_components/ProductCard";
 
 function HeroA() {
   const { lang } = useLocale();
@@ -15,7 +15,7 @@ function HeroA() {
     <section className="hero">
       <div>
         <div className="eyebrow">{t.hero.eyebrow}</div>
-        <h1 className="hero-headline" style={{ marginTop: 22 }}>
+        <h1 className="hero-headline mt-[22px]">
           {h.line1}
           <br />
           {h.line2}
@@ -23,7 +23,7 @@ function HeroA() {
           {h.line3}{" "}
           <em>
             {h.line4em.split("\n").map((seg, i, arr) => (
-              <span key={i}>
+              <span key={seg}>
                 {seg}
                 {i < arr.length - 1 && <br />}
               </span>
@@ -32,10 +32,10 @@ function HeroA() {
         </h1>
         <p className="hero-sub">{t.hero.sub}</p>
         <div className="hero-cta">
-          <Link href="/request" className="btn btn-primary">
+          <Link className="btn btn-primary" href="/request">
             {t.cta.request} <span>→</span>
           </Link>
-          <Link href="/collection" className="btn btn-ghost">
+          <Link className="btn btn-ghost" href="/collection">
             {t.cta.browse}
           </Link>
         </div>
@@ -47,23 +47,28 @@ function HeroA() {
           <div className="hero-meta-cell">
             <div className="num display">
               36
-              <span style={{ fontSize: 14, marginLeft: 4, color: "var(--ink-3)" }}>hr</span>
+              <span className="ml-1 text-[14px] text-ink-3">hr</span>
             </div>
             <div className="lbl">median time to first dossier</div>
           </div>
           <div className="hero-meta-cell">
             <div className="num display">
               98.4
-              <span style={{ fontSize: 14, marginLeft: 4, color: "var(--ink-3)" }}>%</span>
+              <span className="ml-1 text-[14px] text-ink-3">%</span>
             </div>
             <div className="lbl">authenticated on first inspection</div>
           </div>
         </div>
       </div>
-      <Placeholder
+      <ImageOrPlaceholder
+        alt="A sourced Birkett Saddle 25 in Étoupe, photographed in studio"
         aspect="3x4"
         brackets
         caption="hero · sourced piece, hand-styled"
+        id="p1"
+        kind="products"
+        priority
+        sizes="(min-width: 1280px) 40vw, 100vw"
         style={{ minHeight: 480 }}
       />
     </section>
@@ -72,11 +77,11 @@ function HeroA() {
 
 function Maisons() {
   return (
-    <section className="section" style={{ paddingTop: 32, paddingBottom: 32 }}>
+    <section className="section py-8">
       <div className="shell">
         <div className="maisons">
           {HOUSES.map((h) => (
-            <span key={h} className="house">
+            <span className="house" key={h}>
               {h}
             </span>
           ))}
@@ -95,13 +100,13 @@ function Process() {
         <div className="section-head">
           <div>
             <div className="eyebrow">{t.kicker}</div>
-            <h2 style={{ marginTop: 14 }}>
+            <h2 className="mt-[14px]">
               <em>{t.title}</em>
             </h2>
           </div>
           <div className="meta">
-            Every file is handled by one concierge from request to delivery. You will know their name, their voice,
-            and their working hours.
+            Every file is handled by one concierge from request to delivery. You
+            will know their name, their voice, and their working hours.
           </div>
         </div>
         <div className="process-list">
@@ -125,20 +130,15 @@ function Collection() {
         <div className="section-head">
           <div>
             <div className="eyebrow">In rotation · May</div>
-            <h2 style={{ marginTop: 14 }}>
+            <h2 className="mt-[14px]">
               Eight quiet <em>arrivals</em>.
             </h2>
           </div>
           <div className="meta">
             Updated as files close. Marked{" "}
-            <span className="mono" style={{ color: "var(--ink-2)" }}>
-              IN VAULT
-            </span>{" "}
-            if confirmed in Taipei;{" "}
-            <span className="mono" style={{ color: "var(--accent)" }}>
-              ESTIMATED
-            </span>{" "}
-            if sourcing on quote.
+            <span className="mono text-ink-2">IN VAULT</span> if confirmed in
+            Taipei; <span className="mono text-accent">ESTIMATED</span> if
+            sourcing on quote.
           </div>
         </div>
         <div className="grid-4">
@@ -158,18 +158,22 @@ function AtelierNote() {
         <div className="atelier-note">
           <div>
             <div className="eyebrow">A note from the atelier</div>
-            <h3 style={{ marginTop: 14 }}>
+            <h3 className="mt-[14px]">
               We work in <em>three languages</em>,<br />
               five currencies, and one voice.
             </h3>
           </div>
           <div>
-            <p style={{ marginBottom: 16 }}>
-              Switch currency at any moment — every figure on the platform reflects the live mid-market rate,
-              refreshed every fifteen minutes and marked with a timestamp. We hold orders in the currency we paid,
-              then settle at delivery, so a swing in the yen never reaches your invoice unannounced.
+            <p className="mb-4">
+              Switch currency at any moment — every figure on the platform
+              reflects the live mid-market rate, refreshed every fifteen minutes
+              and marked with a timestamp. We hold orders in the currency we
+              paid, then settle at delivery, so a swing in the yen never reaches
+              your invoice unannounced.
             </p>
-            <button className="btn btn-link">Read how we handle exchange-rate risk</button>
+            <button className="btn btn-link" type="button">
+              Read how we handle exchange-rate risk
+            </button>
           </div>
         </div>
       </div>
@@ -184,7 +188,11 @@ function Tiers() {
       it: false,
       cur: false,
       spend: "No minimum",
-      bens: ["One concierge channel", "Quotes within 36 hours", "Insured shipping at cost"],
+      bens: [
+        "One concierge channel",
+        "Quotes within 36 hours",
+        "Insured shipping at cost",
+      ],
     },
     {
       name: "Professional",
@@ -217,12 +225,13 @@ function Tiers() {
         <div className="section-head">
           <div>
             <div className="eyebrow">Three memberships</div>
-            <h2 style={{ marginTop: 14 }}>
+            <h2 className="mt-[14px]">
               Choose the rhythm <em>of your file</em>.
             </h2>
           </div>
           <div className="meta">
-            Upgrade happens quietly — based on a year of activity, never on a sales call.
+            Upgrade happens quietly — based on a year of activity, never on a
+            sales call.
             <br />
             Downgrade is just as discreet.
           </div>

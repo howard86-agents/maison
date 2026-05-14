@@ -27,6 +27,17 @@
       "dependsOn": ["^generate"],
       "cache": false
     },
-    "lint": {}
+    "typecheck": {
+      "dependsOn": ["^typecheck", "generate"],
+      "inputs": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "tsconfig.json",
+        "tsconfig.*.json"
+      ],
+      "outputs": []
+    }
   }
 }

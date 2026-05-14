@@ -1,15 +1,21 @@
 "use client";
 
+import { PAYMENT_METHODS } from "@maison/data";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatCcy } from "../../lib/currency";
-import { PAYMENT_METHODS } from "../../lib/maison-data";
-import { Placeholder } from "../_components/Placeholder";
+import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";
 
 const CONSENTS: [string, boolean][] = [
-  ["I confirm the piece matches my brief — and accept the concierge has discretion within the approved budget.", true],
-  ["I authorise MAISON to authenticate before dispatch; failed inspections refund in full.", true],
+  [
+    "I confirm the piece matches my brief — and accept the concierge has discretion within the approved budget.",
+    true,
+  ],
+  [
+    "I authorise MAISON to authenticate before dispatch; failed inspections refund in full.",
+    true,
+  ],
   ["Send LINE updates from @maison_concierge at each milestone.", true],
   ["Hold my address on file for repeat carriage (encrypted at rest).", false],
 ];
@@ -21,57 +27,39 @@ export function CheckoutClient() {
 
   return (
     <div className="fade-in shell">
-      <div style={{ padding: "48px 0 16px" }}>
+      <div className="pt-12 pb-4">
         <div className="eyebrow">File MSN — 04823 · Candidate A · Paris</div>
-        <h1
-          className="display"
-          style={{ fontSize: 52, marginTop: 14, fontWeight: 400, letterSpacing: "-0.02em" }}
-        >
-          Approve & <span style={{ fontStyle: "italic", color: "var(--accent)" }}>secure</span>.
+        <h1 className="display mt-[14px] font-normal text-[52px] tracking-[-0.02em]">
+          Approve & <span className="text-accent italic">secure</span>.
         </h1>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.5fr 1fr",
-          gap: 56,
-          padding: "32px 0 80px",
-        }}
-      >
+      <div className="grid grid-cols-[1.5fr_1fr] gap-14 pt-8 pb-20">
         <div className="stack-lg">
           <div>
             <div className="eyebrow">01 · Delivery</div>
-            <div className="hairline" style={{ marginTop: 12 }} />
-            <div
-              className="row-between"
-              style={{ padding: "18px 0", borderBottom: "0.5px solid var(--line)" }}
-            >
+            <div className="hairline mt-3" />
+            <div className="row-between border-line border-b-[0.5px] py-[18px]">
               <div>
-                <div
-                  className="display"
-                  style={{ fontSize: 19, letterSpacing: "-0.01em" }}
-                >
+                <div className="display text-[19px] tracking-[-0.01em]">
                   Chen Mei-Lin · 陳美琳
                 </div>
-                <div className="muted" style={{ fontSize: 12.5, marginTop: 4 }}>
-                  No. 7, Lane 12, Lishui Street · Da&apos;an District · Taipei 106 · TW
-                  <span style={{ marginLeft: 14, color: "var(--accent)" }}>· primary</span>
+                <div className="muted mt-1 text-[12.5px]">
+                  No. 7, Lane 12, Lishui Street · Da&apos;an District · Taipei
+                  106 · TW
+                  <span className="ml-[14px] text-accent">· primary</span>
                 </div>
               </div>
               <button className="btn-link" type="button">
                 Change
               </button>
             </div>
-            <div className="row-between" style={{ padding: "18px 0" }}>
+            <div className="row-between py-[18px]">
               <div>
-                <div
-                  className="mono"
-                  style={{ fontSize: 10.5, letterSpacing: "0.14em", color: "var(--ink-3)" }}
-                >
+                <div className="mono text-[10.5px] text-ink-3 tracking-[0.14em]">
                   CARRIAGE
                 </div>
-                <div style={{ marginTop: 6, fontSize: 14 }}>
+                <div className="mt-[6px] text-[14px]">
                   Hand-delivered · Wed 21 May · 14:00 – 18:00 window
                 </div>
               </div>
@@ -83,100 +71,67 @@ export function CheckoutClient() {
 
           <div>
             <div className="eyebrow">02 · Payment</div>
-            <div className="hairline" style={{ marginTop: 12 }} />
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: 14,
-                padding: "18px 0",
-              }}
-            >
-              {PAYMENT_METHODS.map((m) => (
-                <button
-                  key={m.id}
-                  onClick={() => setMethod(m.id)}
-                  style={{
-                    textAlign: "left",
-                    cursor: "pointer",
-                    background: method === m.id ? "var(--bg-card)" : "var(--paper)",
-                    border: `0.5px solid ${method === m.id ? "var(--ink)" : "var(--line)"}`,
-                    padding: 18,
-                  }}
-                >
-                  <div className="display" style={{ fontSize: 19, letterSpacing: "-0.01em" }}>
-                    {m.name}
-                  </div>
-                  <div className="muted" style={{ fontSize: 11.5, marginTop: 4 }}>
-                    {m.sub}
-                  </div>
-                  <div style={{ marginTop: 10, display: "flex", gap: 6 }}>
-                    {[0, 1, 2, 3].map((i) => (
-                      <div
-                        key={i}
-                        style={{ width: 22, height: 14, background: "var(--bg-soft)", borderRadius: 1.5 }}
-                      />
-                    ))}
-                  </div>
-                </button>
-              ))}
+            <div className="hairline mt-3" />
+            <div className="grid grid-cols-3 gap-[14px] py-[18px]">
+              {PAYMENT_METHODS.map((m) => {
+                const active = method === m.id;
+                return (
+                  <button
+                    className={`cursor-pointer border-[0.5px] p-[18px] text-left ${active ? "border-ink bg-bg-card" : "border-line bg-paper"}`}
+                    key={m.id}
+                    onClick={() => setMethod(m.id)}
+                    type="button"
+                  >
+                    <div className="display text-[19px] tracking-[-0.01em]">
+                      {m.name}
+                    </div>
+                    <div className="muted mt-1 text-[11.5px]">{m.sub}</div>
+                    <div className="mt-[10px] flex gap-[6px]">
+                      {[0, 1, 2, 3].map((i) => (
+                        <div
+                          className="h-[14px] w-[22px] rounded-[1.5px] bg-bg-soft"
+                          key={i}
+                        />
+                      ))}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "2fr 1fr 1fr",
-                gap: 20,
-                marginTop: 8,
-              }}
-            >
+            <div className="mt-2 grid grid-cols-[2fr_1fr_1fr] gap-5">
               <div className="field">
-                <label>Card number</label>
-                <input placeholder="4242  4242  4242  4242" />
+                <label htmlFor="card-number">Card number</label>
+                <input id="card-number" placeholder="4242  4242  4242  4242" />
               </div>
               <div className="field">
-                <label>Expiry</label>
-                <input placeholder="05 / 29" />
+                <label htmlFor="card-expiry">Expiry</label>
+                <input id="card-expiry" placeholder="05 / 29" />
               </div>
               <div className="field">
-                <label>CVC</label>
-                <input placeholder="•••" />
+                <label htmlFor="card-cvc">CVC</label>
+                <input id="card-cvc" placeholder="•••" />
               </div>
             </div>
           </div>
 
           <div>
             <div className="eyebrow">03 · Consents</div>
-            <div className="hairline" style={{ marginTop: 12 }} />
-            <div
-              style={{
-                padding: "20px 0",
-                display: "flex",
-                flexDirection: "column",
-                gap: 14,
-                fontSize: 13.5,
-                color: "var(--ink-2)",
-              }}
-            >
-              {CONSENTS.map(([copy, on], i) => (
+            <div className="hairline mt-3" />
+            <div className="flex flex-col gap-[14px] py-5 text-[13.5px] text-ink-2">
+              {CONSENTS.map(([copy, on]) => (
                 <label
-                  key={i}
-                  style={{ display: "flex", gap: 14, cursor: "pointer", alignItems: "flex-start" }}
+                  className="flex cursor-pointer items-start gap-[14px]"
+                  key={copy}
                 >
+                  <input
+                    className="pointer-events-none absolute size-px opacity-0"
+                    defaultChecked={on}
+                    type="checkbox"
+                  />
                   <span
-                    style={{
-                      width: 16,
-                      height: 16,
-                      borderRadius: 2,
-                      border: "0.5px solid var(--ink-3)",
-                      background: on ? "var(--ink)" : "transparent",
-                      color: "var(--bg)",
-                      display: "grid",
-                      placeItems: "center",
-                      fontSize: 10,
-                      marginTop: 2,
-                      flexShrink: 0,
-                    }}
+                    aria-hidden="true"
+                    className={`mt-[2px] grid size-4 shrink-0 place-items-center rounded-[2px] border-[0.5px] border-ink-3 text-[10px] text-bg ${on ? "bg-ink" : "bg-transparent"}`}
                   >
                     {on ? "✓" : ""}
                   </span>
@@ -187,59 +142,36 @@ export function CheckoutClient() {
           </div>
         </div>
 
-        <aside
-          style={{
-            background: "var(--paper)",
-            border: "0.5px solid var(--line)",
-            padding: 28,
-            alignSelf: "start",
-            position: "sticky",
-            top: 96,
-          }}
-        >
-          <h4
-            style={{
-              fontFamily: "var(--mono)",
-              fontSize: 10.5,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--ink-3)",
-              margin: "0 0 14px",
-            }}
-          >
+        <aside className="sticky top-24 self-start border-[0.5px] border-line bg-paper p-7">
+          <h4 className="mx-0 mt-0 mb-[14px] font-mono text-[10.5px] text-ink-3 uppercase tracking-[0.16em]">
             Order summary
           </h4>
-          <div className="row" style={{ gap: 14 }}>
-            <Placeholder aspect="none" caption="A" style={{ width: 78, height: 96 }} />
+          <div className="row gap-[14px]">
+            <ImageOrPlaceholder
+              alt="Birkett Saddle 25 · Étoupe"
+              aspect="none"
+              caption="A"
+              id="p1"
+              kind="products"
+              sizes="78px"
+              style={{ width: 78, height: 96 }}
+            />
             <div>
-              <div
-                className="mono"
-                style={{ fontSize: 10, color: "var(--accent)", letterSpacing: "0.14em" }}
-              >
+              <div className="mono text-[10px] text-accent tracking-[0.14em]">
                 BIRKETT · 2023
               </div>
-              <div className="display" style={{ fontSize: 17, marginTop: 4, lineHeight: 1.15 }}>
+              <div className="display mt-1 text-[17px] leading-[1.15]">
                 Saddle 25 · Étoupe
               </div>
-              <div className="muted" style={{ fontSize: 11.5, marginTop: 6 }}>
+              <div className="muted mt-[6px] text-[11.5px]">
                 Candidate A · Paris 8e
               </div>
             </div>
           </div>
-          <div
-            style={{
-              marginTop: 22,
-              paddingTop: 18,
-              borderTop: "0.5px solid var(--line)",
-              display: "flex",
-              flexDirection: "column",
-              gap: 10,
-              fontSize: 12.5,
-            }}
-          >
+          <div className="mt-[22px] flex flex-col gap-[10px] border-line border-t-[0.5px] pt-[18px] text-[12.5px]">
             <div className="row-between">
               <span className="muted">Piece</span>
-              <span>{formatCcy(11760, ccy)}</span>
+              <span>{formatCcy(11_760, ccy)}</span>
             </div>
             <div className="row-between">
               <span className="muted">Concierge service</span>
@@ -258,29 +190,26 @@ export function CheckoutClient() {
               <span className="muted">included</span>
             </div>
           </div>
-          <div className="hairline" style={{ margin: "20px 0" }} />
+          <div className="hairline my-5" />
           <div className="row-between">
-            <span
-              className="mono"
-              style={{ fontSize: 10.5, letterSpacing: "0.16em", color: "var(--ink-3)" }}
-            >
+            <span className="mono text-[10.5px] text-ink-3 tracking-[0.16em]">
               TOTAL TODAY
             </span>
-            <span className="display" style={{ fontSize: 30 }}>
-              {formatCcy(12455, ccy)}
+            <span className="display text-[30px]">
+              {formatCcy(12_455, ccy)}
             </span>
           </div>
-          <div className="fine" style={{ marginTop: 4 }}>
+          <div className="fine mt-1">
             Held in escrow until vault inspection · refunded if rejected.
           </div>
           <button
-            className="btn btn-primary"
-            style={{ marginTop: 22, width: "100%", justifyContent: "center" }}
+            className="btn btn-primary mt-[22px] w-full justify-center"
             onClick={() => router.push("/order")}
+            type="button"
           >
-            Authorise · {formatCcy(12455, ccy)} <span>→</span>
+            Authorise · {formatCcy(12_455, ccy)} <span>→</span>
           </button>
-          <div className="fine" style={{ marginTop: 14, lineHeight: 1.6, textAlign: "center" }}>
+          <div className="fine mt-[14px] text-center leading-[1.6]">
             256-bit · Stripe · escrowed in TWD
           </div>
         </aside>

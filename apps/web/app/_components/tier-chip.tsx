@@ -1,4 +1,4 @@
-import type { Tier } from "../../lib/maison-data";
+import type { Tier } from "@maison/data";
 
 export function TierChip({ tier }: { tier: Tier }) {
   return (

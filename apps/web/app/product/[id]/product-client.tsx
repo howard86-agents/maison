@@ -1,12 +1,12 @@
 "use client";
 
+import type { Product } from "@maison/data";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { formatCcy } from "../../../lib/currency";
-import type { Product } from "../../../lib/maison-data";
 import { TRANSLATIONS } from "../../../lib/translations";
-import { Placeholder } from "../../_components/Placeholder";
+import { ImageOrPlaceholder } from "../../_components/product-image";
 import { useLocale } from "../../providers";
 
 export function ProductClient({ product }: { product: Product }) {
@@ -15,29 +15,21 @@ export function ProductClient({ product }: { product: Product }) {
   const [thumb, setThumb] = useState(0);
   const t = TRANSLATIONS[lang];
 
-  const houseTitle = product.house.charAt(0) + product.house.slice(1).toLowerCase();
+  const houseTitle =
+    product.house.charAt(0) + product.house.slice(1).toLowerCase();
 
   return (
     <div className="fade-in shell">
-      <div
-        style={{
-          padding: "24px 0",
-          fontFamily: "var(--mono)",
-          fontSize: 10.5,
-          letterSpacing: "0.14em",
-          color: "var(--ink-3)",
-          textTransform: "uppercase",
-        }}
-      >
-        <Link href="/" style={{ color: "inherit" }}>
+      <div className="py-6 font-mono text-[10.5px] text-ink-3 uppercase tracking-[0.14em]">
+        <Link className="text-inherit" href="/">
           Atelier
         </Link>
-        <span style={{ margin: "0 10px" }}>/</span>
-        <Link href="/collection" style={{ color: "inherit" }}>
+        <span className="mx-[10px]">/</span>
+        <Link className="text-inherit" href="/collection">
           The Collection
         </Link>
-        <span style={{ margin: "0 10px" }}>/</span>
-        <span style={{ color: "var(--ink)" }}>
+        <span className="mx-[10px]">/</span>
+        <span className="text-ink">
           {product.house} · {product.name}
         </span>
       </div>
@@ -46,54 +38,59 @@ export function ProductClient({ product }: { product: Product }) {
         <div className="pdp-gallery">
           <div className="pdp-thumbs">
             {[0, 1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="ph"
+              <button
+                aria-label={`View ${i + 1}`}
+                aria-pressed={thumb === i}
+                className="ph cursor-pointer"
                 data-on={thumb === i ? "1" : "0"}
                 data-ph={`v${i + 1}`}
+                key={i}
                 onClick={() => setThumb(i)}
-                style={{ cursor: "pointer" }}
+                type="button"
               />
             ))}
           </div>
-          <Placeholder
+          <ImageOrPlaceholder
+            alt={`${product.house} ${product.name} · view ${thumb + 1}`}
             aspect="4x5"
             brackets
             caption={`${product.house.toLowerCase()} · view ${thumb + 1}`}
             className="pdp-hero"
+            id={product.id}
+            kind="products"
+            priority
+            sizes="(min-width: 1280px) 50vw, 100vw"
             style={{ minHeight: 620 }}
           />
         </div>
         <div>
           <div className="house">{product.house}</div>
-          <h1 style={{ marginTop: 10 }}>{product.name}</h1>
-          <div className="muted" style={{ fontSize: 13 }}>
+          <h1 className="mt-[10px]">{product.name}</h1>
+          <div className="muted text-[13px]">
             Sourced from {houseTitle} maison, Faubourg Saint-Honoré · Paris.
           </div>
 
           <div className="price-row">
             <span>{formatCcy(product.price, ccy)}</span>
-            <span className="alt mono">≈ {formatCcy(product.price, "USD")} · live FX 09:42</span>
+            <span className="alt mono">
+              ≈ {formatCcy(product.price, "USD")} · live FX 09:42
+            </span>
           </div>
 
-          <div className="row" style={{ marginTop: 18, gap: 10, flexWrap: "wrap" }}>
+          <div className="row mt-[18px] flex-wrap gap-[10px]">
             <span
-              className="tag"
-              style={
-                product.stockType === "in-vault"
-                  ? { color: "var(--positive)", borderColor: "var(--positive)" }
-                  : {}
-              }
+              className={`tag ${product.stockType === "in-vault" ? "border-positive text-positive" : ""}`}
             >
               <span
-                className="dot"
-                style={{ background: product.stockType === "in-vault" ? "var(--positive)" : "var(--accent)" }}
+                className={`dot ${product.stockType === "in-vault" ? "bg-positive" : "bg-accent"}`}
               />
               {product.stockType === "in-vault"
                 ? "In Taipei vault · ready to ship"
                 : "On concierge quote · est. 4–6 weeks"}
             </span>
-            <span className="tag">Authenticated · Card #{product.id.toUpperCase()}-2607</span>
+            <span className="tag">
+              Authenticated · Card #{product.id.toUpperCase()}-2607
+            </span>
           </div>
 
           <div className="specs">
@@ -101,10 +98,19 @@ export function ProductClient({ product }: { product: Product }) {
               [
                 ["Maison", houseTitle],
                 ["Reference", `${product.id.toUpperCase()} · 2024 production`],
-                ["Materials", "Togo calfskin, palladium hardware, contrast saddle stitch"],
+                [
+                  "Materials",
+                  "Togo calfskin, palladium hardware, contrast saddle stitch",
+                ],
                 ["Dimensions", "25 × 18 × 14 cm · 720g"],
-                ["Provenance", "First owner, hand-carried Paris → Taipei, full set"],
-                ["Authentication", "Photographic dossier · 18 macro images on request"],
+                [
+                  "Provenance",
+                  "First owner, hand-carried Paris → Taipei, full set",
+                ],
+                [
+                  "Authentication",
+                  "Photographic dossier · 18 macro images on request",
+                ],
                 ["Ships from", "Taipei · within 48 hours of confirmed payment"],
               ] as const
             ).map(([k, v]) => (
@@ -116,10 +122,14 @@ export function ProductClient({ product }: { product: Product }) {
           </div>
 
           <div className="actions">
-            <button className="btn btn-primary" onClick={() => router.push("/checkout")}>
+            <button
+              className="btn btn-primary"
+              onClick={() => router.push("/checkout")}
+              type="button"
+            >
               {t.cta.addToBag} <span>→</span>
             </button>
-            <Link href={`/request?ref=${product.id}`} className="btn btn-ghost">
+            <Link className="btn btn-ghost" href={`/request?ref=${product.id}`}>
               {t.cta.requestPiece}
             </Link>
           </div>
@@ -129,14 +139,18 @@ export function ProductClient({ product }: { product: Product }) {
               <div className="seal">✦</div>
               <div className="copy">
                 <strong>Lifetime authentication</strong>
-                <span>Two-stage inspection in our Taipei vault before dispatch.</span>
+                <span>
+                  Two-stage inspection in our Taipei vault before dispatch.
+                </span>
               </div>
             </div>
             <div className="item">
               <div className="seal">⌖</div>
               <div className="copy">
                 <strong>Escrowed payment</strong>
-                <span>Funds held until you confirm the piece in your hands.</span>
+                <span>
+                  Funds held until you confirm the piece in your hands.
+                </span>
               </div>
             </div>
             <div className="item">
@@ -150,7 +164,9 @@ export function ProductClient({ product }: { product: Product }) {
               <div className="seal">↺</div>
               <div className="copy">
                 <strong>Resale offer</strong>
-                <span>We buy back any sourced piece at fair-value, any time.</span>
+                <span>
+                  We buy back any sourced piece at fair-value, any time.
+                </span>
               </div>
             </div>
           </div>
