@@ -7,7 +7,6 @@
     "@biomejs/biome": "2.4.15",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.4",
-    "prettier": "^3.2.5",
     "prisma": "latest",
     "tsx": "4.21.0",
     "turbo": "^2.9.12",
@@ -16,16 +15,15 @@
   "name": "with-prisma",
   "scripts": {
     "build": "turbo run build",
+    "check": "ultracite check",
     "db:migrate:deploy": "turbo run db:migrate:deploy",
     "db:migrate:dev": "turbo run db:migrate:dev",
     "db:push": "turbo run db:push",
     "db:seed": "turbo run db:seed",
     "dev": "turbo run dev",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "generate": "turbo run generate",
-    "lint": "turbo run lint",
-    "check": "ultracite check",
     "fix": "ultracite fix",
+    "generate": "turbo run generate",
+    "lint": "ultracite check",
     "prepare": "husky"
   },
   "workspaces": [
