@@ -4,10 +4,12 @@ import type { Tier } from "@maison/data";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { authClient } from "../../lib/auth-client";
 import { CCY, CURRENCY_CODES } from "../../lib/currency";
 import { type Lang, TRANSLATIONS } from "../../lib/translations";
 import { useLocale, useTheme } from "../providers";
 import { TierChip } from "./tier-chip";
+import { UserChip } from "./user-chip";
 
 const LANGS: Lang[] = ["EN", "TC"];
 
@@ -16,8 +18,11 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
   const { dark, toggleDark } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+  const session = authClient.useSession();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const isLoggedIn = Boolean(session.data?.user);
+  const accountHref = isLoggedIn ? "/account" : "/signin";
 
   useEffect(() => {
     if (!open) {
@@ -129,6 +134,8 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
 
           <TierChip tier={tier} />
 
+          <UserChip />
+
           <button
             aria-label="Toggle dark mode"
             className="icon-btn"
@@ -192,9 +199,9 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
             </svg>
           </button>
           <button
-            aria-label="Account"
+            aria-label={isLoggedIn ? "Account" : "Sign in"}
             className="icon-btn"
-            onClick={() => router.push("/account")}
+            onClick={() => router.push(accountHref)}
             type="button"
           >
             <svg
