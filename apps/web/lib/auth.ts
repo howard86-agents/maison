@@ -36,6 +36,15 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   socialProviders,
   plugins: [anonymous()],
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "USER",
+        input: false,
+      },
+    },
+  },
 });
 
 export type Session = typeof auth.$Infer.Session;
