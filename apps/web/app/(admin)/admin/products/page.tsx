@@ -1,0 +1,47 @@
+import { prisma } from "@maison/database";
+
+export const dynamic = "force-dynamic";
+
+export default async function AdminProductsPage() {
+  const products = await prisma.product.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 50,
+  });
+
+  if (products.length === 0) {
+    return (
+      <div className="border-[0.5px] border-line bg-paper p-[14px]">
+        <div className="mono text-[10px] text-ink-3 uppercase tracking-[0.14em]">
+          Catalog is empty
+        </div>
+        <div className="fine mt-2 leading-[1.6]">
+          Add a product to begin curating the public catalog.
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <ul className="grid grid-cols-2 gap-[14px]">
+      {products.map((product) => (
+        <li
+          className="border-[0.5px] border-line bg-paper p-[14px]"
+          key={product.id}
+        >
+          <div className="row-between">
+            <div className="mono text-[10px] text-ink-3 uppercase tracking-[0.14em]">
+              {product.brand ?? "House"}
+            </div>
+            <div className="fine">{product.isActive ? "Active" : "Draft"}</div>
+          </div>
+          <div className="display mt-2 text-[20px] leading-snug">
+            {product.name}
+          </div>
+          <div className="fine mt-2 font-mono">
+            {product.currency} {String(product.basePrice)}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
