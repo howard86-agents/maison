@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Geist, JetBrains_Mono } from "next/font/google";
 import { getDictionary, getLocale } from "../lib/i18n";
+import { buildOrganizationLd, jsonLdScriptProps } from "../lib/seo/jsonld";
+import { buildPageMetadata } from "../lib/seo/metadata";
 import { HTML_LANG } from "../lib/translations";
 import { DevSwitcher } from "./_components/dev-switcher";
 import { Footer } from "./_components/footer";
@@ -31,11 +33,9 @@ const mono = JetBrains_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getDictionary();
-  return {
-    title: t.meta.title,
-    description: t.meta.description,
-  };
+  const locale = await getLocale();
+  const t = await getDictionary(locale);
+  return buildPageMetadata(t, "home", { path: "/", locale });
 }
 
 export const viewport: Viewport = {
@@ -51,6 +51,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const locale = await getLocale();
+  const t = await getDictionary(locale);
+  const organizationLd = buildOrganizationLd(t, locale);
   return (
     <html
       className={`${cormorant.variable} ${geist.variable} ${mono.variable}`}
@@ -59,6 +61,7 @@ export default async function RootLayout({
     >
       <head>
         <script src="/theme-init.js" />
+        <script {...jsonLdScriptProps(organizationLd)} />
       </head>
       <body>
         <Providers>
