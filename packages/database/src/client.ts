@@ -1,6 +1,14 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg"; // Import the Pool
+import { Pool } from "pg";
 import { PrismaClient } from "../generated/client";
+
+// biome-ignore lint/performance/noBarrelFile: explicit re-exports of generated enum values keep the package's public surface compatible with the previous `export *` while avoiding the Turbopack warning about wildcard re-exports from CommonJS modules.
+export {
+  OrderStatus,
+  PaymentStatus,
+  ProxyRequestStatus,
+  UserRole,
+} from "../generated/client";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
