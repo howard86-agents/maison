@@ -1,15 +1,13 @@
 "use client";
 
-import { HOUSES, PRODUCTS } from "@maison/data";
+import { HOUSES, PRODUCTS, TIERS, type Tier } from "@maison/data";
 import Link from "next/link";
-import { TRANSLATIONS } from "../lib/translations";
 import { ProductCard } from "./_components/product-card";
 import { ImageOrPlaceholder } from "./_components/product-image";
-import { useLocale } from "./providers";
+import { useT } from "./providers";
 
 function HeroA() {
-  const { lang } = useLocale();
-  const t = TRANSLATIONS[lang];
+  const t = useT();
   const h = t.headline;
   return (
     <section className="hero">
@@ -42,29 +40,33 @@ function HeroA() {
         <div className="hero-meta">
           <div className="hero-meta-cell">
             <div className="num display">2,418</div>
-            <div className="lbl">pieces sourced last quarter</div>
+            <div className="lbl">{t.hero.statsSourced}</div>
           </div>
           <div className="hero-meta-cell">
             <div className="num display">
               36
-              <span className="ml-1 text-[14px] text-ink-3">hr</span>
+              <span className="ml-1 text-[14px] text-ink-3">
+                {t.hero.statsTimeUnit}
+              </span>
             </div>
-            <div className="lbl">median time to first dossier</div>
+            <div className="lbl">{t.hero.statsTime}</div>
           </div>
           <div className="hero-meta-cell">
             <div className="num display">
               98.4
-              <span className="ml-1 text-[14px] text-ink-3">%</span>
+              <span className="ml-1 text-[14px] text-ink-3">
+                {t.hero.statsAuthUnit}
+              </span>
             </div>
-            <div className="lbl">authenticated on first inspection</div>
+            <div className="lbl">{t.hero.statsAuth}</div>
           </div>
         </div>
       </div>
       <ImageOrPlaceholder
-        alt="A sourced Birkett Saddle 25 in Étoupe, photographed in studio"
+        alt={t.hero.imageAlt}
         aspect="3x4"
         brackets
-        caption="hero · sourced piece, hand-styled"
+        caption={t.hero.imageCaption}
         id="p1"
         kind="products"
         priority
@@ -92,25 +94,22 @@ function Maisons() {
 }
 
 function Process() {
-  const { lang } = useLocale();
-  const t = TRANSLATIONS[lang].process;
+  const t = useT();
+  const p = t.process;
   return (
     <section className="section">
       <div className="shell">
         <div className="section-head">
           <div>
-            <div className="eyebrow">{t.kicker}</div>
+            <div className="eyebrow">{p.kicker}</div>
             <h2 className="mt-[14px]">
-              <em>{t.title}</em>
+              <em>{p.title}</em>
             </h2>
           </div>
-          <div className="meta">
-            Every file is handled by one concierge from request to delivery. You
-            will know their name, their voice, and their working hours.
-          </div>
+          <div className="meta">{p.meta}</div>
         </div>
         <div className="process-list">
-          {t.steps.map((s) => (
+          {p.steps.map((s) => (
             <div className="step" key={s.n}>
               <div className="num">{s.n}</div>
               <h4>{s.h}</h4>
@@ -124,21 +123,25 @@ function Process() {
 }
 
 function Collection() {
+  const t = useT();
+  const c = t.collectionHome;
   return (
     <section className="section">
       <div className="shell">
         <div className="section-head">
           <div>
-            <div className="eyebrow">In rotation · May</div>
+            <div className="eyebrow">{c.eyebrow}</div>
             <h2 className="mt-[14px]">
-              Eight quiet <em>arrivals</em>.
+              {c.line1}
+              <em>{c.lineEm}</em>
+              {c.line2}
             </h2>
           </div>
           <div className="meta">
-            Updated as files close. Marked{" "}
-            <span className="mono text-ink-2">IN VAULT</span> if confirmed in
-            Taipei; <span className="mono text-accent">ESTIMATED</span> if
-            sourcing on quote.
+            {c.meta} <span className="mono text-ink-2">{c.inVaultMono}</span>{" "}
+            {c.inVaultClause}{" "}
+            <span className="mono text-accent">{c.onQuoteMono}</span>{" "}
+            {c.onQuoteClause}
           </div>
         </div>
         <div className="grid-4">
@@ -152,27 +155,24 @@ function Collection() {
 }
 
 function AtelierNote() {
+  const t = useT();
+  const a = t.atelierNote;
   return (
     <section className="section">
       <div className="shell">
         <div className="atelier-note">
           <div>
-            <div className="eyebrow">A note from the atelier</div>
+            <div className="eyebrow">{a.eyebrow}</div>
             <h3 className="mt-[14px]">
-              We work in <em>three languages</em>,<br />
-              five currencies, and one voice.
+              {a.headlineA}
+              <em>{a.headlineEm}</em>
+              {a.headlineB}
             </h3>
           </div>
           <div>
-            <p className="mb-4">
-              Switch currency at any moment — every figure on the platform
-              reflects the live mid-market rate, refreshed every fifteen minutes
-              and marked with a timestamp. We hold orders in the currency we
-              paid, then settle at delivery, so a swing in the yen never reaches
-              your invoice unannounced.
-            </p>
+            <p className="mb-4">{a.copy}</p>
             <button className="btn btn-link" type="button">
-              Read how we handle exchange-rate risk
+              {a.readMore}
             </button>
           </div>
         </div>
@@ -182,67 +182,46 @@ function AtelierNote() {
 }
 
 function Tiers() {
-  const tiers = [
-    {
-      name: "Normal",
-      it: false,
-      cur: false,
-      spend: "No minimum",
-      bens: [
-        "One concierge channel",
-        "Quotes within 36 hours",
-        "Insured shipping at cost",
-      ],
-    },
-    {
-      name: "Professional",
-      it: true,
-      cur: true,
-      spend: "NT$ 600,000 / year",
-      bens: [
-        "Dedicated concierge",
-        "Quotes within 12 hours",
-        "Complimentary shipping & duties",
-        "Quarterly atelier preview",
-      ],
-    },
-    {
-      name: "Diamond",
-      it: true,
-      cur: false,
-      spend: "By invitation",
-      bens: [
-        "Pair of concierges, 24/7",
-        "Trunk-show priority access",
-        "Private viewings, Taipei vault",
-        "Lifetime resale-buyback offer",
-      ],
-    },
-  ];
+  const t = useT();
+  const ti = t.tiers;
+  const tiersData: { name: Tier; it: boolean; cur: boolean }[] = TIERS.map(
+    (tier) => ({
+      name: tier,
+      it: tier !== "Normal",
+      cur: tier === "Professional",
+    })
+  );
   return (
     <section className="section">
       <div className="shell">
         <div className="section-head">
           <div>
-            <div className="eyebrow">Three memberships</div>
+            <div className="eyebrow">{ti.eyebrow}</div>
             <h2 className="mt-[14px]">
-              Choose the rhythm <em>of your file</em>.
+              {ti.line1}
+              <em>{ti.lineEm}</em>.
             </h2>
           </div>
           <div className="meta">
-            Upgrade happens quietly — based on a year of activity, never on a
-            sales call.
-            <br />
-            Downgrade is just as discreet.
+            {ti.meta.split("\n").map((line, i, arr) => (
+              <span key={line}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </span>
+            ))}
           </div>
         </div>
         <div className="tiers">
-          {tiers.map((tt) => (
+          {tiersData.map((tt) => (
             <div className={`tier ${tt.cur ? "cur" : ""}`} key={tt.name}>
-              <div className="badge">{tt.cur ? "— your tier" : tt.spend}</div>
-              <div className="name">{tt.it ? <em>{tt.name}</em> : tt.name}</div>
+              <div className="badge">
+                {tt.cur ? ti.yourTier : ti.spend[tt.name]}
+              </div>
+              <div className="name">
+                {tt.it ? <em>{ti.names[tt.name]}</em> : ti.names[tt.name]}
+              </div>
               <ul>
-                {tt.bens.map((b) => (
+                {ti.bens[tt.name].map((b) => (
                   <li key={b}>{b}</li>
                 ))}
               </ul>

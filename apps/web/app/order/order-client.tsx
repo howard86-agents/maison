@@ -5,20 +5,24 @@ import { formatCcy } from "../../lib/currency";
 import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";
 
-const NOTIFICATIONS: [string, boolean][] = [
-  ["LINE @maison_concierge", true],
-  ["Email · 陳美琳@…", true],
-  ["SMS · +886 9·· ····", false],
-];
-
 export function OrderClient() {
-  const { ccy } = useLocale();
+  const { ccy, t } = useLocale();
+  const o = t.order;
+
+  const notifications: [string, boolean][] = [
+    [o.notifLine, true],
+    [o.notifEmail, true],
+    [o.notifSms, false],
+  ];
+
   return (
     <div className="fade-in shell">
       <div className="pt-12">
-        <div className="eyebrow">File MSN — 04823 · in motion</div>
+        <div className="eyebrow">{o.fileLine}</div>
         <h1 className="display mt-4 font-normal text-[56px] tracking-[-0.02em]">
-          Your <em className="text-accent italic">Saddle 25</em> is travelling.
+          {o.title}
+          <em className="text-accent italic">{o.titleEm}</em>
+          {o.titleAfter}
         </h1>
       </div>
 
@@ -42,27 +46,23 @@ export function OrderClient() {
                 <div className="display mt-[6px] text-[26px] tracking-[-0.015em]">
                   Saddle 25 · Étoupe
                 </div>
-                <div className="muted mt-2 text-[13px]">
-                  Candidate A · Paris 8e · approved 14 May
-                </div>
+                <div className="muted mt-2 text-[13px]">{o.candidateLine}</div>
                 <div className="row mt-[14px] gap-2">
                   <span className="tag border-accent text-accent">
-                    <span className="dot bg-accent" /> Stage 3 of 5
+                    <span className="dot bg-accent" /> {o.stage3of5}
                   </span>
-                  <span className="tag">ETA · 21 May</span>
+                  <span className="tag">{o.eta}</span>
                 </div>
               </div>
             </div>
             <div>
               <div className="mono text-[10.5px] text-ink-3 tracking-[0.14em]">
-                PAID · ESCROWED
+                {o.paidEscrowed}
               </div>
               <div className="display mt-[6px] text-[30px]">
                 {formatCcy(12_455, ccy)}
               </div>
-              <div className="muted mt-1 text-[12px]">
-                Released to maison on second-inspection clear.
-              </div>
+              <div className="muted mt-1 text-[12px]">{o.releasedNote}</div>
               <div className="process mt-5">
                 <div className="seg on" />
                 <div className="seg on" />
@@ -75,28 +75,29 @@ export function OrderClient() {
           </div>
 
           <div className="timeline">
-            {ORDER_STAGES.map((st) => (
-              <div className="stage" data-on={st.s} key={st.t}>
-                <div className="marker">
-                  {st.t.split(" ").slice(0, 2).join(" ")}
-                  <div className="when">{st.w}</div>
+            {ORDER_STAGES.map((st, i) => {
+              const stageText = o.stages[i] ?? { t: st.t, w: st.w, d: st.d };
+              return (
+                <div className="stage" data-on={st.s} key={st.t}>
+                  <div className="marker">
+                    {stageText.t.split(" ").slice(0, 2).join(" ")}
+                    <div className="when">{stageText.w}</div>
+                  </div>
+                  <div>
+                    <h5>{stageText.t}</h5>
+                    <p>{stageText.d}</p>
+                    {st.s === "cur" && (
+                      <div className="line-preview mt-[14px]">
+                        <strong>{o.conciergeMessageSig.split(" · ")[0]}</strong>{" "}
+                        · {o.conciergeMessageSig.split(" · ")[1] ?? ""}
+                        <br />
+                        {o.conciergeMessage}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  <h5>{st.t}</h5>
-                  <p>{st.d}</p>
-                  {st.s === "cur" && (
-                    <div className="line-preview mt-[14px]">
-                      <strong>Hsiao-Yu</strong> · MAISON CONCIERGE
-                      <br />
-                      Saddle is on AF197, due Taoyuan 06:40 tomorrow. I will
-                      photograph her at the vault before lunch and dispatch by
-                      Wednesday — we are on track for your Friday hand-delivery
-                      window.
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -107,35 +108,37 @@ export function OrderClient() {
                 HY
               </div>
               <div>
-                <div className="display text-[16px]">Hsiao-Yu Chen</div>
+                <div className="display text-[16px]">
+                  {t.quote.conciergeFull}
+                </div>
                 <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
-                  YOUR CONCIERGE
+                  {o.yourConcierge}
                 </div>
               </div>
             </div>
             <div className="hairline my-4" />
             <div className="fine leading-[1.7]">
-              Reachable 09:00 — 19:00 GMT+8.
+              {o.reachable}
               <br />
-              Replies in 32 mins (median).
+              {o.repliesIn}
             </div>
             <button
               className="btn btn-ghost mt-4 w-full justify-center"
               type="button"
             >
-              Open LINE channel
+              {o.openLine}
             </button>
             <button className="btn btn-link mt-3" type="button">
-              Request photographs of the piece
+              {o.requestPhotos}
             </button>
           </div>
 
           <div className="mt-[18px] border-[0.5px] border-line bg-bg-card p-[22px]">
             <div className="mono text-[10.5px] text-ink-3 tracking-[0.14em]">
-              YOUR NOTIFICATIONS
+              {o.yourNotifications}
             </div>
             <div className="mt-[14px] flex flex-col gap-[10px] text-[12.5px]">
-              {NOTIFICATIONS.map(([k, on]) => (
+              {notifications.map(([k, on]) => (
                 <div className="row-between" key={k}>
                   <span>{k}</span>
                   <span
@@ -144,7 +147,7 @@ export function OrderClient() {
                     <span
                       className={`dot ${on ? "bg-positive" : "bg-ink-3"}`}
                     />
-                    {on ? "on" : "off"}
+                    {on ? o.on : o.off}
                   </span>
                 </div>
               ))}
@@ -152,11 +155,11 @@ export function OrderClient() {
           </div>
 
           <div className="mt-[18px] border-[0.5px] border-line bg-bg-card p-[22px]">
-            <div className="eyebrow">After arrival</div>
+            <div className="eyebrow">{o.afterArrival}</div>
             <ul className="mx-0 mt-3 mb-0 flex list-none flex-col gap-[9px] p-0 text-[13px] text-ink-2">
-              <li>— 14-day no-questions return</li>
-              <li>— Resale offer · 70% within 12 months</li>
-              <li>— Lifetime authentication card</li>
+              {o.afterArrivalItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </div>
         </aside>
