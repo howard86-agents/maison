@@ -117,7 +117,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
                     }}
                     type="button"
                   >
-                    <span>{CCY[c].label}</span>
+                    <span>{t.currencies[c]}</span>
                     <span className="mono text-ink-3">{CCY[c].sym}</span>
                   </button>
                 ))}

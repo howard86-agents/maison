@@ -224,6 +224,15 @@ interface Dictionary {
     back: string;
     approve: string;
   };
+  currencies: {
+    USD: string;
+    TWD: string;
+    EUR: string;
+    JPY: string;
+    HKD: string;
+    CNY: string;
+    KRW: string;
+  };
   dev: {
     home: string;
     collection: string;
@@ -592,6 +601,15 @@ const EN: Dictionary = {
     continueReview: "Continue to review",
     back: "← back",
     approve: "Approve",
+  },
+  currencies: {
+    USD: "US Dollar",
+    TWD: "New Taiwan Dollar",
+    EUR: "Euro",
+    JPY: "Japanese Yen",
+    HKD: "Hong Kong Dollar",
+    CNY: "Chinese Yuan",
+    KRW: "Korean Won",
   },
   hero: {
     eyebrow: "A proxy-shopping atelier for considered pieces",
@@ -1252,6 +1270,15 @@ const ZH_TW: Dictionary = {
     back: "← 返回",
     approve: "確認核可",
   },
+  currencies: {
+    USD: "美元",
+    TWD: "新台幣",
+    EUR: "歐元",
+    JPY: "日圓",
+    HKD: "港幣",
+    CNY: "人民幣",
+    KRW: "韓元",
+  },
   hero: {
     eyebrow: "為慎重之物存在的代購工坊",
     sub: "MAISON 是專屬代購顧問,為您搜羅全球工坊的皮件、製錶與成衣。透明定價、嚴格鑑定,並由一位專屬顧問全程經手您的檔案。",
@@ -1877,6 +1904,15 @@ const ZH_CN: Dictionary = {
     continueReview: "前往最终确认",
     back: "← 返回",
     approve: "确认核可",
+  },
+  currencies: {
+    USD: "美元",
+    TWD: "新台币",
+    EUR: "欧元",
+    JPY: "日元",
+    HKD: "港币",
+    CNY: "人民币",
+    KRW: "韩元",
   },
   hero: {
     eyebrow: "为慎重之物而存的代购工坊",
@@ -2504,6 +2540,15 @@ const JA: Dictionary = {
     continueReview: "最終確認へ",
     back: "← 戻る",
     approve: "承認する",
+  },
+  currencies: {
+    USD: "米ドル",
+    TWD: "ニュー台湾ドル",
+    EUR: "ユーロ",
+    JPY: "日本円",
+    HKD: "香港ドル",
+    CNY: "人民元",
+    KRW: "韓国ウォン",
   },
   hero: {
     eyebrow: "厳選された一点のためのプロキシ・アトリエ",
@@ -3151,6 +3196,15 @@ const KO: Dictionary = {
     continueReview: "최종 확인",
     back: "← 뒤로",
     approve: "승인",
+  },
+  currencies: {
+    USD: "미국 달러",
+    TWD: "신타이완 달러",
+    EUR: "유로",
+    JPY: "일본 엔",
+    HKD: "홍콩 달러",
+    CNY: "중국 위안",
+    KRW: "대한민국 원",
   },
   hero: {
     eyebrow: "신중한 한 점을 위한 프록시 아틀리에",
