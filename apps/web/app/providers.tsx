@@ -8,14 +8,26 @@ import {
   useMemo,
   useState,
 } from "react";
-import type { CurrencyCode } from "../lib/currency";
-import type { Lang } from "../lib/translations";
+import { CURRENCY_CODES, type CurrencyCode } from "../lib/currency";
+import {
+  DEFAULT_LOCALE,
+  isLocale,
+  LOCALE_COOKIE,
+  matchLocaleFromTag,
+} from "../lib/i18n/config";
+import {
+  type Dictionary,
+  HTML_LANG,
+  type Locale,
+  TRANSLATIONS,
+} from "../lib/translations";
 
 interface LocaleCtx {
   ccy: CurrencyCode;
-  lang: Lang;
+  locale: Locale;
   setCcy: (c: CurrencyCode) => void;
-  setLang: (l: Lang) => void;
+  setLocale: (l: Locale) => void;
+  t: Dictionary;
 }
 
 interface ThemeCtx {
@@ -34,6 +46,10 @@ export function useLocale(): LocaleCtx {
   return ctx;
 }
 
+export function useT(): Dictionary {
+  return useLocale().t;
+}
+
 export function useTheme(): ThemeCtx {
   const ctx = useContext(ThemeContext);
   if (!ctx) {
@@ -42,23 +58,32 @@ export function useTheme(): ThemeCtx {
   return ctx;
 }
 
+function detectBrowserLocale(): Locale | null {
+  return matchLocaleFromTag(window.navigator.language ?? "");
+}
+
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("EN");
+  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
   const [ccy, setCcyState] = useState<CurrencyCode>("USD");
   const [dark, setDark] = useState<boolean>(false);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
-      const storedLang = window.localStorage.getItem("maison.lang");
+      const storedLocale = window.localStorage.getItem("maison.locale");
       const storedCcy = window.localStorage.getItem("maison.ccy");
       const storedDark = window.localStorage.getItem("maison.dark");
-      if (storedLang === "EN" || storedLang === "TC") {
-        setLangState(storedLang);
+      if (isLocale(storedLocale)) {
+        setLocaleState(storedLocale);
+      } else {
+        const detected = detectBrowserLocale();
+        if (detected) {
+          setLocaleState(detected);
+        }
       }
       if (
         storedCcy &&
-        ["USD", "TWD", "EUR", "JPY", "HKD"].includes(storedCcy)
+        (CURRENCY_CODES as readonly string[]).includes(storedCcy)
       ) {
         setCcyState(storedCcy as CurrencyCode);
       }
@@ -83,13 +108,27 @@ export function Providers({ children }: { children: React.ReactNode }) {
     }
   }, [dark, hydrated]);
 
-  const setLang = useCallback((next: Lang) => {
-    setLangState(next);
-    try {
-      window.localStorage.setItem("maison.lang", next);
-    } catch {
-      // ignore
+  useEffect(() => {
+    if (!hydrated) {
+      return;
     }
+    document.documentElement.lang = HTML_LANG[locale];
+  }, [locale, hydrated]);
+
+  const setLocale = useCallback((next: Locale) => {
+    setLocaleState((prev) => {
+      if (prev === next) {
+        return prev;
+      }
+      try {
+        window.localStorage.setItem("maison.locale", next);
+        // biome-ignore lint/suspicious/noDocumentCookie: server reads `accept-language` fallback when cookie absent; one-line write is simplest.
+        document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
+      } catch {
+        // ignore
+      }
+      return next;
+    });
   }, []);
 
   const setCcy = useCallback((next: CurrencyCode) => {
@@ -104,8 +143,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const toggleDark = useCallback(() => setDark((d) => !d), []);
 
   const localeValue = useMemo(
-    () => ({ lang, ccy, setLang, setCcy }),
-    [lang, ccy, setLang, setCcy]
+    () => ({
+      locale,
+      ccy,
+      t: TRANSLATIONS[locale],
+      setLocale,
+      setCcy,
+    }),
+    [locale, ccy, setLocale, setCcy]
   );
   const themeValue = useMemo(() => ({ dark, toggleDark }), [dark, toggleDark]);
 

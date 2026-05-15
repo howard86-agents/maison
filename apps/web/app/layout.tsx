@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Geist, JetBrains_Mono } from "next/font/google";
+import { getDictionary, getLocale } from "../lib/i18n";
+import { HTML_LANG } from "../lib/translations";
 import { DevSwitcher } from "./_components/dev-switcher";
 import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
@@ -28,11 +30,13 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "MAISON · Concierge",
-  description:
-    "A private concierge for sourcing fine leather, watchmaking and ready-to-wear.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getDictionary();
+  return {
+    title: t.meta.title,
+    description: t.meta.description,
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -41,15 +45,16 @@ export const viewport: Viewport = {
 
 const isDev = process.env.NODE_ENV !== "production";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
   return (
     <html
       className={`${cormorant.variable} ${geist.variable} ${mono.variable}`}
-      lang="en"
+      lang={HTML_LANG[locale]}
       suppressHydrationWarning
     >
       <head>

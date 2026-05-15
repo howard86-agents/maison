@@ -1,13 +1,14 @@
 import { cookies, headers } from "next/headers";
-import { type Lang, TRANSLATIONS } from "../translations";
-import { DEFAULT_LOCALE, isLocale, LOCALE_COOKIE, type Locale } from "./config";
+import { cache } from "react";
+import { type Locale, TRANSLATIONS } from "../translations";
+import {
+  DEFAULT_LOCALE,
+  isLocale,
+  LOCALE_COOKIE,
+  matchLocaleFromTag,
+} from "./config";
 
-const LEGACY_LANG: Record<Locale, Lang> = {
-  en: "EN",
-  "zh-TW": "TC",
-};
-
-export async function getLocale(): Promise<Locale> {
+export const getLocale = cache(async (): Promise<Locale> => {
   const cookieValue = (await cookies()).get(LOCALE_COOKIE)?.value;
   if (isLocale(cookieValue)) {
     return cookieValue;
@@ -15,23 +16,17 @@ export async function getLocale(): Promise<Locale> {
 
   const acceptLanguage = (await headers()).get("accept-language") ?? "";
   for (const tag of acceptLanguage.split(",")) {
-    const candidate = tag.trim().split(";")[0]?.trim();
-    if (isLocale(candidate)) {
-      return candidate;
-    }
-    if (candidate?.startsWith("zh")) {
-      return "zh-TW";
-    }
-    if (candidate?.startsWith("en")) {
-      return "en";
+    const matched = matchLocaleFromTag(tag);
+    if (matched) {
+      return matched;
     }
   }
   return DEFAULT_LOCALE;
-}
+});
 
-export async function getDictionary(locale?: Locale) {
+export const getDictionary = cache(async (locale?: Locale) => {
   const resolved = locale ?? (await getLocale());
-  return TRANSLATIONS[LEGACY_LANG[resolved]];
-}
+  return TRANSLATIONS[resolved];
+});
 
-export type { Locale } from "./config";
+export type { Locale } from "../translations";
