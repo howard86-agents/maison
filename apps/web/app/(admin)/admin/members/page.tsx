@@ -6,6 +6,13 @@ export default async function AdminMembersPage() {
   const members = await prisma.user.findMany({
     orderBy: { createdAt: "desc" },
     take: 50,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      createdAt: true,
+    },
   });
 
   return (
