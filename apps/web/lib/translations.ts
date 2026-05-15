@@ -272,6 +272,21 @@ interface Dictionary {
   meta: {
     title: string;
     description: string;
+    siteName: string;
+    product: {
+      titleTemplate: string;
+      descriptionTemplate: string;
+    };
+    pages: {
+      home: { title: string; description: string };
+      collection: { title: string; description: string };
+      request: { title: string; description: string };
+      quote: { title: string; description: string };
+      checkout: { title: string; description: string };
+      order: { title: string; description: string };
+      account: { title: string; description: string };
+      signin: { title: string; description: string };
+    };
   };
   nav: {
     atelier: string;
@@ -499,6 +514,50 @@ const EN: Dictionary = {
     title: "MAISON · Concierge",
     description:
       "A private concierge for sourcing fine leather, watchmaking and ready-to-wear.",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "Concierge-sourced {{name}} from {{house}}. {{condition}} · authenticated and hand-delivered by MAISON.",
+    },
+    pages: {
+      home: {
+        title: "MAISON · Concierge",
+        description:
+          "MAISON is a private concierge for sourcing fine leather, watchmaking and ready-to-wear from the world’s ateliers — with transparent pricing, authentication, and one human dedicated to your file.",
+      },
+      collection: {
+        title: "The Collection · MAISON",
+        description:
+          "In rotation this month. Every piece is concierge-sourced, authenticated, and ready to hand-deliver.",
+      },
+      request: {
+        title: "Request a Piece · MAISON",
+        description:
+          "Every file is handled by one concierge from request to delivery. You will know their name, their voice, and their working hours.",
+      },
+      quote: {
+        title: "Your Quote · MAISON",
+        description: "Review and approve your concierge dossier.",
+      },
+      checkout: {
+        title: "Checkout · MAISON",
+        description: "Authorise your sourcing file with secure payment.",
+      },
+      order: {
+        title: "Order · MAISON",
+        description:
+          "Track your sourcing file from collection to hand delivery.",
+      },
+      account: {
+        title: "Account · MAISON",
+        description: "Your concierge file, ledger, and tier.",
+      },
+      signin: {
+        title: "Sign in · MAISON",
+        description: "Sign in to your MAISON file.",
+      },
+    },
   },
   header: {
     estTaipei: "EST · 2019 · TAIPEI",
@@ -1115,6 +1174,49 @@ const ZH_TW: Dictionary = {
   meta: {
     title: "MAISON · 代購工坊",
     description: "為您搜羅全球皮件、製錶與成衣的私密代購顧問。",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "由 MAISON 顧問為您代購的 {{name}},來自 {{house}}。{{condition}} · 經過鑑定並親手送達。",
+    },
+    pages: {
+      home: {
+        title: "MAISON · 代購工坊",
+        description:
+          "MAISON 是專屬代購顧問,為您搜羅全球工坊的皮件、製錶與成衣。透明定價、嚴格鑑定,並由一位專屬顧問全程經手您的檔案。",
+      },
+      collection: {
+        title: "典藏 · MAISON",
+        description:
+          "本月在席的精選。每一件皆由顧問代購、嚴格鑑定,並可親手送達。",
+      },
+      request: {
+        title: "指定代購 · MAISON",
+        description:
+          "每一份檔案從提交到送達都由同一位顧問經手。您會記得他的姓名、聲音與服務時段。",
+      },
+      quote: {
+        title: "您的報價 · MAISON",
+        description: "確認並核可您的顧問檔案。",
+      },
+      checkout: {
+        title: "結帳 · MAISON",
+        description: "以安全支付方式核可您的代購檔案。",
+      },
+      order: {
+        title: "訂單 · MAISON",
+        description: "從取件到親手送達,追蹤您的代購檔案。",
+      },
+      account: {
+        title: "會員 · MAISON",
+        description: "您的代購檔案、帳本與會員等級。",
+      },
+      signin: {
+        title: "登入 · MAISON",
+        description: "登入您的 MAISON 檔案。",
+      },
+    },
   },
   header: {
     estTaipei: "創立 · 2019 · 台北",
@@ -1698,6 +1800,49 @@ const ZH_CN: Dictionary = {
   meta: {
     title: "MAISON · 代购工坊",
     description: "为您搜罗全球皮具、制表与成衣的私密代购顾问。",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "由 MAISON 顾问代购的 {{name}},来自 {{house}}。{{condition}} · 经过鉴定并亲手送达。",
+    },
+    pages: {
+      home: {
+        title: "MAISON · 代购工坊",
+        description:
+          "MAISON 是专属代购顾问,为您搜罗全球工坊的皮具、制表与成衣。透明定价、严格鉴定,并由一位专属顾问全程经手您的档案。",
+      },
+      collection: {
+        title: "典藏 · MAISON",
+        description:
+          "本月在席的精选。每一件皆由顾问代购、严格鉴定,并可亲手送达。",
+      },
+      request: {
+        title: "指定代购 · MAISON",
+        description:
+          "每一份档案从提交到送达都由同一位顾问经手。您会记得他的姓名、声音与服务时段。",
+      },
+      quote: {
+        title: "您的报价 · MAISON",
+        description: "确认并核可您的顾问档案。",
+      },
+      checkout: {
+        title: "结账 · MAISON",
+        description: "以安全支付方式核可您的代购档案。",
+      },
+      order: {
+        title: "订单 · MAISON",
+        description: "从取件到亲手送达,追踪您的代购档案。",
+      },
+      account: {
+        title: "会员 · MAISON",
+        description: "您的代购档案、账本与会员等级。",
+      },
+      signin: {
+        title: "登录 · MAISON",
+        description: "登录您的 MAISON 档案。",
+      },
+    },
   },
   header: {
     estTaipei: "创立 · 2019 · 台北",
@@ -2282,6 +2427,49 @@ const JA: Dictionary = {
     title: "MAISON · コンシェルジュ",
     description:
       "革・時計・既製服を世界のアトリエから手配する、プライベート・コンシェルジュ。",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "MAISON コンシェルジュが手配する {{name}}。{{house}} より。{{condition}} · 鑑定済み、直接お届け。",
+    },
+    pages: {
+      home: {
+        title: "MAISON · コンシェルジュ",
+        description:
+          "MAISON は、世界のアトリエから革・時計・既製服を手配するプライベート・コンシェルジュ。透明な価格、確かな鑑定、そしてあなたのファイルを担当するひとりの専属担当者。",
+      },
+      collection: {
+        title: "コレクション · MAISON",
+        description:
+          "今月の取り扱い。すべてコンシェルジュが手配し、鑑定を経て、直接お届けします。",
+      },
+      request: {
+        title: "依頼する · MAISON",
+        description:
+          "すべてのファイルは、ご依頼から到着まで同じコンシェルジュが担当します。お名前、声、対応時間まで、はっきりとお伝えします。",
+      },
+      quote: {
+        title: "ご見積もり · MAISON",
+        description: "コンシェルジュ・ドシエをご確認・ご承認ください。",
+      },
+      checkout: {
+        title: "お支払い · MAISON",
+        description: "安全な決済で手配ファイルを承認します。",
+      },
+      order: {
+        title: "ご注文 · MAISON",
+        description: "受け取りから直接配送まで、手配ファイルを追跡します。",
+      },
+      account: {
+        title: "アカウント · MAISON",
+        description: "コンシェルジュ・ファイル、台帳、ティア。",
+      },
+      signin: {
+        title: "サインイン · MAISON",
+        description: "MAISON ファイルにサインインします。",
+      },
+    },
   },
   header: {
     estTaipei: "創立 · 2019 · 台北",
@@ -2886,6 +3074,49 @@ const KO: Dictionary = {
     title: "MAISON · 컨시어지",
     description:
       "가죽·시계·기성복을 세계의 아틀리에에서 조달하는 프라이빗 컨시어지.",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "MAISON 컨시어지가 조달한 {{name}}. {{house}}. {{condition}} · 감정 완료, 직접 전달.",
+    },
+    pages: {
+      home: {
+        title: "MAISON · 컨시어지",
+        description:
+          "MAISON 은 세계의 아틀리에에서 가죽·시계·기성복을 조달하는 프라이빗 컨시어지입니다. 투명한 가격, 엄정한 감정, 그리고 당신의 파일을 전담하는 한 사람.",
+      },
+      collection: {
+        title: "컬렉션 · MAISON",
+        description:
+          "이번 달의 라인업. 모두 컨시어지가 조달하고 감정을 거쳐 직접 전달합니다.",
+      },
+      request: {
+        title: "요청하기 · MAISON",
+        description:
+          "모든 파일은 요청부터 인도까지 같은 컨시어지가 담당합니다. 이름과 음성, 근무 시간까지 분명히 안내합니다.",
+      },
+      quote: {
+        title: "견적 · MAISON",
+        description: "컨시어지 도시에를 확인하고 승인하세요.",
+      },
+      checkout: {
+        title: "결제 · MAISON",
+        description: "안전한 결제로 조달 파일을 승인합니다.",
+      },
+      order: {
+        title: "주문 · MAISON",
+        description: "수령부터 직접 전달까지 조달 파일을 추적합니다.",
+      },
+      account: {
+        title: "계정 · MAISON",
+        description: "컨시어지 파일, 원장, 티어.",
+      },
+      signin: {
+        title: "로그인 · MAISON",
+        description: "MAISON 파일에 로그인하세요.",
+      },
+    },
   },
   header: {
     estTaipei: "설립 · 2019 · 타이베이",
