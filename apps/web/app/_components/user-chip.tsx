@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { authClient } from "../../lib/auth-client";
+import { useT } from "../providers";
 
 const WHITESPACE = /\s+/;
 
@@ -24,6 +25,7 @@ function firstName(
 
 export function UserChip() {
   const router = useRouter();
+  const t = useT();
   const session = authClient.useSession();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -51,14 +53,14 @@ export function UserChip() {
         type="button"
       >
         <span className="dot" />
-        <span className="mono">Sign in</span>
+        <span className="mono">{t.user.signIn}</span>
       </button>
     );
   }
 
   const label = user.isAnonymous
-    ? "Guest"
-    : (firstName(user.name, user.email) ?? "Member");
+    ? t.user.guest
+    : (firstName(user.name, user.email) ?? t.user.member);
 
   const handleSignOut = async () => {
     setOpen(false);
@@ -81,7 +83,7 @@ export function UserChip() {
       </button>
       {open ? (
         <div className="dropdown" role="menu">
-          <div className="group">Signed in</div>
+          <div className="group">{t.user.signedIn}</div>
           <button
             onClick={() => {
               setOpen(false);
@@ -89,11 +91,11 @@ export function UserChip() {
             }}
             type="button"
           >
-            <span>Account</span>
+            <span>{t.user.account}</span>
             <span className="mono text-ink-3">→</span>
           </button>
           <button onClick={handleSignOut} type="button">
-            <span>Sign out</span>
+            <span>{t.user.signOut}</span>
             <span className="mono text-ink-3">↶</span>
           </button>
         </div>

@@ -7,7 +7,7 @@ import { useLocale } from "../providers";
 import { ImageOrPlaceholder } from "./product-image";
 
 export function ProductCard({ product }: { product: Product }) {
-  const { ccy } = useLocale();
+  const { ccy, t } = useLocale();
   return (
     <Link className="prod" href={`/product/${product.id}`}>
       <ImageOrPlaceholder
@@ -27,7 +27,9 @@ export function ProductCard({ product }: { product: Product }) {
             className={`prod-status ${product.stockType === "estimated" ? "estim" : ""}`}
           >
             <span className="dot" />
-            {product.stockType === "estimated" ? "estimated" : "in vault"}
+            {product.stockType === "estimated"
+              ? t.productCard.estimated
+              : t.productCard.inVault}
           </div>
         </div>
       </div>

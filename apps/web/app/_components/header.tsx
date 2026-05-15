@@ -6,15 +6,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { authClient } from "../../lib/auth-client";
 import { CCY, CURRENCY_CODES } from "../../lib/currency";
-import { type Lang, TRANSLATIONS } from "../../lib/translations";
+import { LOCALE_LABEL, LOCALE_SHORT, LOCALES } from "../../lib/translations";
 import { useLocale, useTheme } from "../providers";
 import { TierChip } from "./tier-chip";
 import { UserChip } from "./user-chip";
 
-const LANGS: Lang[] = ["EN", "TC"];
-
 export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
-  const { lang, ccy, setLang, setCcy } = useLocale();
+  const { locale, ccy, setLocale, setCcy, t } = useLocale();
   const { dark, toggleDark } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
@@ -36,8 +34,6 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
-
-  const t = TRANSLATIONS[lang];
 
   const nav: { href: string; label: string; match: (p: string) => boolean }[] =
     [
@@ -67,7 +63,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
       <div className="shell hdr-top">
         <Link className="row no-underline" href="/">
           <div className="hdr-mark">MAISON</div>
-          <sup>EST · 2019 · TAIPEI</sup>
+          <sup>{t.header.estTaipei}</sup>
         </Link>
         <nav className="hdr-nav">
           {nav.map((it) => (
@@ -91,26 +87,26 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
               type="button"
             >
               <span className="dot" />
-              <span className="mono">{lang}</span>
+              <span className="mono">{LOCALE_SHORT[locale]}</span>
               <span className="text-ink-3">·</span>
               <span className="mono">{ccy}</span>
               <span className="ml-[2px] text-ink-3">▾</span>
             </button>
             {open && (
               <div className="dropdown" role="menu">
-                <div className="group">Language</div>
-                {LANGS.map((l) => (
+                <div className="group">{t.header.languageGroup}</div>
+                {LOCALES.map((l) => (
                   <button
-                    data-on={l === lang ? "1" : "0"}
+                    data-on={l === locale ? "1" : "0"}
                     key={l}
-                    onClick={() => setLang(l)}
+                    onClick={() => setLocale(l)}
                     type="button"
                   >
-                    <span>{l === "EN" ? "English" : "繁體中文"}</span>
-                    <span className="mono text-ink-3">{l}</span>
+                    <span>{LOCALE_LABEL[l]}</span>
+                    <span className="mono text-ink-3">{LOCALE_SHORT[l]}</span>
                   </button>
                 ))}
-                <div className="group">Currency · reference</div>
+                <div className="group">{t.header.currencyGroup}</div>
                 {CURRENCY_CODES.map((c) => (
                   <button
                     data-on={c === ccy ? "1" : "0"}
@@ -126,7 +122,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
                   </button>
                 ))}
                 <div className="group flex items-center gap-2">
-                  Updated 13·05·26 09:42 GMT+8
+                  {t.header.updated}
                 </div>
               </div>
             )}
@@ -137,7 +133,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
           <UserChip />
 
           <button
-            aria-label="Toggle dark mode"
+            aria-label={t.header.toggleDark}
             className="icon-btn"
             onClick={toggleDark}
             type="button"
@@ -180,7 +176,11 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
               </svg>
             )}
           </button>
-          <button aria-label="Search" className="icon-btn" type="button">
+          <button
+            aria-label={t.header.search}
+            className="icon-btn"
+            type="button"
+          >
             <svg
               aria-hidden="true"
               fill="none"
@@ -199,7 +199,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
             </svg>
           </button>
           <button
-            aria-label={isLoggedIn ? "Account" : "Sign in"}
+            aria-label={isLoggedIn ? t.header.account : t.header.signIn}
             className="icon-btn"
             onClick={() => router.push(accountHref)}
             type="button"

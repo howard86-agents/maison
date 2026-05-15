@@ -4,6 +4,7 @@ import { AI_MATCHES } from "@maison/data";
 import { useRouter } from "next/navigation";
 import { type ChangeEvent, useRef, useState } from "react";
 import { CCY, formatCcy } from "../../lib/currency";
+import { type Dictionary, formatTemplate } from "../../lib/translations";
 import { ImageOrPlaceholder } from "../_components/product-image";
 import { useLocale } from "../providers";
 
@@ -17,25 +18,29 @@ interface FormState {
   notes: string;
 }
 
-const INITIAL_FORM: FormState = {
-  brand: "Birkett",
-  model: "Saddle 25 · Étoupe",
-  budgetLow: "USD 10,000",
-  budgetHi: "USD 14,500",
-  notes: "",
-  cond: "Excellent · pre-loved, no visible wear",
-  deadline: "Before September",
-};
-
 const AI_DELAY_MS = 1400;
 
+function makeInitialForm(t: Dictionary["request"]): FormState {
+  return {
+    brand: "Birkett",
+    model: "Saddle 25 · Étoupe",
+    budgetLow: "USD 10,000",
+    budgetHi: "USD 14,500",
+    notes: "",
+    cond: t.condExcellent,
+    deadline: "",
+  };
+}
+
 function UploadStep({
+  t,
   uploadPreview,
   setUploadPreview,
   runningAI,
   aiDone,
   runAI,
 }: {
+  t: Dictionary["request"];
   uploadPreview: string | null;
   setUploadPreview: (v: string | null) => void;
   runningAI: boolean;
@@ -62,7 +67,7 @@ function UploadStep({
   return (
     <div className="stack-lg">
       <div className="field gap-[10px]">
-        <label htmlFor="req-piece-upload">01 · The piece</label>
+        <label htmlFor="req-piece-upload">{t.pieceLabel}</label>
         <div className="upload-zone" data-has={hasUpload ? "1" : "0"}>
           <div className="drop-target">
             {hasUpload ? (
@@ -77,22 +82,14 @@ function UploadStep({
                   +
                 </div>
                 <div className="mono mt-2 text-[10px] tracking-[0.16em]">
-                  DRAG · OR · BROWSE
+                  {t.dragOrBrowse}
                 </div>
               </div>
             )}
           </div>
           <div>
-            <h3>
-              {hasUpload
-                ? "A handsome reference."
-                : "Add the piece you have in mind."}
-            </h3>
-            <p>
-              {hasUpload
-                ? "Add up to 4 more photographs from different angles, a link, or a sentence about what you remember."
-                : "Drop a screenshot, a runway photo, or even a snapshot taken in a friend’s closet. We accept JPG, HEIC, PNG up to 24MB."}
-            </p>
+            <h3>{hasUpload ? t.uploadedH : t.emptyH}</h3>
+            <p>{hasUpload ? t.uploadedP : t.emptyP}</p>
             <div className="actions">
               {hasUpload ? (
                 <>
@@ -101,7 +98,7 @@ function UploadStep({
                     onClick={() => setUploadPreview(null)}
                     type="button"
                   >
-                    Replace photograph
+                    {t.replacePhoto}
                   </button>
                   {!aiDone && (
                     <button
@@ -110,10 +107,7 @@ function UploadStep({
                       onClick={runAI}
                       type="button"
                     >
-                      {runningAI
-                        ? "Identifying…"
-                        : "Identify with our assistant"}{" "}
-                      <span>→</span>
+                      {runningAI ? t.identifying : t.identify} <span>→</span>
                     </button>
                   )}
                 </>
@@ -124,10 +118,10 @@ function UploadStep({
                     onClick={() => fileRef.current?.click()}
                     type="button"
                   >
-                    Choose a photograph
+                    {t.choosePhoto}
                   </button>
                   <button className="btn btn-ghost" type="button">
-                    Paste a link instead
+                    {t.pasteLink}
                   </button>
                 </>
               )}
@@ -148,16 +142,16 @@ function UploadStep({
         <div className="ai-card fade-in">
           <div className="row1">
             <span className="pulse" />
-            <span>Concierge assistant — suggestion only</span>
+            <span>{t.aiAssistant}</span>
           </div>
           <div className="summary">
             {runningAI && !aiDone ? (
-              <>Reading hardware, stitching, and grain…</>
+              t.aiReading
             ) : (
               <>
-                This appears to be a{" "}
-                <em>Birkett Saddle, size 25, Étoupe Togo</em> — circa 2023,
-                hardware in palladium.
+                {t.aiSuggestion1}
+                <em>{t.aiSuggestion2}</em>
+                {t.aiSuggestion3}
               </>
             )}
           </div>
@@ -177,16 +171,16 @@ function UploadStep({
                     <div className="body">
                       <div className="nm">{m.name}</div>
                       <div className="pr">{m.brand}</div>
-                      <div className="pct">{m.confidence}% confidence</div>
+                      <div className="pct">
+                        {formatTemplate(t.aiConfidence, { n: m.confidence })}
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
               <div className="footnote">
-                <strong>A note from MAISON.</strong> Identification is a
-                suggestion to speed your concierge along — never a verification.
-                Your dossier is reviewed and confirmed by a human within 24
-                hours.
+                <strong>{t.aiFootnoteStrong}</strong>
+                {t.aiFootnote}
               </div>
             </>
           )}
@@ -197,9 +191,11 @@ function UploadStep({
 }
 
 function DetailsStep({
+  t,
   form,
   setForm,
 }: {
+  t: Dictionary["request"];
   form: FormState;
   setForm: (f: FormState) => void;
 }) {
@@ -208,20 +204,20 @@ function DetailsStep({
     <div className="stack-lg">
       <div className="grid grid-cols-2 gap-8">
         <div className="field">
-          <label htmlFor="req-brand">02 · Maison or house</label>
+          <label htmlFor="req-brand">{t.brandLabel}</label>
           <input
             id="req-brand"
             onChange={(e) => upd("brand", e.target.value)}
-            placeholder="e.g. Birkett, Aurel, Couronne"
+            placeholder={t.brandPh}
             value={form.brand}
           />
         </div>
         <div className="field">
-          <label htmlFor="req-model">02 · Model or reference</label>
+          <label htmlFor="req-model">{t.modelLabel}</label>
           <input
             id="req-model"
             onChange={(e) => upd("model", e.target.value)}
-            placeholder="Saddle 25 · Étoupe · 2023"
+            placeholder={t.modelPh}
             value={form.model}
           />
         </div>
@@ -229,65 +225,58 @@ function DetailsStep({
 
       <div className="grid grid-cols-2 gap-8">
         <div className="field">
-          <label htmlFor="req-budget-low">03 · Budget — comfortable</label>
+          <label htmlFor="req-budget-low">{t.budgetLowLabel}</label>
           <input
             id="req-budget-low"
             onChange={(e) => upd("budgetLow", e.target.value)}
             placeholder="USD 10,000"
             value={form.budgetLow}
           />
-          <div className="field-help">
-            What we should aim for if the perfect piece appears.
-          </div>
+          <div className="field-help">{t.budgetLowHelp}</div>
         </div>
         <div className="field">
-          <label htmlFor="req-budget-hi">03 · Budget — ceiling</label>
+          <label htmlFor="req-budget-hi">{t.budgetHiLabel}</label>
           <input
             id="req-budget-hi"
             onChange={(e) => upd("budgetHi", e.target.value)}
             placeholder="USD 14,500"
             value={form.budgetHi}
           />
-          <div className="field-help">
-            The line beyond which we should pause and ask.
-          </div>
+          <div className="field-help">{t.budgetHiHelp}</div>
         </div>
       </div>
 
       <div className="field">
-        <label htmlFor="req-notes">04 · Notes for your concierge</label>
+        <label htmlFor="req-notes">{t.notesLabel}</label>
         <textarea
           id="req-notes"
           onChange={(e) => upd("notes", e.target.value)}
-          placeholder="The pre-loved kind is welcome, but please nothing visibly worn at the corners. The colour should read warmer in daylight than the reference photograph — closer to a milky coffee."
+          placeholder={t.notesPh}
           rows={4}
           value={form.notes}
         />
-        <div className="field-help">
-          Anything specific, sentimental, or non-negotiable. Your concierge
-          reads every word.
-        </div>
+        <div className="field-help">{t.notesHelp}</div>
       </div>
 
       <div className="grid grid-cols-2 gap-8">
         <div className="field">
-          <label htmlFor="req-cond">05 · Acceptable condition</label>
+          <label htmlFor="req-cond">{t.condLabel}</label>
           <select
             id="req-cond"
             onChange={(e) => upd("cond", e.target.value)}
             value={form.cond}
           >
-            <option>New, unworn — original packaging</option>
-            <option>Excellent · pre-loved, no visible wear</option>
-            <option>Vintage · any era, original elements only</option>
+            <option value={t.condNew}>{t.condNew}</option>
+            <option value={t.condExcellent}>{t.condExcellent}</option>
+            <option value={t.condVintage}>{t.condVintage}</option>
           </select>
         </div>
         <div className="field">
-          <label htmlFor="req-deadline">05 · Latest acceptable delivery</label>
+          <label htmlFor="req-deadline">{t.deadlineLabel}</label>
           <input
             id="req-deadline"
             onChange={(e) => upd("deadline", e.target.value)}
-            placeholder="No rush · or specify a date"
+            placeholder={t.deadlinePh}
             value={form.deadline}
           />
         </div>
@@ -296,13 +285,19 @@ function DetailsStep({
   );
 }
 
-function ReviewStep({ form }: { form: FormState }) {
+function ReviewStep({
+  t,
+  form,
+}: {
+  t: Dictionary["request"];
+  form: FormState;
+}) {
   return (
     <div className="stack-lg">
       <div className="card-paper p-8">
         <div className="row-between items-start">
           <div>
-            <div className="eyebrow">File · ready to dispatch</div>
+            <div className="eyebrow">{t.fileReady}</div>
             <h2 className="display mx-0 mt-3 mb-1 font-normal text-[40px] tracking-[-0.015em]">
               <em className="text-accent italic">{form.brand || "Birkett"}</em>{" "}
               {form.model || "Saddle 25 · Étoupe"}
@@ -316,7 +311,7 @@ function ReviewStep({ form }: { form: FormState }) {
             </div>
           </div>
           <ImageOrPlaceholder
-            alt="Customer reference photograph"
+            alt="reference"
             aspect="none"
             caption="reference"
             id="reference"
@@ -328,48 +323,41 @@ function ReviewStep({ form }: { form: FormState }) {
         <div className="hairline my-6" />
         <div className="grid grid-cols-[120px_1fr] gap-[14px] text-[13px]">
           <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
-            NOTES
+            {t.notesHeader}
           </div>
-          <div>
-            {form.notes ||
-              "Pre-loved is welcome, nothing visibly worn at corners. Warmer reading than the reference photograph — closer to milky coffee."}
-          </div>
+          <div>{form.notes || t.defaultNotes}</div>
           <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
-            BY
+            {t.byHeader}
           </div>
-          <div>{form.deadline || "No fixed date"}</div>
+          <div>{form.deadline || t.noFixedDate}</div>
           <div className="mono text-[10px] text-ink-3 tracking-[0.14em]">
-            CHANNEL
+            {t.channelHeader}
           </div>
           <div className="row flex-wrap gap-[14px]">
             <span>
-              Concierge channel · LINE
+              {t.conciergeChannelLine}
               <span className="muted ml-[6px] font-mono">
                 @maison_concierge
               </span>
             </span>
             <span className="tag border-positive text-positive">
-              <span className="dot bg-positive" /> connected
+              <span className="dot bg-positive" /> {t.connected}
             </span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        {(
-          [
-            ["T+0", "You submit the file", "Now"],
-            ["T+24h", "Your concierge dossier arrives", "Wed · 14 May"],
-            ["T+3–6w", "Piece in the vault, ready to ship", "mid · June"],
-          ] as const
-        ).map(([tlabel, w, when]) => (
-          <div className="card-paper p-[18px]" key={tlabel}>
+        {t.timeline.map((item) => (
+          <div className="card-paper p-[18px]" key={item.t}>
             <div className="mono text-[10px] text-accent tracking-[0.14em]">
-              {tlabel}
+              {item.t}
             </div>
-            <div className="display mt-2 text-[17px] leading-[1.2]">{w}</div>
+            <div className="display mt-2 text-[17px] leading-[1.2]">
+              {item.w}
+            </div>
             <div className="mono mt-[6px] text-[10px] text-ink-3 tracking-[0.1em]">
-              {when}
+              {item.when}
             </div>
           </div>
         ))}
@@ -380,12 +368,13 @@ function ReviewStep({ form }: { form: FormState }) {
 
 export function RequestClient() {
   const router = useRouter();
-  const { ccy } = useLocale();
+  const { ccy, t } = useLocale();
+  const r = t.request;
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [uploadPreview, setUploadPreview] = useState<string | null>(null);
   const [runningAI, setRunningAI] = useState(false);
   const [aiDone, setAiDone] = useState(false);
-  const [form, setForm] = useState<FormState>(INITIAL_FORM);
+  const [form, setForm] = useState<FormState>(() => makeInitialForm(r));
 
   const runAI = () => {
     setRunningAI(true);
@@ -397,36 +386,33 @@ export function RequestClient() {
   };
 
   const lines: [string, string, string][] = [
-    ["Concierge service fee", "USD 480", "flat — included in quote"],
-    ["Authentication & inspection", "USD 120", "two-stage, in Taipei vault"],
-    ["Insured carriage", "USD 95", "door-to-door, signature"],
-    [
-      "Reference exchange",
-      `${CCY[ccy].sym} · ${CCY[ccy].rate}`,
-      "live · 15-min refresh",
-    ],
+    [r.conciergeFee, "USD 480", r.conciergeFeeSub],
+    [r.authFee, "USD 120", r.authFeeSub],
+    [r.insuredFee, "USD 95", r.insuredFeeSub],
+    [r.refRate, `${CCY[ccy].sym} · ${CCY[ccy].rate}`, r.refRateSub],
   ];
 
   return (
     <div className="fade-in shell">
       <div className="req-header pt-12">
         <div>
-          <div className="eyebrow">Concierge file · new</div>
+          <div className="eyebrow">{r.eyebrow}</div>
           <h1>
-            Request a <em>piece</em>.
+            {r.title}
+            <em>{r.titleEm}</em>.
           </h1>
         </div>
         <div className="req-step-list">
           <span className="step" data-on={step === 1 ? "1" : "0"}>
-            01 The piece
+            {r.step1}
           </span>
           <span className="text-line-2">—</span>
           <span className="step" data-on={step === 2 ? "1" : "0"}>
-            02 Details
+            {r.step2}
           </span>
           <span className="text-line-2">—</span>
           <span className="step" data-on={step === 3 ? "1" : "0"}>
-            03 Review
+            {r.step3}
           </span>
         </div>
       </div>
@@ -445,22 +431,23 @@ export function RequestClient() {
                   setRunningAI(false);
                 }
               }}
+              t={r}
               uploadPreview={uploadPreview}
             />
           )}
-          {step === 2 && <DetailsStep form={form} setForm={setForm} />}
-          {step === 3 && <ReviewStep form={form} />}
+          {step === 2 && <DetailsStep form={form} setForm={setForm} t={r} />}
+          {step === 3 && <ReviewStep form={form} t={r} />}
         </div>
 
         <aside className="req-aside">
-          <h4>File preview</h4>
+          <h4>{r.filePreview}</h4>
           <div className="price-block">
             <span className="mb-1 block font-mono text-[10px] text-ink-3 tracking-[0.14em]">
-              EST. ALL-IN
+              {r.estAllIn}
             </span>
             {formatCcy(13_150, ccy)}
             <div className="mt-[6px] font-sans text-[12px] text-ink-3">
-              Indicative — final quote arrives within 24 hours.
+              {r.indicative}
             </div>
           </div>
           <div className="breakdown">
@@ -477,7 +464,7 @@ export function RequestClient() {
             ))}
           </div>
           <div className="total">
-            <div className="k">Hold deposit · refundable</div>
+            <div className="k">{r.holdDeposit}</div>
             <div className="v">{formatCcy(200, ccy)}</div>
           </div>
           <div className="mt-[22px] flex gap-[10px]">
@@ -489,7 +476,7 @@ export function RequestClient() {
                 }
                 type="button"
               >
-                ← back
+                {r.backLabel}
               </button>
             )}
             {step < 3 ? (
@@ -501,7 +488,7 @@ export function RequestClient() {
                 }
                 type="button"
               >
-                {step === 1 ? "Continue to details" : "Continue to review"}{" "}
+                {step === 1 ? r.continueDetails : r.continueReview}{" "}
                 <span>→</span>
               </button>
             ) : (
@@ -510,14 +497,13 @@ export function RequestClient() {
                 onClick={() => router.push("/quote")}
                 type="button"
               >
-                Dispatch file · {formatCcy(200, ccy)} hold
+                {formatTemplate(r.dispatchFile, {
+                  amount: formatCcy(200, ccy),
+                })}
               </button>
             )}
           </div>
-          <div className="fine mt-[18px] leading-[1.6]">
-            Hold deposit is refunded in full if the quote is declined. We never
-            charge it until a dossier is delivered.
-          </div>
+          <div className="fine mt-[18px] leading-[1.6]">{r.holdFootnote}</div>
         </aside>
       </div>
     </div>

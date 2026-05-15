@@ -4,22 +4,13 @@ import { PRODUCTS, type Product } from "@maison/data";
 import Link from "next/link";
 import { useState } from "react";
 import { CCY } from "../../lib/currency";
-import { TRANSLATIONS } from "../../lib/translations";
 import { ProductCard } from "../_components/product-card";
 import { useLocale } from "../providers";
 
 type Filter = "all" | "vault" | "estimated";
 
-const CATEGORIES = [
-  "Leather",
-  "Watches",
-  "Jewellery",
-  "Ready-to-wear",
-  "Vintage",
-];
-
 export function CollectionClient() {
-  const { ccy, lang } = useLocale();
+  const { ccy, t } = useLocale();
   const [filter, setFilter] = useState<Filter>("all");
   const filterStock: Record<Filter, Product["stockType"] | null> = {
     all: null,
@@ -31,26 +22,35 @@ export function CollectionClient() {
     ? PRODUCTS.filter((p) => p.stockType === targetStock)
     : PRODUCTS;
 
-  const t = TRANSLATIONS[lang];
+  const c = t.collectionPage;
+
+  const filterRows: { id: Filter; label: string; n: number }[] = [
+    { id: "all", label: c.filterAll, n: 82 },
+    { id: "vault", label: c.filterVault, n: 41 },
+    { id: "estimated", label: c.filterEstimated, n: 41 },
+  ];
 
   return (
     <div className="fade-in">
       <div className="shell pt-12 pb-6">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <div>
-            <div className="eyebrow">The Collection · Spring 2026</div>
+            <div className="eyebrow">{c.eyebrow}</div>
             <h1 className="display mt-4 text-[64px] leading-none tracking-[-0.02em]">
-              Eighty-two pieces
-              <br />
-              currently <span className="text-accent italic">open to file</span>
-              .
+              {c.headline1.split("\n").map((seg, i, arr) => (
+                <span key={seg}>
+                  {seg}
+                  {i < arr.length - 1 && <br />}
+                </span>
+              ))}
+              <span className="text-accent italic">{c.headlineEm}</span>
+              {c.headline2}
             </h1>
           </div>
           <div className="max-w-[320px] text-[13.5px] text-ink-2">
-            Every figure converts at{" "}
-            <span className="mono">{CCY[ccy].sym}</span> ·
+            {c.rateLine} <span className="mono">{CCY[ccy].sym}</span> ·
             <span className="mono"> 1 USD = {CCY[ccy].rate}</span> ·
-            <span className="muted"> updated 09:42 GMT+8</span>.
+            <span className="muted"> {c.rateUpdated}</span>.
           </div>
         </div>
       </div>
@@ -59,13 +59,7 @@ export function CollectionClient() {
         <div className="hairline" />
         <div className="row-between flex-wrap gap-[14px] py-5">
           <div className="row flex-wrap gap-2">
-            {(
-              [
-                ["all", "All pieces", 82],
-                ["vault", "In vault", 41],
-                ["estimated", "On quote", 41],
-              ] as const
-            ).map(([id, label, n]) => {
+            {filterRows.map(({ id, label, n }) => {
               const active = filter === id;
               return (
                 <button
@@ -81,27 +75,27 @@ export function CollectionClient() {
               );
             })}
             <span className="mono ml-[18px] text-[10px] text-ink-3 tracking-[0.14em]">
-              CATEGORIES —
+              {c.categoriesLabel}
             </span>
-            {CATEGORIES.map((c) => (
-              <span className="tag cursor-pointer" key={c}>
-                {c}
+            {c.categories.map((cat) => (
+              <span className="tag cursor-pointer" key={cat}>
+                {cat}
               </span>
             ))}
           </div>
           <div className="row">
             <span className="mono text-[10px] text-ink-3 tracking-[0.14em]">
-              SORT
+              {c.sortLabel}
             </span>
             <select
-              aria-label="Sort collection"
+              aria-label={c.sortLabel}
               className="input-sm pr-7"
               defaultValue="newest"
             >
-              <option value="newest">Newest dossier</option>
-              <option value="asc">Price ascending</option>
-              <option value="desc">Price descending</option>
-              <option value="fav">Concierge favourites</option>
+              <option value="newest">{c.sortNewest}</option>
+              <option value="asc">{c.sortAsc}</option>
+              <option value="desc">{c.sortDesc}</option>
+              <option value="fav">{c.sortFav}</option>
             </select>
           </div>
         </div>
@@ -118,15 +112,13 @@ export function CollectionClient() {
         <div className="mt-14 border-[0.5px] border-line bg-paper p-8">
           <div className="grid grid-cols-[1.4fr_1fr] items-center gap-8">
             <div>
-              <div className="eyebrow">Nothing quite fits.</div>
+              <div className="eyebrow">{c.nothingFits}</div>
               <h3 className="display mt-[14px] font-normal text-[32px] tracking-[-0.015em]">
-                Send us a photo, a link, or simply{" "}
-                <em className="text-accent italic">describe it.</em>
+                {c.sendUsA}
+                <em className="text-accent italic">{c.sendUsEm}</em>
+                {c.sendUsAfter}
               </h3>
-              <p className="mt-3 mb-0 text-ink-2">
-                One concierge will respond within 36 hours with sourcing options
-                and a transparent quote.
-              </p>
+              <p className="mt-3 mb-0 text-ink-2">{c.conciergeReply}</p>
             </div>
             <div className="text-right">
               <Link className="btn btn-primary" href="/request">
