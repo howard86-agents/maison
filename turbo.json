@@ -1,6 +1,6 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
-  "globalEnv": ["NODE_ENV", "DATABASE_URL"],
+  "globalEnv": ["NODE_ENV", "DATABASE_URL", "DIRECT_URL"],
   "globalPassThroughEnv": ["PATH", "HOME", "SHELL"],
   "tasks": {
     "build": {

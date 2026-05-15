@@ -1,21 +1,17 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
-// DATABASE_URL is required for migrate/push/studio at runtime, but not for
-// `prisma generate` (which only reads the schema). A placeholder keeps
-// generate runnable in CI and on fresh checkouts so typecheck can succeed
-// without a provisioned database; commands that actually hit the DB will
-// fail loudly at connection time if the real URL is missing.
-const databaseUrl =
-  process.env.DATABASE_URL ??
-  "postgresql://placeholder@localhost:5432/placeholder";
-
+// Migrate/push/studio need a direct (non-pooled) connection. On Supabase
+// the pooled DATABASE_URL drops session-level features migrations rely on,
+// so prefer DIRECT_URL when present and fall back to DATABASE_URL for
+// single-URL setups (local Postgres, dev databases). `prisma generate`
+// does not connect, so an undefined url is fine on fresh checkouts.
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: databaseUrl,
+    url: process.env.DIRECT_URL ?? process.env.DATABASE_URL,
   },
 });
