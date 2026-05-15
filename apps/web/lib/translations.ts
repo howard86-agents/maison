@@ -224,6 +224,15 @@ interface Dictionary {
     back: string;
     approve: string;
   };
+  currencies: {
+    USD: string;
+    TWD: string;
+    EUR: string;
+    JPY: string;
+    HKD: string;
+    CNY: string;
+    KRW: string;
+  };
   dev: {
     home: string;
     collection: string;
@@ -272,6 +281,21 @@ interface Dictionary {
   meta: {
     title: string;
     description: string;
+    siteName: string;
+    product: {
+      titleTemplate: string;
+      descriptionTemplate: string;
+    };
+    pages: {
+      home: { title: string; description: string };
+      collection: { title: string; description: string };
+      request: { title: string; description: string };
+      quote: { title: string; description: string };
+      checkout: { title: string; description: string };
+      order: { title: string; description: string };
+      account: { title: string; description: string };
+      signin: { title: string; description: string };
+    };
   };
   nav: {
     atelier: string;
@@ -499,6 +523,50 @@ const EN: Dictionary = {
     title: "MAISON · Concierge",
     description:
       "A private concierge for sourcing fine leather, watchmaking and ready-to-wear.",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "Concierge-sourced {{name}} from {{house}}. {{condition}} · authenticated and hand-delivered by MAISON.",
+    },
+    pages: {
+      home: {
+        title: "MAISON · Concierge",
+        description:
+          "MAISON is a private concierge for sourcing fine leather, watchmaking and ready-to-wear from the world’s ateliers — with transparent pricing, authentication, and one human dedicated to your file.",
+      },
+      collection: {
+        title: "The Collection · MAISON",
+        description:
+          "In rotation this month. Every piece is concierge-sourced, authenticated, and ready to hand-deliver.",
+      },
+      request: {
+        title: "Request a Piece · MAISON",
+        description:
+          "Every file is handled by one concierge from request to delivery. You will know their name, their voice, and their working hours.",
+      },
+      quote: {
+        title: "Your Quote · MAISON",
+        description: "Review and approve your concierge dossier.",
+      },
+      checkout: {
+        title: "Checkout · MAISON",
+        description: "Authorise your sourcing file with secure payment.",
+      },
+      order: {
+        title: "Order · MAISON",
+        description:
+          "Track your sourcing file from collection to hand delivery.",
+      },
+      account: {
+        title: "Account · MAISON",
+        description: "Your concierge file, ledger, and tier.",
+      },
+      signin: {
+        title: "Sign in · MAISON",
+        description: "Sign in to your MAISON file.",
+      },
+    },
   },
   header: {
     estTaipei: "EST · 2019 · TAIPEI",
@@ -533,6 +601,15 @@ const EN: Dictionary = {
     continueReview: "Continue to review",
     back: "← back",
     approve: "Approve",
+  },
+  currencies: {
+    USD: "US Dollar",
+    TWD: "New Taiwan Dollar",
+    EUR: "Euro",
+    JPY: "Japanese Yen",
+    HKD: "Hong Kong Dollar",
+    CNY: "Chinese Yuan",
+    KRW: "Korean Won",
   },
   hero: {
     eyebrow: "A proxy-shopping atelier for considered pieces",
@@ -592,8 +669,8 @@ const EN: Dictionary = {
   atelierNote: {
     eyebrow: "A note from the atelier",
     headlineA: "We work in ",
-    headlineEm: "three languages",
-    headlineB: ", five currencies, and one voice.",
+    headlineEm: "five languages",
+    headlineB: ", seven currencies, and one voice.",
     copy: "Switch currency at any moment — every figure on the platform reflects the live mid-market rate, refreshed every fifteen minutes and marked with a timestamp. We hold orders in the currency we paid, then settle at delivery, so a swing in the yen never reaches your invoice unannounced.",
     readMore: "Read how we handle exchange-rate risk",
   },
@@ -1115,6 +1192,49 @@ const ZH_TW: Dictionary = {
   meta: {
     title: "MAISON · 代購工坊",
     description: "為您搜羅全球皮件、製錶與成衣的私密代購顧問。",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "由 MAISON 顧問為您代購的 {{name}},來自 {{house}}。{{condition}} · 經過鑑定並親手送達。",
+    },
+    pages: {
+      home: {
+        title: "MAISON · 代購工坊",
+        description:
+          "MAISON 是專屬代購顧問,為您搜羅全球工坊的皮件、製錶與成衣。透明定價、嚴格鑑定,並由一位專屬顧問全程經手您的檔案。",
+      },
+      collection: {
+        title: "典藏 · MAISON",
+        description:
+          "本月在席的精選。每一件皆由顧問代購、嚴格鑑定,並可親手送達。",
+      },
+      request: {
+        title: "指定代購 · MAISON",
+        description:
+          "每一份檔案從提交到送達都由同一位顧問經手。您會記得他的姓名、聲音與服務時段。",
+      },
+      quote: {
+        title: "您的報價 · MAISON",
+        description: "確認並核可您的顧問檔案。",
+      },
+      checkout: {
+        title: "結帳 · MAISON",
+        description: "以安全支付方式核可您的代購檔案。",
+      },
+      order: {
+        title: "訂單 · MAISON",
+        description: "從取件到親手送達,追蹤您的代購檔案。",
+      },
+      account: {
+        title: "會員 · MAISON",
+        description: "您的代購檔案、帳本與會員等級。",
+      },
+      signin: {
+        title: "登入 · MAISON",
+        description: "登入您的 MAISON 檔案。",
+      },
+    },
   },
   header: {
     estTaipei: "創立 · 2019 · 台北",
@@ -1149,6 +1269,15 @@ const ZH_TW: Dictionary = {
     continueReview: "前往最終確認",
     back: "← 返回",
     approve: "確認核可",
+  },
+  currencies: {
+    USD: "美元",
+    TWD: "新台幣",
+    EUR: "歐元",
+    JPY: "日圓",
+    HKD: "港幣",
+    CNY: "人民幣",
+    KRW: "韓元",
   },
   hero: {
     eyebrow: "為慎重之物存在的代購工坊",
@@ -1208,8 +1337,8 @@ const ZH_TW: Dictionary = {
   atelierNote: {
     eyebrow: "來自工坊的一段話",
     headlineA: "我們以 ",
-    headlineEm: "三種語言",
-    headlineB: "、五種幣別、一種口吻運作。",
+    headlineEm: "五種語言",
+    headlineB: "、七種幣別、一種口吻運作。",
     copy: "您可隨時切換幣別 — 平台上的每一個數字都以即時中間匯率呈現,每十五分鐘更新並標註時戳。我們以代購當下的幣別保管您的訂單,待交付時結算 — 不會讓日圓的起伏悄悄出現在您的帳單上。",
     readMore: "了解我們如何處理匯率風險",
   },
@@ -1698,6 +1827,49 @@ const ZH_CN: Dictionary = {
   meta: {
     title: "MAISON · 代购工坊",
     description: "为您搜罗全球皮具、制表与成衣的私密代购顾问。",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "由 MAISON 顾问代购的 {{name}},来自 {{house}}。{{condition}} · 经过鉴定并亲手送达。",
+    },
+    pages: {
+      home: {
+        title: "MAISON · 代购工坊",
+        description:
+          "MAISON 是专属代购顾问,为您搜罗全球工坊的皮具、制表与成衣。透明定价、严格鉴定,并由一位专属顾问全程经手您的档案。",
+      },
+      collection: {
+        title: "典藏 · MAISON",
+        description:
+          "本月在席的精选。每一件皆由顾问代购、严格鉴定,并可亲手送达。",
+      },
+      request: {
+        title: "指定代购 · MAISON",
+        description:
+          "每一份档案从提交到送达都由同一位顾问经手。您会记得他的姓名、声音与服务时段。",
+      },
+      quote: {
+        title: "您的报价 · MAISON",
+        description: "确认并核可您的顾问档案。",
+      },
+      checkout: {
+        title: "结账 · MAISON",
+        description: "以安全支付方式核可您的代购档案。",
+      },
+      order: {
+        title: "订单 · MAISON",
+        description: "从取件到亲手送达,追踪您的代购档案。",
+      },
+      account: {
+        title: "会员 · MAISON",
+        description: "您的代购档案、账本与会员等级。",
+      },
+      signin: {
+        title: "登录 · MAISON",
+        description: "登录您的 MAISON 档案。",
+      },
+    },
   },
   header: {
     estTaipei: "创立 · 2019 · 台北",
@@ -1732,6 +1904,15 @@ const ZH_CN: Dictionary = {
     continueReview: "前往最终确认",
     back: "← 返回",
     approve: "确认核可",
+  },
+  currencies: {
+    USD: "美元",
+    TWD: "新台币",
+    EUR: "欧元",
+    JPY: "日元",
+    HKD: "港币",
+    CNY: "人民币",
+    KRW: "韩元",
   },
   hero: {
     eyebrow: "为慎重之物而存的代购工坊",
@@ -1791,8 +1972,8 @@ const ZH_CN: Dictionary = {
   atelierNote: {
     eyebrow: "来自工坊的一段话",
     headlineA: "我们以 ",
-    headlineEm: "三种语言",
-    headlineB: "、五种币别、一种口吻运作。",
+    headlineEm: "五种语言",
+    headlineB: "、七种币别、一种口吻运作。",
     copy: "您可随时切换币别 — 平台上的每一个数字都以即时中间汇率呈现,每十五分钟刷新并标注时戳。我们以代购当下的币别保管您的订单,待交付时结算 — 不会让日元的起伏悄然出现在您的账单上。",
     readMore: "了解我们如何处理汇率风险",
   },
@@ -2282,6 +2463,49 @@ const JA: Dictionary = {
     title: "MAISON · コンシェルジュ",
     description:
       "革・時計・既製服を世界のアトリエから手配する、プライベート・コンシェルジュ。",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "MAISON コンシェルジュが手配する {{name}}。{{house}} より。{{condition}} · 鑑定済み、直接お届け。",
+    },
+    pages: {
+      home: {
+        title: "MAISON · コンシェルジュ",
+        description:
+          "MAISON は、世界のアトリエから革・時計・既製服を手配するプライベート・コンシェルジュ。透明な価格、確かな鑑定、そしてあなたのファイルを担当するひとりの専属担当者。",
+      },
+      collection: {
+        title: "コレクション · MAISON",
+        description:
+          "今月の取り扱い。すべてコンシェルジュが手配し、鑑定を経て、直接お届けします。",
+      },
+      request: {
+        title: "依頼する · MAISON",
+        description:
+          "すべてのファイルは、ご依頼から到着まで同じコンシェルジュが担当します。お名前、声、対応時間まで、はっきりとお伝えします。",
+      },
+      quote: {
+        title: "ご見積もり · MAISON",
+        description: "コンシェルジュ・ドシエをご確認・ご承認ください。",
+      },
+      checkout: {
+        title: "お支払い · MAISON",
+        description: "安全な決済で手配ファイルを承認します。",
+      },
+      order: {
+        title: "ご注文 · MAISON",
+        description: "受け取りから直接配送まで、手配ファイルを追跡します。",
+      },
+      account: {
+        title: "アカウント · MAISON",
+        description: "コンシェルジュ・ファイル、台帳、ティア。",
+      },
+      signin: {
+        title: "サインイン · MAISON",
+        description: "MAISON ファイルにサインインします。",
+      },
+    },
   },
   header: {
     estTaipei: "創立 · 2019 · 台北",
@@ -2316,6 +2540,15 @@ const JA: Dictionary = {
     continueReview: "最終確認へ",
     back: "← 戻る",
     approve: "承認する",
+  },
+  currencies: {
+    USD: "米ドル",
+    TWD: "ニュー台湾ドル",
+    EUR: "ユーロ",
+    JPY: "日本円",
+    HKD: "香港ドル",
+    CNY: "人民元",
+    KRW: "韓国ウォン",
   },
   hero: {
     eyebrow: "厳選された一点のためのプロキシ・アトリエ",
@@ -2375,8 +2608,8 @@ const JA: Dictionary = {
   atelierNote: {
     eyebrow: "アトリエより",
     headlineA: "私たちは ",
-    headlineEm: "三つの言語",
-    headlineB: "、五つの通貨、ひとつの声で。",
+    headlineEm: "五つの言語",
+    headlineB: "、七つの通貨、ひとつの声で。",
     copy: "通貨はいつでも切り替え可能 — 表示される数字はすべてリアルタイムのミッドレートに基づき、15 分ごとに更新・タイムスタンプ付きです。注文は支払時の通貨で保管し、お届け時に精算 — 円相場の揺れがそのまま請求書に届くことはありません。",
     readMore: "為替リスクの取り扱いについて",
   },
@@ -2886,6 +3119,49 @@ const KO: Dictionary = {
     title: "MAISON · 컨시어지",
     description:
       "가죽·시계·기성복을 세계의 아틀리에에서 조달하는 프라이빗 컨시어지.",
+    siteName: "MAISON",
+    product: {
+      titleTemplate: "{{name}} · {{house}} · MAISON",
+      descriptionTemplate:
+        "MAISON 컨시어지가 조달한 {{name}}. {{house}}. {{condition}} · 감정 완료, 직접 전달.",
+    },
+    pages: {
+      home: {
+        title: "MAISON · 컨시어지",
+        description:
+          "MAISON 은 세계의 아틀리에에서 가죽·시계·기성복을 조달하는 프라이빗 컨시어지입니다. 투명한 가격, 엄정한 감정, 그리고 당신의 파일을 전담하는 한 사람.",
+      },
+      collection: {
+        title: "컬렉션 · MAISON",
+        description:
+          "이번 달의 라인업. 모두 컨시어지가 조달하고 감정을 거쳐 직접 전달합니다.",
+      },
+      request: {
+        title: "요청하기 · MAISON",
+        description:
+          "모든 파일은 요청부터 인도까지 같은 컨시어지가 담당합니다. 이름과 음성, 근무 시간까지 분명히 안내합니다.",
+      },
+      quote: {
+        title: "견적 · MAISON",
+        description: "컨시어지 도시에를 확인하고 승인하세요.",
+      },
+      checkout: {
+        title: "결제 · MAISON",
+        description: "안전한 결제로 조달 파일을 승인합니다.",
+      },
+      order: {
+        title: "주문 · MAISON",
+        description: "수령부터 직접 전달까지 조달 파일을 추적합니다.",
+      },
+      account: {
+        title: "계정 · MAISON",
+        description: "컨시어지 파일, 원장, 티어.",
+      },
+      signin: {
+        title: "로그인 · MAISON",
+        description: "MAISON 파일에 로그인하세요.",
+      },
+    },
   },
   header: {
     estTaipei: "설립 · 2019 · 타이베이",
@@ -2920,6 +3196,15 @@ const KO: Dictionary = {
     continueReview: "최종 확인",
     back: "← 뒤로",
     approve: "승인",
+  },
+  currencies: {
+    USD: "미국 달러",
+    TWD: "신타이완 달러",
+    EUR: "유로",
+    JPY: "일본 엔",
+    HKD: "홍콩 달러",
+    CNY: "중국 위안",
+    KRW: "대한민국 원",
   },
   hero: {
     eyebrow: "신중한 한 점을 위한 프록시 아틀리에",
@@ -2979,8 +3264,8 @@ const KO: Dictionary = {
   atelierNote: {
     eyebrow: "아틀리에로부터",
     headlineA: "우리는 ",
-    headlineEm: "세 가지 언어",
-    headlineB: ", 다섯 통화, 하나의 목소리로 일합니다.",
+    headlineEm: "다섯 가지 언어",
+    headlineB: ", 일곱 통화, 하나의 목소리로 일합니다.",
     copy: "통화는 언제든 전환 가능 — 플랫폼의 모든 숫자는 실시간 중간 환율을 반영하며 15 분마다 갱신·타임스탬프가 표시됩니다. 주문은 결제 통화로 보관되며 인도 시 정산되므로 엔화의 변동이 청구서에 그대로 도달하는 일은 없습니다.",
     readMore: "환율 리스크 처리 방식 보기",
   },

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { authClient } from "../../lib/auth-client";
 import { CCY, CURRENCY_CODES } from "../../lib/currency";
 import { LOCALE_LABEL, LOCALE_SHORT, LOCALES } from "../../lib/translations";
-import { useLocale, useTheme } from "../providers";
+import { localeHref, useLocale, useTheme } from "../providers";
 import { TierChip } from "./tier-chip";
 import { UserChip } from "./user-chip";
 
@@ -20,7 +20,11 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const isLoggedIn = Boolean(session.data?.user);
-  const accountHref = isLoggedIn ? "/account" : "/signin";
+  const accountHref = localeHref(locale, isLoggedIn ? "/account" : "/signin");
+  const localePrefix = `/${locale}`;
+  const isHome = pathname === localePrefix;
+  const after = (segment: string) =>
+    pathname.startsWith(`${localePrefix}${segment}`);
 
   useEffect(() => {
     if (!open) {
@@ -35,40 +39,36 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
 
-  const nav: { href: string; label: string; match: (p: string) => boolean }[] =
-    [
-      { href: "/", label: t.nav.atelier, match: (p) => p === "/" },
-      {
-        href: "/collection",
-        label: t.nav.collection,
-        match: (p) => p.startsWith("/collection") || p.startsWith("/product"),
-      },
-      {
-        href: "/request",
-        label: t.nav.request,
-        match: (p) => p.startsWith("/request"),
-      },
-      {
-        href: "/order",
-        label: t.nav.journal,
-        match: (p) =>
-          p.startsWith("/order") ||
-          p.startsWith("/quote") ||
-          p.startsWith("/checkout"),
-      },
-    ];
+  const nav: { href: string; label: string; active: boolean }[] = [
+    { href: localeHref(locale, "/"), label: t.nav.atelier, active: isHome },
+    {
+      href: localeHref(locale, "/collection"),
+      label: t.nav.collection,
+      active: after("/collection") || after("/product"),
+    },
+    {
+      href: localeHref(locale, "/request"),
+      label: t.nav.request,
+      active: after("/request"),
+    },
+    {
+      href: localeHref(locale, "/order"),
+      label: t.nav.journal,
+      active: after("/order") || after("/quote") || after("/checkout"),
+    },
+  ];
 
   return (
     <header className="hdr">
       <div className="shell hdr-top">
-        <Link className="row no-underline" href="/">
+        <Link className="row no-underline" href={localeHref(locale, "/")}>
           <div className="hdr-mark">MAISON</div>
           <sup>{t.header.estTaipei}</sup>
         </Link>
         <nav className="hdr-nav">
           {nav.map((it) => (
             <button
-              data-on={it.match(pathname) ? "1" : "0"}
+              data-on={it.active ? "1" : "0"}
               key={it.href}
               onClick={() => router.push(it.href)}
               type="button"
@@ -117,7 +117,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
                     }}
                     type="button"
                   >
-                    <span>{CCY[c].label}</span>
+                    <span>{t.currencies[c]}</span>
                     <span className="mono text-ink-3">{CCY[c].sym}</span>
                   </button>
                 ))}
