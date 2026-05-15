@@ -1,23 +1,26 @@
 import { prisma } from "@maison/database";
+import { getDictionary } from "../../../../lib/i18n";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminProxyRequestsPage() {
-  const requests = await prisma.proxyRequest.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 50,
-    include: { user: { select: { email: true, name: true } } },
-  });
+  const [t, requests] = await Promise.all([
+    getDictionary(),
+    prisma.proxyRequest.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 50,
+      include: { user: { select: { email: true, name: true } } },
+    }),
+  ]);
+  const r = t.admin.proxyRequests;
 
   if (requests.length === 0) {
     return (
       <div className="border-[0.5px] border-line bg-paper p-[14px]">
         <div className="mono text-[10px] text-ink-3 uppercase tracking-[0.14em]">
-          No proxy requests yet
+          {r.noneTitle}
         </div>
-        <div className="fine mt-2 leading-[1.6]">
-          Submissions from members will appear here for staff review.
-        </div>
+        <div className="fine mt-2 leading-[1.6]">{r.noneCopy}</div>
       </div>
     );
   }
@@ -36,7 +39,7 @@ export default async function AdminProxyRequestsPage() {
             <div className="fine">{req.user.email ?? req.user.name}</div>
           </div>
           <div className="display mt-2 text-[20px] leading-snug">
-            {req.targetBrand ?? "Unspecified brand"}{" "}
+            {req.targetBrand ?? r.unspecifiedBrand}{" "}
             {req.targetModel ? `· ${req.targetModel}` : null}
           </div>
           <p className="fine mt-2 leading-[1.6]">{req.description}</p>

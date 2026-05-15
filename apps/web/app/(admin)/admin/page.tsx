@@ -1,21 +1,24 @@
 import { prisma } from "@maison/database";
+import { getDictionary } from "../../../lib/i18n";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const [orderCount, proxyRequestCount, productCount, memberCount] =
+  const [t, orderCount, proxyRequestCount, productCount, memberCount] =
     await Promise.all([
+      getDictionary(),
       prisma.order.count(),
       prisma.proxyRequest.count(),
       prisma.product.count(),
       prisma.user.count(),
     ]);
 
+  const s = t.admin.stats;
   const stats = [
-    ["Orders", orderCount],
-    ["Proxy requests", proxyRequestCount],
-    ["Products", productCount],
-    ["Members", memberCount],
+    [s.orders, orderCount],
+    [s.proxyRequests, proxyRequestCount],
+    [s.products, productCount],
+    [s.members, memberCount],
   ] as const;
 
   return (

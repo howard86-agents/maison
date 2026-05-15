@@ -1,35 +1,40 @@
 import { prisma } from "@maison/database";
+import { getDictionary } from "../../../../lib/i18n";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminMembersPage() {
-  const members = await prisma.user.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 50,
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      role: true,
-      createdAt: true,
-    },
-  });
+  const [t, members] = await Promise.all([
+    getDictionary(),
+    prisma.user.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 50,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    }),
+  ]);
+  const m = t.admin.members;
 
   return (
     <table className="w-full border-collapse text-[12px]">
       <thead>
         <tr className="border-line border-b-[0.5px] text-left">
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Member
+            {m.member}
           </th>
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Email
+            {m.email}
           </th>
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Role
+            {m.role}
           </th>
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Joined
+            {m.joined}
           </th>
         </tr>
       </thead>

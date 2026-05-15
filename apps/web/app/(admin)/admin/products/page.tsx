@@ -1,22 +1,25 @@
 import { prisma } from "@maison/database";
+import { getDictionary } from "../../../../lib/i18n";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminProductsPage() {
-  const products = await prisma.product.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
+  const [t, products] = await Promise.all([
+    getDictionary(),
+    prisma.product.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 50,
+    }),
+  ]);
+  const p = t.admin.products;
 
   if (products.length === 0) {
     return (
       <div className="border-[0.5px] border-line bg-paper p-[14px]">
         <div className="mono text-[10px] text-ink-3 uppercase tracking-[0.14em]">
-          Catalog is empty
+          {p.noneTitle}
         </div>
-        <div className="fine mt-2 leading-[1.6]">
-          Add a product to begin curating the public catalog.
-        </div>
+        <div className="fine mt-2 leading-[1.6]">{p.noneCopy}</div>
       </div>
     );
   }
@@ -30,9 +33,9 @@ export default async function AdminProductsPage() {
         >
           <div className="row-between">
             <div className="mono text-[10px] text-ink-3 uppercase tracking-[0.14em]">
-              {product.brand ?? "House"}
+              {product.brand ?? p.houseFallback}
             </div>
-            <div className="fine">{product.isActive ? "Active" : "Draft"}</div>
+            <div className="fine">{product.isActive ? p.active : p.draft}</div>
           </div>
           <div className="display mt-2 text-[20px] leading-snug">
             {product.name}

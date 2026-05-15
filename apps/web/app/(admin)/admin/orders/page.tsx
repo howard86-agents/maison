@@ -1,23 +1,26 @@
 import { prisma } from "@maison/database";
+import { getDictionary } from "../../../../lib/i18n";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminOrdersPage() {
-  const orders = await prisma.order.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 50,
-    include: { user: { select: { email: true, name: true } } },
-  });
+  const [t, orders] = await Promise.all([
+    getDictionary(),
+    prisma.order.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 50,
+      include: { user: { select: { email: true, name: true } } },
+    }),
+  ]);
+  const o = t.admin.orders;
 
   if (orders.length === 0) {
     return (
       <div className="border-[0.5px] border-line bg-paper p-[14px]">
         <div className="mono text-[10px] text-ink-3 uppercase tracking-[0.14em]">
-          No orders yet
+          {o.noneTitle}
         </div>
-        <div className="fine mt-2 leading-[1.6]">
-          Orders appear here once members complete checkout.
-        </div>
+        <div className="fine mt-2 leading-[1.6]">{o.noneCopy}</div>
       </div>
     );
   }
@@ -27,16 +30,16 @@ export default async function AdminOrdersPage() {
       <thead>
         <tr className="border-line border-b-[0.5px] text-left">
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Order
+            {o.order}
           </th>
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Member
+            {o.member}
           </th>
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Status
+            {o.status}
           </th>
           <th className="py-2 font-mono text-[10px] uppercase tracking-[0.14em]">
-            Total
+            {o.total}
           </th>
         </tr>
       </thead>
