@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { authClient } from "../../lib/auth-client";
-import { useT } from "../providers";
+import { localeHref, useLocale } from "../providers";
 
 const WHITESPACE = /\s+/;
 
@@ -25,7 +25,7 @@ function firstName(
 
 export function UserChip() {
   const router = useRouter();
-  const t = useT();
+  const { locale, t } = useLocale();
   const session = authClient.useSession();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -49,7 +49,7 @@ export function UserChip() {
       <button
         className="pill"
         disabled={session.isPending}
-        onClick={() => router.push("/signin")}
+        onClick={() => router.push(localeHref(locale, "/signin"))}
         type="button"
       >
         <span className="dot" />
@@ -87,7 +87,7 @@ export function UserChip() {
           <button
             onClick={() => {
               setOpen(false);
-              router.push("/account");
+              router.push(localeHref(locale, "/account"));
             }}
             type="button"
           >

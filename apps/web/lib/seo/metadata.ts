@@ -1,5 +1,6 @@
 import type { Product } from "@maison/data";
 import type { Metadata } from "next";
+import { localeHref } from "../i18n/path";
 import {
   type Dictionary,
   formatTemplate,
@@ -18,11 +19,13 @@ interface BuildOptions {
   path: string;
 }
 
-function languageAlternates(path: string): Record<string, string> {
-  const url = new URL(path, SITE_URL).toString();
+export function languageAlternates(path: string): Record<string, string> {
   const entries: Record<string, string> = {};
   for (const locale of LOCALES) {
-    entries[HTML_LANG[locale]] = url;
+    entries[HTML_LANG[locale]] = new URL(
+      localeHref(locale, path),
+      SITE_URL
+    ).toString();
   }
   return entries;
 }

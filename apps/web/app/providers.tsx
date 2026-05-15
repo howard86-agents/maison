@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -9,18 +10,17 @@ import {
   useState,
 } from "react";
 import { CURRENCY_CODES, type CurrencyCode } from "../lib/currency";
-import {
-  DEFAULT_LOCALE,
-  isLocale,
-  LOCALE_COOKIE,
-  matchLocaleFromTag,
-} from "../lib/i18n/config";
+import { LOCALE_COOKIE } from "../lib/i18n/config";
+import { localeHref } from "../lib/i18n/path";
 import {
   type Dictionary,
   HTML_LANG,
   type Locale,
   TRANSLATIONS,
 } from "../lib/translations";
+
+// biome-ignore lint/performance/noBarrelFile: single helper re-export, kept here so existing client imports don't churn.
+export { localeHref } from "../lib/i18n/path";
 
 interface LocaleCtx {
   ccy: CurrencyCode;
@@ -58,29 +58,23 @@ export function useTheme(): ThemeCtx {
   return ctx;
 }
 
-function detectBrowserLocale(): Locale | null {
-  return matchLocaleFromTag(window.navigator.language ?? "");
-}
-
-export function Providers({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(DEFAULT_LOCALE);
+export function Providers({
+  children,
+  locale,
+}: {
+  children: React.ReactNode;
+  locale: Locale;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [ccy, setCcyState] = useState<CurrencyCode>("USD");
   const [dark, setDark] = useState<boolean>(false);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     try {
-      const storedLocale = window.localStorage.getItem("maison.locale");
       const storedCcy = window.localStorage.getItem("maison.ccy");
       const storedDark = window.localStorage.getItem("maison.dark");
-      if (isLocale(storedLocale)) {
-        setLocaleState(storedLocale);
-      } else {
-        const detected = detectBrowserLocale();
-        if (detected) {
-          setLocaleState(detected);
-        }
-      }
       if (
         storedCcy &&
         (CURRENCY_CODES as readonly string[]).includes(storedCcy)
@@ -115,21 +109,21 @@ export function Providers({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = HTML_LANG[locale];
   }, [locale, hydrated]);
 
-  const setLocale = useCallback((next: Locale) => {
-    setLocaleState((prev) => {
-      if (prev === next) {
-        return prev;
+  const setLocale = useCallback(
+    (next: Locale) => {
+      if (next === locale) {
+        return;
       }
       try {
-        window.localStorage.setItem("maison.locale", next);
-        // biome-ignore lint/suspicious/noDocumentCookie: server reads `accept-language` fallback when cookie absent; one-line write is simplest.
+        // biome-ignore lint/suspicious/noDocumentCookie: proxy reads this to remember preference for root-path visits.
         document.cookie = `${LOCALE_COOKIE}=${next};path=/;max-age=31536000;samesite=lax`;
       } catch {
         // ignore
       }
-      return next;
-    });
-  }, []);
+      router.push(localeHref(next, pathname ?? "/"));
+    },
+    [locale, pathname, router]
+  );
 
   const setCcy = useCallback((next: CurrencyCode) => {
     setCcyState(next);

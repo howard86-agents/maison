@@ -3,13 +3,13 @@
 import type { Product } from "@maison/data";
 import Link from "next/link";
 import { formatCcy } from "../../lib/currency";
-import { useLocale } from "../providers";
+import { localeHref, useLocale } from "../providers";
 import { ImageOrPlaceholder } from "./product-image";
 
 export function ProductCard({ product }: { product: Product }) {
-  const { ccy, t } = useLocale();
+  const { ccy, locale, t } = useLocale();
   return (
-    <Link className="prod" href={`/product/${product.id}`}>
+    <Link className="prod" href={localeHref(locale, `/product/${product.id}`)}>
       <ImageOrPlaceholder
         alt={`${product.house} ${product.name}`}
         aspect="4x5"

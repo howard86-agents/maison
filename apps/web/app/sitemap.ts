@@ -1,16 +1,9 @@
 import { PRODUCTS } from "@maison/data";
 import type { MetadataRoute } from "next";
+import { localeHref } from "../lib/i18n/path";
+import { languageAlternates } from "../lib/seo/metadata";
 import { SITE_URL } from "../lib/seo/site";
-import { HTML_LANG, LOCALES } from "../lib/translations";
-
-function languageAlternates(path: string): Record<string, string> {
-  const url = new URL(path, SITE_URL).toString();
-  const entries: Record<string, string> = {};
-  for (const locale of LOCALES) {
-    entries[HTML_LANG[locale]] = url;
-  }
-  return entries;
-}
+import { LOCALES } from "../lib/translations";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -24,26 +17,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/request", priority: 0.8, changeFrequency: "monthly" },
   ];
 
-  const staticEntries: MetadataRoute.Sitemap = staticPaths.map(
-    ({ path, priority, changeFrequency }) => ({
-      url: new URL(path, SITE_URL).toString(),
-      lastModified: now,
-      changeFrequency,
-      priority,
-      alternates: { languages: languageAlternates(path) },
-    })
-  );
+  const productPaths = PRODUCTS.map((product) => ({
+    path: `/product/${product.id}`,
+    priority: 0.7,
+    changeFrequency: "weekly" as const,
+  }));
 
-  const productEntries: MetadataRoute.Sitemap = PRODUCTS.map((product) => {
-    const path = `/product/${product.id}`;
-    return {
-      url: new URL(path, SITE_URL).toString(),
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.7,
-      alternates: { languages: languageAlternates(path) },
-    };
-  });
-
-  return [...staticEntries, ...productEntries];
+  const entries: MetadataRoute.Sitemap = [];
+  for (const { path, priority, changeFrequency } of [
+    ...staticPaths,
+    ...productPaths,
+  ]) {
+    const languages = languageAlternates(path);
+    for (const locale of LOCALES) {
+      entries.push({
+        url: new URL(localeHref(locale, path), SITE_URL).toString(),
+        lastModified: now,
+        changeFrequency,
+        priority,
+        alternates: { languages },
+      });
+    }
+  }
+  return entries;
 }
