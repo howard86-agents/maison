@@ -16,9 +16,6 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
-      # `prisma generate` runs as a dep of `turbo run typecheck`. It only needs
-      # the schema, not a real DB, but prisma.config.ts wants DATABASE_URL set.
-      DATABASE_URL: postgresql://placeholder@localhost:5432/placeholder
       TURBO_TELEMETRY_DISABLED: 1
     steps:
       - uses: actions/checkout@v4
