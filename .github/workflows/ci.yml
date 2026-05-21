@@ -18,26 +18,13 @@ jobs:
     env:
       TURBO_TELEMETRY_DISABLED: 1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           # Required for gitleaks to scan history, not just the tip commit.
           fetch-depth: 0
 
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version-file: package.json
-
-      - name: Restore turbo cache
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: turbo-${{ runner.os }}-${{ hashFiles('bun.lock') }}-${{ github.sha }}
-          restore-keys: |
-            turbo-${{ runner.os }}-${{ hashFiles('bun.lock') }}-
-            turbo-${{ runner.os }}-
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+      - name: Setup (Bun + caches + install)
+        uses: howard86/actions/setup@a99a85ee8cbe78d34e8f5e79bfd24db64fc9b112 # v1.0.0
 
       - name: Lint (ultracite)
         run: bun run check
@@ -45,10 +32,7 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
-      - name: Spell-check (typos)
-        uses: crate-ci/typos@master
-
-      - name: Secret scan (gitleaks)
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Quality (typos, gitleaks, actionlint)
+        uses: howard86/actions/quality@a99a85ee8cbe78d34e8f5e79bfd24db64fc9b112 # v1.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
