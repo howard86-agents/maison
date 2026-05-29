@@ -941,7 +941,10 @@
   /* ───── Order timeline ───── */
   .order-shell {
     grid-template-columns: 1fr 320px;
-    @apply grid gap-14 pt-14 pb-20;
+    @apply grid gap-14 pt-14 pb-20 max-narrow:grid-cols-1 max-narrow:gap-8 max-narrow:pt-8 max-narrow:pb-16;
+  }
+  .order-summary-grid {
+    @apply max-narrow:grid-cols-1;
   }
   .timeline {
     @apply relative mt-8 flex flex-col;
@@ -949,7 +952,7 @@
   .timeline .stage {
     grid-template-columns: 120px 1fr;
     border-bottom: 0.5px solid var(--color-line);
-    @apply relative grid gap-8 py-[22px];
+    @apply relative grid gap-8 py-[22px] max-narrow:grid-cols-1 max-narrow:gap-3;
   }
   .timeline .stage:last-child {
     @apply border-b-0;
@@ -1076,11 +1079,11 @@
   /* ───── Account screen ───── */
   .acct {
     grid-template-columns: 280px 1fr;
-    @apply grid gap-14 pt-12 pb-20;
+    @apply grid gap-14 pt-12 pb-20 max-narrow:grid-cols-1 max-narrow:gap-8 max-narrow:pt-8 max-narrow:pb-16;
   }
   .acct-side {
     border-right: 0.5px solid var(--color-line);
-    @apply pr-8;
+    @apply pr-8 max-narrow:border-r-0 max-narrow:border-b-[0.5px] max-narrow:pr-0 max-narrow:pb-6;
   }
   .acct-side .me {
     border-bottom: 0.5px solid var(--color-line);
@@ -1090,11 +1093,11 @@
     @apply grid size-12 place-items-center rounded-full bg-ink font-display text-[20px] text-bg;
   }
   .acct-side nav {
-    @apply mt-[22px] flex flex-col;
+    @apply mt-[22px] flex flex-col max-narrow:flex-row max-narrow:gap-2 max-narrow:overflow-x-auto max-narrow:pb-1;
   }
   .acct-side nav button {
     border-bottom: 0.5px solid var(--color-line);
-    @apply cursor-pointer appearance-none border-0 bg-none py-[11px] text-left text-[13.5px] text-ink-2;
+    @apply cursor-pointer appearance-none border-0 bg-none py-[11px] text-left text-[13.5px] text-ink-2 max-narrow:min-w-max max-narrow:border-[0.5px] max-narrow:border-line max-narrow:bg-paper max-narrow:px-3 max-narrow:py-2;
   }
   .acct-side nav button[data-on="1"] {
     @apply text-ink;
@@ -1109,11 +1112,11 @@
   .orders-table.orders-table .row {
     grid-template-columns: 120px 1.5fr 1fr 120px 100px;
     border-bottom: 0.5px solid var(--color-line);
-    @apply grid items-center gap-4 py-[18px] text-[13px];
+    @apply grid items-center gap-4 py-[18px] text-[13px] max-narrow:grid-cols-1 max-narrow:items-start max-narrow:gap-2;
   }
   .orders-table .row.head {
     letter-spacing: 0.14em;
-    @apply py-3 font-mono text-[10px] text-ink-3 uppercase;
+    @apply py-3 font-mono text-[10px] text-ink-3 uppercase max-narrow:hidden;
   }
   .orders-table .pill-state {
     letter-spacing: 0.12em;
@@ -1135,6 +1138,16 @@
   .orders-table .pill-state[data-state="delivered"] {
     border-color: var(--color-line);
     @apply text-ink-3;
+  }
+
+  .account-section-head {
+    @apply max-narrow:flex-col max-narrow:items-start;
+  }
+  .account-section-head .btn {
+    @apply max-narrow:w-full max-narrow:justify-center;
+  }
+  .account-summary-grid {
+    @apply max-narrow:grid-cols-1;
   }
 
   /* ───── Dropdown ───── */
