@@ -28,10 +28,12 @@ export function SignInClient() {
         router.refresh();
         return;
       }
-      await authClient.signIn.social({
-        provider,
-        callbackURL: localeHref(locale, "/"),
-      });
+      const result = await authClient.signIn.social({ provider });
+      if (result.error) {
+        throw new Error(result.error.message ?? s.errorSignIn);
+      }
+      router.push(localeHref(locale, "/"));
+      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : s.errorGeneric);
       setPending(null);

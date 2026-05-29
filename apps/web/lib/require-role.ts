@@ -1,30 +1,60 @@
 import type { UserRole } from "@maison/database";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth, type Session } from "./auth";
 
-export type SessionUser = Session["user"] & { role: UserRole };
-
-export async function getSession() {
-  return auth.api.getSession({ headers: await headers() });
+export interface SessionUser {
+  email: string | null;
+  id: string;
+  image?: string | null;
+  isAnonymous?: boolean | null;
+  name: string | null;
+  role: UserRole;
 }
 
-export async function requireSession(): Promise<Session> {
-  const session = await getSession();
-  if (!session) {
-    redirect("/signin");
-  }
-  return session;
+export interface Session {
+  session: {
+    id: string;
+    token: string;
+    userId: string;
+    expiresAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  user: SessionUser;
 }
 
-export async function requireRole(
-  role: UserRole | readonly UserRole[]
-): Promise<SessionUser> {
-  const session = await requireSession();
+const MOCK_USER_ID = "client-side-demo-user";
+
+export function getSession(): Session {
+  const now = new Date();
+  return {
+    user: {
+      id: MOCK_USER_ID,
+      name: "Maison Demo Admin",
+      email: "demo@client.maison.local",
+      image: null,
+      isAnonymous: false,
+      role: "ADMIN" as UserRole,
+    },
+    session: {
+      id: "client-side-demo-session",
+      token: "client-side-demo-token",
+      userId: MOCK_USER_ID,
+      expiresAt: new Date(now.getTime() + 1000 * 60 * 60 * 24 * 30),
+      createdAt: now,
+      updatedAt: now,
+    },
+  };
+}
+
+export function requireSession(): Session {
+  return getSession();
+}
+
+export function requireRole(role: UserRole | readonly UserRole[]): SessionUser {
+  const session = requireSession();
   const allowed = Array.isArray(role) ? role : [role];
-  const user = session.user as SessionUser;
-  if (!allowed.includes(user.role)) {
+  if (!allowed.includes(session.user.role)) {
     redirect("/");
   }
-  return user;
+  return session.user;
 }
