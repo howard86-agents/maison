@@ -28,7 +28,7 @@ export function OrderClient() {
 
       <div className="order-shell">
         <div>
-          <div className="grid grid-cols-[1.2fr_1fr] gap-8 border-line border-b-[0.5px] pb-7">
+          <div className="order-summary-grid grid grid-cols-[1.2fr_1fr] gap-8 border-line border-b-[0.5px] pb-7">
             <div className="row gap-[18px]">
               <ImageOrPlaceholder
                 alt="Saddle 25 · Étoupe"

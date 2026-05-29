@@ -161,6 +161,22 @@
     @apply flex items-center gap-4 text-[12.5px] max-mid:gap-[10px];
   }
 
+  @media (max-width: 740px) {
+    .hdr-top {
+      @apply h-14 gap-3;
+    }
+    .hdr-mark {
+      @apply text-[22px];
+    }
+    .hdr-right {
+      @apply min-w-0 gap-1;
+    }
+    .hdr-user,
+    .hdr-optional {
+      @apply hidden;
+    }
+  }
+
   /* ───── Pill / chip ───── */
   .pill {
     border: 0.5px solid var(--color-line);
@@ -224,6 +240,16 @@
 
   .icon-btn {
     @apply grid size-9 cursor-pointer appearance-none place-items-center rounded-full border-0 bg-none text-ink-2;
+  }
+
+  @media (max-width: 740px) {
+    .pill,
+    .icon-btn {
+      min-height: 44px;
+    }
+    .icon-btn {
+      @apply size-11;
+    }
   }
   .icon-btn:hover {
     @apply bg-paper text-ink;
@@ -680,35 +706,35 @@
   /* ───── Product detail (PDP) ───── */
   .pdp {
     grid-template-columns: 1.35fr 1fr;
-    @apply grid gap-16 py-14;
+    @apply grid gap-16 py-14 max-narrow:grid-cols-1 max-narrow:gap-8 max-narrow:py-8;
   }
   .pdp-gallery {
     grid-template-columns: 88px 1fr;
-    @apply grid gap-4;
+    @apply grid gap-4 max-narrow:grid-cols-1;
   }
   .pdp-thumbs {
-    @apply flex flex-col gap-3;
+    @apply flex flex-col gap-3 max-narrow:order-2 max-narrow:flex-row max-narrow:overflow-x-auto max-narrow:pb-1;
   }
   .pdp-thumbs .ph {
-    @apply size-[88px];
+    @apply size-[88px] max-narrow:size-16 max-narrow:shrink-0;
   }
   .pdp-thumbs .ph[data-on="1"] {
     outline: 0.5px solid var(--color-ink);
     outline-offset: 2px;
   }
   .pdp-hero {
-    @apply relative;
+    @apply relative max-narrow:order-1;
   }
   .pdp h1 {
     letter-spacing: -0.02em;
-    @apply mx-0 mt-0 mb-3 font-display font-normal text-[52px] leading-none;
+    @apply mx-0 mt-0 mb-3 font-display font-normal text-[52px] leading-none max-narrow:text-[40px];
   }
   .pdp .house {
     letter-spacing: 0.2em;
     @apply font-mono text-[11px] text-accent uppercase;
   }
   .pdp .price-row {
-    @apply mt-[18px] flex items-baseline gap-[14px] font-display text-[30px];
+    @apply mt-[18px] flex items-baseline gap-[14px] font-display text-[30px] max-narrow:flex-col max-narrow:items-start max-narrow:gap-1;
   }
   .pdp .price-row .alt {
     @apply font-sans text-[12.5px] text-ink-3;
@@ -720,19 +746,19 @@
   .pdp .specs .row {
     grid-template-columns: 160px 1fr;
     border-bottom: 0.5px solid var(--color-line);
-    @apply grid py-[14px] text-[13px];
+    @apply grid py-[14px] text-[13px] max-narrow:grid-cols-1 max-narrow:gap-1;
   }
   .pdp .specs .row .k {
     letter-spacing: 0.12em;
     @apply font-mono text-[10.5px] text-ink-3 uppercase;
   }
   .pdp .actions {
-    @apply mt-7 flex gap-[14px];
+    @apply mt-7 flex gap-[14px] max-narrow:flex-col;
   }
 
   .assurance {
     border: 0.5px solid var(--color-line);
-    @apply mt-9 grid grid-cols-2 gap-[18px] bg-paper p-[22px];
+    @apply mt-9 grid grid-cols-2 gap-[18px] bg-paper p-[22px] max-narrow:grid-cols-1;
   }
   .assurance .item {
     @apply flex gap-3;
@@ -915,7 +941,10 @@
   /* ───── Order timeline ───── */
   .order-shell {
     grid-template-columns: 1fr 320px;
-    @apply grid gap-14 pt-14 pb-20;
+    @apply grid gap-14 pt-14 pb-20 max-narrow:grid-cols-1 max-narrow:gap-8 max-narrow:pt-8 max-narrow:pb-16;
+  }
+  .order-summary-grid {
+    @apply max-narrow:grid-cols-1;
   }
   .timeline {
     @apply relative mt-8 flex flex-col;
@@ -923,7 +952,7 @@
   .timeline .stage {
     grid-template-columns: 120px 1fr;
     border-bottom: 0.5px solid var(--color-line);
-    @apply relative grid gap-8 py-[22px];
+    @apply relative grid gap-8 py-[22px] max-narrow:grid-cols-1 max-narrow:gap-3;
   }
   .timeline .stage:last-child {
     @apply border-b-0;
@@ -1050,11 +1079,11 @@
   /* ───── Account screen ───── */
   .acct {
     grid-template-columns: 280px 1fr;
-    @apply grid gap-14 pt-12 pb-20;
+    @apply grid gap-14 pt-12 pb-20 max-narrow:grid-cols-1 max-narrow:gap-8 max-narrow:pt-8 max-narrow:pb-16;
   }
   .acct-side {
     border-right: 0.5px solid var(--color-line);
-    @apply pr-8;
+    @apply pr-8 max-narrow:border-r-0 max-narrow:border-b-[0.5px] max-narrow:pr-0 max-narrow:pb-6;
   }
   .acct-side .me {
     border-bottom: 0.5px solid var(--color-line);
@@ -1064,11 +1093,11 @@
     @apply grid size-12 place-items-center rounded-full bg-ink font-display text-[20px] text-bg;
   }
   .acct-side nav {
-    @apply mt-[22px] flex flex-col;
+    @apply mt-[22px] flex flex-col max-narrow:flex-row max-narrow:gap-2 max-narrow:overflow-x-auto max-narrow:pb-1;
   }
   .acct-side nav button {
     border-bottom: 0.5px solid var(--color-line);
-    @apply cursor-pointer appearance-none border-0 bg-none py-[11px] text-left text-[13.5px] text-ink-2;
+    @apply cursor-pointer appearance-none border-0 bg-none py-[11px] text-left text-[13.5px] text-ink-2 max-narrow:min-w-max max-narrow:border-[0.5px] max-narrow:border-line max-narrow:bg-paper max-narrow:px-3 max-narrow:py-2;
   }
   .acct-side nav button[data-on="1"] {
     @apply text-ink;
@@ -1083,11 +1112,11 @@
   .orders-table.orders-table .row {
     grid-template-columns: 120px 1.5fr 1fr 120px 100px;
     border-bottom: 0.5px solid var(--color-line);
-    @apply grid items-center gap-4 py-[18px] text-[13px];
+    @apply grid items-center gap-4 py-[18px] text-[13px] max-narrow:grid-cols-1 max-narrow:items-start max-narrow:gap-2;
   }
   .orders-table .row.head {
     letter-spacing: 0.14em;
-    @apply py-3 font-mono text-[10px] text-ink-3 uppercase;
+    @apply py-3 font-mono text-[10px] text-ink-3 uppercase max-narrow:hidden;
   }
   .orders-table .pill-state {
     letter-spacing: 0.12em;
@@ -1109,6 +1138,16 @@
   .orders-table .pill-state[data-state="delivered"] {
     border-color: var(--color-line);
     @apply text-ink-3;
+  }
+
+  .account-section-head {
+    @apply max-narrow:flex-col max-narrow:items-start;
+  }
+  .account-section-head .btn {
+    @apply max-narrow:w-full max-narrow:justify-center;
+  }
+  .account-summary-grid {
+    @apply max-narrow:grid-cols-1;
   }
 
   /* ───── Dropdown ───── */

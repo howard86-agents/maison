@@ -130,11 +130,13 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
 
           <TierChip tier={tier} />
 
-          <UserChip />
+          <div className="hdr-user">
+            <UserChip />
+          </div>
 
           <button
             aria-label={t.header.toggleDark}
-            className="icon-btn"
+            className="icon-btn hdr-optional"
             onClick={toggleDark}
             type="button"
           >
@@ -178,7 +180,7 @@ export function Header({ tier = "Professional" as Tier }: { tier?: Tier }) {
           </button>
           <button
             aria-label={t.header.search}
-            className="icon-btn"
+            className="icon-btn hdr-optional"
             type="button"
           >
             <svg

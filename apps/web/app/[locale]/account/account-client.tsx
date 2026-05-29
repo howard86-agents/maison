@@ -111,7 +111,7 @@ export function AccountClient() {
         <div>
           {page === "orders" ? (
             <div>
-              <div className="row-between">
+              <div className="account-section-head row-between">
                 <div>
                   <div className="eyebrow">{a.filesEyebrow}</div>
                   <div className="display mt-[10px] font-normal text-[32px] tracking-[-0.015em]">
@@ -176,7 +176,7 @@ export function AccountClient() {
                 })}
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-5">
+              <div className="account-summary-grid mt-8 grid grid-cols-2 gap-5">
                 <div className="card-paper p-[22px]">
                   <div className="eyebrow">{a.ledgerYtdEyebrow}</div>
                   <div className="display mt-[10px] text-[32px] tracking-[-0.015em]">
