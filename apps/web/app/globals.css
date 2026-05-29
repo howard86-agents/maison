@@ -161,6 +161,22 @@
     @apply flex items-center gap-4 text-[12.5px] max-mid:gap-[10px];
   }
 
+  @media (max-width: 740px) {
+    .hdr-top {
+      @apply h-14 gap-3;
+    }
+    .hdr-mark {
+      @apply text-[22px];
+    }
+    .hdr-right {
+      @apply min-w-0 gap-1;
+    }
+    .hdr-user,
+    .hdr-optional {
+      @apply hidden;
+    }
+  }
+
   /* ───── Pill / chip ───── */
   .pill {
     border: 0.5px solid var(--color-line);
@@ -224,6 +240,16 @@
 
   .icon-btn {
     @apply grid size-9 cursor-pointer appearance-none place-items-center rounded-full border-0 bg-none text-ink-2;
+  }
+
+  @media (max-width: 740px) {
+    .pill,
+    .icon-btn {
+      min-height: 44px;
+    }
+    .icon-btn {
+      @apply size-11;
+    }
   }
   .icon-btn:hover {
     @apply bg-paper text-ink;
