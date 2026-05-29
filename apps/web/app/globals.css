@@ -706,35 +706,35 @@
   /* ───── Product detail (PDP) ───── */
   .pdp {
     grid-template-columns: 1.35fr 1fr;
-    @apply grid gap-16 py-14;
+    @apply grid gap-16 py-14 max-narrow:grid-cols-1 max-narrow:gap-8 max-narrow:py-8;
   }
   .pdp-gallery {
     grid-template-columns: 88px 1fr;
-    @apply grid gap-4;
+    @apply grid gap-4 max-narrow:grid-cols-1;
   }
   .pdp-thumbs {
-    @apply flex flex-col gap-3;
+    @apply flex flex-col gap-3 max-narrow:order-2 max-narrow:flex-row max-narrow:overflow-x-auto max-narrow:pb-1;
   }
   .pdp-thumbs .ph {
-    @apply size-[88px];
+    @apply size-[88px] max-narrow:size-16 max-narrow:shrink-0;
   }
   .pdp-thumbs .ph[data-on="1"] {
     outline: 0.5px solid var(--color-ink);
     outline-offset: 2px;
   }
   .pdp-hero {
-    @apply relative;
+    @apply relative max-narrow:order-1;
   }
   .pdp h1 {
     letter-spacing: -0.02em;
-    @apply mx-0 mt-0 mb-3 font-display font-normal text-[52px] leading-none;
+    @apply mx-0 mt-0 mb-3 font-display font-normal text-[52px] leading-none max-narrow:text-[40px];
   }
   .pdp .house {
     letter-spacing: 0.2em;
     @apply font-mono text-[11px] text-accent uppercase;
   }
   .pdp .price-row {
-    @apply mt-[18px] flex items-baseline gap-[14px] font-display text-[30px];
+    @apply mt-[18px] flex items-baseline gap-[14px] font-display text-[30px] max-narrow:flex-col max-narrow:items-start max-narrow:gap-1;
   }
   .pdp .price-row .alt {
     @apply font-sans text-[12.5px] text-ink-3;
@@ -746,19 +746,19 @@
   .pdp .specs .row {
     grid-template-columns: 160px 1fr;
     border-bottom: 0.5px solid var(--color-line);
-    @apply grid py-[14px] text-[13px];
+    @apply grid py-[14px] text-[13px] max-narrow:grid-cols-1 max-narrow:gap-1;
   }
   .pdp .specs .row .k {
     letter-spacing: 0.12em;
     @apply font-mono text-[10.5px] text-ink-3 uppercase;
   }
   .pdp .actions {
-    @apply mt-7 flex gap-[14px];
+    @apply mt-7 flex gap-[14px] max-narrow:flex-col;
   }
 
   .assurance {
     border: 0.5px solid var(--color-line);
-    @apply mt-9 grid grid-cols-2 gap-[18px] bg-paper p-[22px];
+    @apply mt-9 grid grid-cols-2 gap-[18px] bg-paper p-[22px] max-narrow:grid-cols-1;
   }
   .assurance .item {
     @apply flex gap-3;

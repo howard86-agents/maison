@@ -73,7 +73,7 @@ export function ProductClient({ product }: { product: Product }) {
             kind="products"
             priority
             sizes="(min-width: 1280px) 50vw, 100vw"
-            style={{ minHeight: 620 }}
+            style={{ minHeight: "clamp(360px, 90vw, 620px)" }}
           />
         </div>
         <div>
