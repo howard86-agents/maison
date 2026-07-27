@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@maison/data": "*",
-    "sharp": "^0.34.1"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@maison/typescript-config": "*",
